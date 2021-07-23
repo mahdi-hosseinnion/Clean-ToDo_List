@@ -4,11 +4,13 @@ import dependencies.Versions
 import dependencies.SupportDependencies
 import dependencies.Java
 import dependencies.AndroidTestDependencies
+import dependencies.AnnotationProcessing
 
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -45,6 +47,16 @@ dependencies {
     implementation Dependencies.kotlin_standard_library
     implementation Dependencies.kotlin_reflect
     implementation Dependencies.ktx
+
+    // dependencies
+    implementation Dependencies.dagger
+    implementation Dependencies.firebase_firestore
+    implementation Dependencies.firebase_auth
+    implementation Dependencies.firebase_analytics
+    implementation Dependencies.firebase_crashlytics
+
+    // Annotation Processing
+    kapt AnnotationProcessing.dagger_compiler
 
     // Support
     implementation SupportDependencies.appcompat
