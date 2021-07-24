@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 
-abstract class BaseTodoFragment
+abstract class BaseTaskFragment
 constructor(
         @LayoutRes layoutRes: Int
 ) : Fragment(layoutRes) {

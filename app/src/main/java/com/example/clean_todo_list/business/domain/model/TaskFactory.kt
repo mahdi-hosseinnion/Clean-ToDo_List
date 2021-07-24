@@ -4,14 +4,14 @@ import com.example.clean_todo_list.business.domain.util.DateUtil
 import java.util.*
 import kotlin.random.Random
 
-object TodoFactory {
+object TaskFactory {
 
-    fun createTodo(
+    fun createTask(
         id: String?,
         title: String,
         body: String?,
         isDone: Boolean?
-    ): Todo = Todo(
+    ): Task = Task(
         id = id ?: UUID.randomUUID().toString(),
         title = title,
         body = body ?: "",
@@ -20,15 +20,15 @@ object TodoFactory {
         created_at = DateUtil.getCurrentTimestamp()
     )
 
-    fun createListOfTodo(count: Int): List<Todo> {
-        val result = ArrayList<Todo>()
+    fun createListOfTask(count: Int): List<Task> {
+        val result = ArrayList<Task>()
         for (i in 0 until count) {
             //random true or false for empty or full body
             val coin = Random.nextBoolean()
             //random true or false for done or ongoing task
             val coin1 = Random.nextBoolean()
             result.add(
-                createTodo(
+                createTask(
                     id = null,
                     title = UUID.randomUUID().toString(),
                     body = if (coin) UUID.randomUUID().toString() else null,

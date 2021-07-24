@@ -1,11 +1,11 @@
-package com.example.clean_todo_list.framework.presentation.todolist
+package com.example.clean_todo_list.framework.presentation.tasklist
 
 import android.os.Bundle
 import android.view.View
 import com.example.clean_todo_list.R
-import com.example.clean_todo_list.framework.presentation.common.BaseTodoFragment
+import com.example.clean_todo_list.framework.presentation.common.BaseTaskFragment
 
-class NoteListFragment : BaseTodoFragment(R.layout.fragment_todo_list) {
+class NoteListFragment : BaseTaskFragment(R.layout.fragment_task_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
