@@ -54,6 +54,9 @@ dependencies {
     implementation Dependencies.firebase_auth
     implementation Dependencies.firebase_analytics
     implementation Dependencies.firebase_crashlytics
+    implementation Dependencies.kotlin_coroutines
+    implementation Dependencies.kotlin_coroutines_android
+    implementation Dependencies.kotlin_coroutines_play_services
 
     // Annotation Processing
     kapt AnnotationProcessing.dagger_compiler
