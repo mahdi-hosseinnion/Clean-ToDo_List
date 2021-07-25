@@ -5,7 +5,7 @@ import android.view.View
 import com.example.clean_todo_list.R
 import com.example.clean_todo_list.framework.presentation.common.BaseTaskFragment
 
-class NoteListFragment : BaseTaskFragment(R.layout.fragment_task_list) {
+class TaskListFragment : BaseTaskFragment(R.layout.fragment_task_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
