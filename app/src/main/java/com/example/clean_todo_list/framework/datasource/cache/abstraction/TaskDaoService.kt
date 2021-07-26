@@ -8,7 +8,7 @@ interface TaskDaoService {
 
     suspend fun deleteTask(primaryKey: String): Int
 
-    suspend fun deleteTasks(tasks: List<Task>)
+    suspend fun deleteTasks(tasks: List<Task>):Int
 
     suspend fun updateTask(
         primaryKey: String,
@@ -25,7 +25,7 @@ interface TaskDaoService {
 
     suspend fun insertTasks(tasks: List<Task>): LongArray
 
-    suspend fun doneTask(primaryKey: String): Int //set isDone to true
+    suspend fun updateIsDone(primaryKey: String, isDone: Boolean): Int
 
     suspend fun searchTasksOrderByDateDESC(
         query: String,

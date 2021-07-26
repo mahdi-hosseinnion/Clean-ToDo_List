@@ -5,6 +5,7 @@ import dependencies.SupportDependencies
 import dependencies.Java
 import dependencies.AndroidTestDependencies
 import dependencies.AnnotationProcessing
+import dependencies.TestDependencies
 
 plugins {
     id 'com.android.application'
@@ -40,6 +41,12 @@ android {
     kotlinOptions {
         jvmTarget = Java.java_version
     }
+    // remove need for apply plugin: 'de.mannodermaus.android-junit5' in build.gradle(project)
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
@@ -69,4 +76,10 @@ dependencies {
     implementation SupportDependencies.constraintlayout
     implementation SupportDependencies.material_design
     implementation SupportDependencies.swipe_refresh_layout
+    // Unit Tests
+    testImplementation TestDependencies.mockk
+    testImplementation TestDependencies.jupiter_api
+    testImplementation TestDependencies.jupiter_params
+    testImplementation TestDependencies.junit4
+    testRuntimeOnly TestDependencies.jupiter_engine
 }

@@ -20,7 +20,7 @@ constructor(
     override suspend fun deleteTask(primaryKey: String): Int =
         taskDaoService.deleteTask(primaryKey)
 
-    override suspend fun deleteTasks(tasks: List<Task>) =
+    override suspend fun deleteTasks(tasks: List<Task>): Int =
         taskDaoService.deleteTasks(tasks)
 
     override suspend fun updateTask(
@@ -32,7 +32,7 @@ constructor(
         taskDaoService.updateTask(primaryKey, newTitle, newBody, newIsDone)
 
     override suspend fun searchTask(query: String, filterAndOrder: String, page: Int): List<Task> {
-    TODO("Check filterAndOrder and make query")
+        TODO("Check filterAndOrder and make query")
     }
 
     override suspend fun searchTaskById(primaryKey: String): Task? =
@@ -44,8 +44,8 @@ constructor(
     override suspend fun insertTasks(tasks: List<Task>): LongArray =
         taskDaoService.insertTasks(tasks)
 
-    override suspend fun doneTask(primaryKey: String): Int =
-        taskDaoService.doneTask(primaryKey)
+    override suspend fun updateIsDone(primaryKey: String, isDone: Boolean): Int =
+        taskDaoService.updateIsDone(primaryKey, isDone)
 }
 
 
