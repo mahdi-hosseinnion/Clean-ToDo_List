@@ -6,8 +6,8 @@ import com.example.clean_todo_list.business.domain.util.DateUtil
 import com.example.clean_todo_list.framework.datasource.database.TASK_PAGINATION_PAGE_SIZE
 
 private const val TAG = "FakeTaskCacheDataSource"
-private const val FORCE_EXCEPTION = "FORCE_EXCEPTION"
-private const val FORCE_GENERAL_FAILURE = "FORCE_GENERAL_FAILURE"
+const val FORCE_EXCEPTION = "FORCE_EXCEPTION"
+const val FORCE_GENERAL_FAILURE = "FORCE_GENERAL_FAILURE"
 
 class FakeTaskCacheDataSourceImpl(
     private val tasksData: HashMap<String, Task>
@@ -89,11 +89,6 @@ class FakeTaskCacheDataSourceImpl(
     }
 
     override suspend fun searchTaskById(primaryKey: String): Task? {
-        if (primaryKey == FORCE_EXCEPTION) {
-            throw Exception("searchTaskById error")
-        } else if (primaryKey == FORCE_GENERAL_FAILURE) {
-            null
-        }
         return tasksData[primaryKey]
     }
 

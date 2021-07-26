@@ -7,10 +7,10 @@ import kotlin.random.Random
 object TaskFactory {
 
     fun createTask(
-        id: String?,
+        id: String? = null,
         title: String,
-        body: String?,
-        isDone: Boolean?
+        body: String? = null,
+        isDone: Boolean? = null
     ): Task = Task(
         id = id ?: UUID.randomUUID().toString(),
         title = title,
