@@ -41,6 +41,9 @@ android {
     kotlinOptions {
         jvmTarget = Java.java_version
     }
+    sourceSets{
+        test.resources.srcDirs += "src/test/res"
+    }
     // remove need for apply plugin: 'de.mannodermaus.android-junit5' in build.gradle(project)
     testOptions {
         unitTests.all {

@@ -36,10 +36,10 @@ class SearchTasks(
             stateEvent = stateEvent
         ) {
             override suspend fun handleSuccess(resultObj: List<Task>): DataState<TaskListViewState>? {
-                var message = SEARCH_NOTES_SUCCESS
+                var message = SEARCH_TASKS_SUCCESS
                 var uiComponentType: UIComponentType = UIComponentType.None
                 if (resultObj.isEmpty()) {
-                    message = SEARCH_NOTES_NO_MATCHING_RESULTS
+                    message = SEARCH_TASKS_NO_MATCHING_RESULTS
                     uiComponentType = UIComponentType.Toast
                 }
                 return DataState.data(
@@ -59,9 +59,9 @@ class SearchTasks(
     }
 
     companion object {
-        val SEARCH_NOTES_SUCCESS = "Successfully retrieved list of notes."
-        val SEARCH_NOTES_NO_MATCHING_RESULTS = "There are no notes that match that query."
-        val SEARCH_NOTES_FAILED = "Failed to retrieve the list of notes."
+        val SEARCH_TASKS_SUCCESS = "Successfully retrieved list of tasks."
+        val SEARCH_TASKS_NO_MATCHING_RESULTS = "There are no tasks that match that query."
+        val SEARCH_TASKS_FAILED = "Failed to retrieve the list of tasks."
 
     }
 }
