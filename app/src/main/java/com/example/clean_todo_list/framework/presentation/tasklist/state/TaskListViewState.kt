@@ -16,7 +16,7 @@ data class TaskListViewState(
     var filter: String? = null,
     var order: String? = null,
     var layoutManagerState: Parcelable? = null,//for process death
-    var numNotesInCache: Int? = null
+    var numTasksInCache: Int? = null
 ) : Parcelable, ViewState {
 
     @Parcelize
