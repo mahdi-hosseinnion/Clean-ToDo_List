@@ -38,4 +38,11 @@ object TaskFactory {
         }
         return result
     }
+
+    fun createRandomTask(): Task = createTask(
+        UUID.randomUUID().toString(),
+        UUID.randomUUID().toString(),
+        UUID.randomUUID().toString(),
+        Random.nextBoolean()
+    )
 }
