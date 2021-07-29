@@ -17,7 +17,6 @@ class DeleteMultipleTask(
     private val taskCacheDataSource: TaskCacheDataSource,
     private val taskNetworkDataSource: TaskNetworkDataSource
 ) {
-
     /**
      * Logic:
      * 1. execute all the deletes and save result into an ArrayList<DataState<TaskListViewState>>
@@ -25,7 +24,7 @@ class DeleteMultipleTask(
      * 2b. If all success, emit success response
      * 3. Update network with tasks that were successfully deleted
      */
-    fun deleteMultipleTasks(
+    fun deleteTasks(
         tasks: List<Task>,
         stateEvent: StateEvent
     ): Flow<DataState<TaskListViewState>?> = flow {
@@ -63,11 +62,11 @@ class DeleteMultipleTask(
             )
         }
         emit(finalResult)
-        deleteMultipleTasksInNetwork(successfullyDeletedTasks)
+        deleteTasksInNetwork(successfullyDeletedTasks)
 
     }
 
-    private suspend fun deleteMultipleTasksInNetwork(successfullyDeletedTasks: List<Task>) {
+    private suspend fun deleteTasksInNetwork(successfullyDeletedTasks: List<Task>) {
         for (task in successfullyDeletedTasks) {
             safeApiCall(IO) {
                 // delete from "tasks" node
