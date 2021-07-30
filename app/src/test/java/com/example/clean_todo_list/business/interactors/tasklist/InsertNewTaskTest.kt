@@ -24,13 +24,13 @@ import java.util.*
         c) confirm cache was updated
         d) confirm network was updated
     2. insertAsk_fail_confirmCacheAndNetworkDidNotChange
-        a) insert new note
+        a) insert new task
         b) force failure (return -1 from database)
         c) observe for INSERT_NEW_TASK_FAIL from flow
         d) confirm cache was not updated
         e) confirm network was not updated
     3. throwException_checkForError_confirmCacheAndNetworkDidNotChange
-        a) insert new note
+        a) insert new task
         b) force exception (throw exception in database)
         c) observe for CACHE_ERROR_UNKNOWN from flow
         d) confirm cache was not updated
@@ -71,12 +71,12 @@ class InsertNewTaskTest {
             )
         }
         //confirm cache was updated
-        val cacheNoteThatWasInserted = taskCacheDataSource.searchTaskById(newTask.id)
-        assertEquals(newTask, cacheNoteThatWasInserted)
+        val cacheTaskThatWasInserted = taskCacheDataSource.searchTaskById(newTask.id)
+        assertEquals(newTask, cacheTaskThatWasInserted)
 
         //confirm network was updated
-        val networkNoteThatWasInserted = taskNetworkDataSource.searchTask(newTask)
-        assertEquals(newTask, networkNoteThatWasInserted)
+        val networkTaskThatWasInserted = taskNetworkDataSource.searchTask(newTask)
+        assertEquals(newTask, networkTaskThatWasInserted)
     }
 
     @Test
@@ -97,12 +97,12 @@ class InsertNewTaskTest {
             )
         }
         //confirm cache was not updated
-        val cacheNoteThatWasInserted = taskCacheDataSource.searchTaskById(newTask.id)
-        assertEquals(null, cacheNoteThatWasInserted)
+        val cacheTaskThatWasInserted = taskCacheDataSource.searchTaskById(newTask.id)
+        assertEquals(null, cacheTaskThatWasInserted)
 
         //confirm network was not updated
-        val networkNoteThatWasInserted = taskNetworkDataSource.searchTask(newTask)
-        assertEquals(null, networkNoteThatWasInserted)
+        val networkTaskThatWasInserted = taskNetworkDataSource.searchTask(newTask)
+        assertEquals(null, networkTaskThatWasInserted)
     }
 
     @Test
@@ -123,11 +123,11 @@ class InsertNewTaskTest {
             )
         }
         //confirm cache was not updated
-        val cacheNoteThatWasInserted = taskCacheDataSource.searchTaskById(newTask.id)
-        assertEquals(null, cacheNoteThatWasInserted)
+        val cacheTaskThatWasInserted = taskCacheDataSource.searchTaskById(newTask.id)
+        assertEquals(null, cacheTaskThatWasInserted)
 
         //confirm network was not updated
-        val networkNoteThatWasInserted = taskNetworkDataSource.searchTask(newTask)
-        assertEquals(null, networkNoteThatWasInserted)
+        val networkTaskThatWasInserted = taskNetworkDataSource.searchTask(newTask)
+        assertEquals(null, networkTaskThatWasInserted)
     }
 }

@@ -35,6 +35,10 @@ constructor(
         TODO("Check filterAndOrder and make query")
     }
 
+    override suspend fun getAllTasks(): List<Task> =
+        taskDaoService.getAllTasks()
+
+
     override suspend fun searchTaskById(primaryKey: String): Task? =
         taskDaoService.searchTaskById(primaryKey)
 

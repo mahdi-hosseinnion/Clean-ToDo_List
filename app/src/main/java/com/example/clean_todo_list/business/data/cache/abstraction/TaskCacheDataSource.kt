@@ -23,6 +23,8 @@ interface TaskCacheDataSource {
         page: Int
     ): List<Task>
 
+    suspend fun getAllTasks(): List<Task>
+
     suspend fun searchTaskById(primaryKey: String): Task?
 
     suspend fun getNumOfTasks(): Int

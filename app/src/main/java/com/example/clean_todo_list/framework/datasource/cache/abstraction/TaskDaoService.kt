@@ -27,6 +27,8 @@ interface TaskDaoService {
 
     suspend fun updateIsDone(primaryKey: String, isDone: Boolean): Int
 
+    suspend fun getAllTasks(): List<Task>
+
     suspend fun searchTasksOrderByDateDESC(
         query: String,
         page: Int,
