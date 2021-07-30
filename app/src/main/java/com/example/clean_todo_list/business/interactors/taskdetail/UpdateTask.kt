@@ -39,7 +39,7 @@ class UpdateTask(
                 return if (resultObj > 0) {
                     DataState.data(
                         response = Response(
-                            message = UPDATE_NOTE_SUCCESS,
+                            message = UPDATE_TASK_SUCCESS,
                             uiComponentType = UIComponentType.Toast,
                             messageType = MessageType.Success
                         ),
@@ -49,7 +49,7 @@ class UpdateTask(
                 } else {
                     DataState.error(
                         response = Response(
-                            message = UPDATE_NOTE_FAILED,
+                            message = UPDATE_TASK_FAILED,
                             uiComponentType = UIComponentType.Toast,
                             messageType = MessageType.Error
                         ),
@@ -72,9 +72,9 @@ class UpdateTask(
         }
     }
     companion object{
-        val UPDATE_NOTE_SUCCESS = "Successfully updated note."
-        val UPDATE_NOTE_FAILED = "Failed to update note."
-        val UPDATE_NOTE_FAILED_PK = "Update failed. Note is missing primary key."
+        val UPDATE_TASK_SUCCESS = "Successfully updated task."
+        val UPDATE_TASK_FAILED = "Failed to update task."
+        val UPDATE_TASK_FAILED_PK = "Update failed. task is missing primary key."
 
     }
 }
