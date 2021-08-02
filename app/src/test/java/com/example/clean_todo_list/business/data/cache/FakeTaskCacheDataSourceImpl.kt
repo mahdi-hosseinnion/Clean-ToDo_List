@@ -88,6 +88,8 @@ class FakeTaskCacheDataSourceImpl(
         return results
     }
 
+    override suspend fun getAllTasks(): List<Task> = ArrayList(tasksData.values)
+
     override suspend fun searchTaskById(primaryKey: String): Task? {
         return tasksData[primaryKey]
     }

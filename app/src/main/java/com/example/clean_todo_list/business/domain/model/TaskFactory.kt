@@ -29,7 +29,7 @@ object TaskFactory {
             val coin1 = Random.nextBoolean()
             result.add(
                 createTask(
-                    id = null,
+                    id = UUID.randomUUID().toString(),
                     title = UUID.randomUUID().toString(),
                     body = if (coin) UUID.randomUUID().toString() else null,
                     isDone = coin1

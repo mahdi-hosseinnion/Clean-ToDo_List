@@ -28,7 +28,7 @@ class DependencyContainer {
             tasksData
         )
         taskNetworkDataSource = FakeTaskNetworkDataSourceImpl(
-            tasksData = tasksData,
+            tasksData = HashMap(tasksData),
             deletedTasksData = HashMap()
         )
     }
