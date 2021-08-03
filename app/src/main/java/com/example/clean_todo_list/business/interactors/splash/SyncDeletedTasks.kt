@@ -21,7 +21,7 @@ class SyncDeletedTasks(
     private val taskNetworkDataSource: TaskNetworkDataSource
 ) {
 
-    suspend fun syncDeletedTasks(stateEvent: StateEvent) {
+    suspend fun syncDeletedTasks() {
 
         val allTasksInNetwork = getAllTasksFromNetwork()
 
@@ -32,7 +32,7 @@ class SyncDeletedTasks(
             //just for debugging purposes
             object : CacheResponseHandler<Int, Int>(
                 response = cacheResult,
-                stateEvent = stateEvent
+                stateEvent = null
             ) {
                 override suspend fun handleSuccess(resultObj: Int): DataState<Int>? {
                     printLogD("syncNote", "Successfully deleted $resultObj task")

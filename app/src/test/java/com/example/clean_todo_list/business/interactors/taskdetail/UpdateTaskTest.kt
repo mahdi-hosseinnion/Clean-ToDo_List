@@ -11,8 +11,7 @@ import com.example.clean_todo_list.di.DependencyContainer
 import com.example.clean_todo_list.framework.presentation.taskdetail.state.TaskDetailStateEvent
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.util.*
 
@@ -76,9 +75,18 @@ class UpdateTaskTestTest {
             )
         }
         //confirm cache was updated
+        val cacheTask=taskCacheDataSource.searchTaskById(taskToUpdate.id)
         assertEquals(
-            taskToUpdate,
-            taskCacheDataSource.searchTaskById(taskToUpdate.id)
+            taskToUpdate.title,
+            cacheTask?.title
+        )
+        assertEquals(
+            taskToUpdate.body,
+            cacheTask?.body
+        )
+        assertNotEquals(
+            taskToUpdate.updated_at,
+            cacheTask?.updated_at
         )
         //confirm network was updated
         assertEquals(

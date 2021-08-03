@@ -35,13 +35,13 @@ class FakeTaskCacheDataSourceImpl(
     }
 
     override suspend fun deleteTasks(tasks: List<Task>): Int {
-        var failOrSuccess = 1
+        var count = 0
         for (task in tasks) {
-            if (tasksData.remove(task.id) == null) {
-                failOrSuccess = -1 // mark for failure
+            if (tasksData.remove(task.id) != null) {
+                count++
             }
         }
-        return failOrSuccess
+        return if (count == 0) -1 else count
     }
 
     override suspend fun updateTask(
@@ -70,7 +70,11 @@ class FakeTaskCacheDataSourceImpl(
 
     // Not testing the order/filter. Just basic query
     // simulate SQLite "LIKE" query on title and body
-    override suspend fun searchTask(query: String, filterAndOrder: String, page: Int): List<Task> {
+    override suspend fun searchTask(
+        query: String,
+        filterAndOrder: String,
+        page: Int
+    ): List<Task> {
         if (query == FORCE_EXCEPTION) {
             throw Exception("Something went searching the cache for tasks.")
         }
