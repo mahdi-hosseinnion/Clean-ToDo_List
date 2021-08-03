@@ -22,8 +22,13 @@ interface TaskNetworkDataSource {
 
     suspend fun searchTask(task: Task): Task?
 
-    suspend fun getAllTasks():List<Task>
+    suspend fun getAllTasks(): List<Task>
 
     suspend fun insertOrUpdateTasks(tasks: List<Task>)
+
+    suspend fun updateIsDone(
+        taskId: String,
+        isDone: Boolean
+    )
 
 }

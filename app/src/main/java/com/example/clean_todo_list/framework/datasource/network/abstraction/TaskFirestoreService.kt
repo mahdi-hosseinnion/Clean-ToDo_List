@@ -25,4 +25,6 @@ interface TaskFirestoreService {
     suspend fun getAllTasks():List<Task>
 
     suspend fun insertOrUpdateTasks(tasks: List<Task>)
+
+    suspend fun updateIsDone(taskId: String, isDone: Boolean)
 }

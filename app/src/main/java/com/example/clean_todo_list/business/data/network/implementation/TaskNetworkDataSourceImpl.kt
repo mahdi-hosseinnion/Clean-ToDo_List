@@ -44,4 +44,8 @@ constructor(
 
     override suspend fun insertOrUpdateTasks(tasks: List<Task>) =
         firestoreService.insertOrUpdateTasks(tasks)
+
+    override suspend fun updateIsDone(taskId: String, isDone: Boolean) {
+        firestoreService.updateIsDone(taskId,isDone)
+    }
 }
