@@ -65,7 +65,7 @@ class ChangeTaskDoneState<_ViewState : ViewState>(
         }
     }
 
-    suspend fun changeTaskDoneStateInNetwork(
+    private suspend fun changeTaskDoneStateInNetwork(
         taskId: String,
         isDone: Boolean
     ) {

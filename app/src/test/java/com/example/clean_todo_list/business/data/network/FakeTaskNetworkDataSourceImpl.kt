@@ -56,4 +56,10 @@ class FakeTaskNetworkDataSourceImpl(
             tasksData[task.id] = task
         }
     }
+
+    override suspend fun updateIsDone(taskId: String, isDone: Boolean) {
+        tasksData[taskId]?.let {
+            tasksData[taskId] = it.copy(isDone = isDone)
+        }
+    }
 }

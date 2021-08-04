@@ -21,35 +21,6 @@ sealed class TaskListStateEvent : StateEvent {
         override fun shouldDisplayProgressBar() = true
     }
 
-    class DoneTaskEvent(
-        val primaryString: String
-    ) : TaskListStateEvent() {
-
-        override fun errorInfo(): String {
-            return "Error set task to done."
-        }
-
-        override fun eventName(): String {
-            return "DoneTaskEvent $primaryString"
-        }
-
-        override fun shouldDisplayProgressBar() = false
-    }
-    class UnDoneTaskEvent(
-        val primaryString: String
-    ) : TaskListStateEvent() {
-
-        override fun errorInfo(): String {
-            return "Error set task to undone."
-        }
-
-        override fun eventName(): String {
-            return "UnDoneTaskEvent $primaryString"
-        }
-
-        override fun shouldDisplayProgressBar() = false
-    }
-
     // for testing
     class InsertMultipleTasksEvent(
         val numTasks: Int
@@ -79,6 +50,22 @@ sealed class TaskListStateEvent : StateEvent {
         }
 
         override fun shouldDisplayProgressBar() = true
+    }
+
+    class ChangeTaskDoneStateEvent(
+        val taskId: String,
+        val isDone: Boolean
+    ) : TaskListStateEvent() {
+
+        override fun errorInfo(): String {
+            return "Error updating task done state."
+        }
+
+        override fun eventName(): String {
+            return "ChangeTaskDoneState"
+        }
+
+        override fun shouldDisplayProgressBar() = false
     }
 
     class DeleteMultipleTasksEvent(
