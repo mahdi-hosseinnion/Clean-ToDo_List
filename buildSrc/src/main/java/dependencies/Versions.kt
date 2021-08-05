@@ -16,9 +16,10 @@ object Versions {
     val constraintlayout = "1.1.3"
     val material_design = "1.1.0"
     val play_core = "1.7.1"
-    val play_services = "4.3.3"
+    val play_services = "4.3.8"
     val leak_canary = "2.0-alpha-3"
     val swipe_refresh_layout = "1.1.0-alpha03"
+    val firebase_bom = "28.3.0"
     val firebase_firestore = "21.4.2"
     val firebase_analytics = "17.4.0"
     val firebase_crashlytics = "2.10.1"
@@ -38,4 +39,5 @@ object Versions {
     val fragment_version = "1.2.0"
     val androidx_test_ext = "1.1.1"
     val fabric_version = "1.31.2"
+    val multidex = "2.0.1"
 }

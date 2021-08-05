@@ -12,6 +12,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -61,7 +62,6 @@ dependencies {
     implementation Dependencies.kotlin_coroutines_play_services
     implementation Dependencies.retrofit
     implementation Dependencies.retrofit_gson
-    implementation "androidx.multidex:multidex:2.0.1"
 
     // dependencies
     implementation Dependencies.dagger
@@ -69,6 +69,7 @@ dependencies {
     implementation Dependencies.firebase_auth
     implementation Dependencies.firebase_analytics
     implementation Dependencies.firebase_crashlytics
+    implementation platform(Dependencies.firebase_bom)
     implementation Dependencies.kotlin_coroutines
     implementation Dependencies.kotlin_coroutines_android
     implementation Dependencies.kotlin_coroutines_play_services
@@ -84,6 +85,9 @@ dependencies {
     implementation SupportDependencies.constraintlayout
     implementation SupportDependencies.material_design
     implementation SupportDependencies.swipe_refresh_layout
+    //https://developer.android.com/studio/build/multidex
+    implementation Dependencies.androidx_multidex
+
     // Unit Tests
     testImplementation TestDependencies.mockk
     testImplementation TestDependencies.jupiter_api

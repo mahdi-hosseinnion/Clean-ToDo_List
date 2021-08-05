@@ -18,6 +18,7 @@ object Dependencies {
     val room_ktx = "androidx.room:room-ktx:${Versions.room}"
     val play_core = "com.google.android.play:core:${Versions.play_core}"
     val leak_canary = "com.squareup.leakcanary:leakcanary-android:${Versions.leak_canary}"
+    val firebase_bom = "com.google.firebase:firebase-bom:${Versions.firebase_bom}"
     val firebase_firestore = "com.google.firebase:firebase-firestore-ktx:${Versions.firebase_firestore}"
     val firebase_auth = "com.google.firebase:firebase-auth:${Versions.firebase_auth}"
     val firebase_analytics = "com.google.firebase:firebase-analytics:${Versions.firebase_analytics}"
@@ -27,4 +28,5 @@ object Dependencies {
     val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit2_version}"
     val retrofit_gson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit2_version}"
     val markdown_processor = "com.yydcdut:markdown-processor:${Versions.markdown_processor}"
+    val androidx_multidex = "androidx.multidex:multidex:${Versions.multidex}"
 }
