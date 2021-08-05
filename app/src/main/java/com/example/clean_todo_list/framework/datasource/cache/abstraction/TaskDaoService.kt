@@ -1,14 +1,14 @@
 package com.example.clean_todo_list.framework.datasource.cache.abstraction
 
 import com.example.clean_todo_list.business.domain.model.Task
-import com.example.clean_todo_list.framework.datasource.database.TASK_PAGINATION_PAGE_SIZE
+import com.example.clean_todo_list.framework.datasource.cache.database.TaskDao.Companion.TASK_PAGINATION_PAGE_SIZE
 
 interface TaskDaoService {
     suspend fun insertTask(task: Task): Long
 
     suspend fun deleteTask(primaryKey: String): Int
 
-    suspend fun deleteTasks(tasks: List<Task>):Int
+    suspend fun deleteTasks(tasks: List<Task>): Int
 
     suspend fun updateTask(
         primaryKey: String,

@@ -11,7 +11,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'kotlin-android-extensions'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -24,6 +24,7 @@ android {
         targetSdkVersion Versions.targetsdk
         versionCode Application.version_code
         versionName Application.version_name
+        multiDexEnabled = true
 
         testInstrumentationRunner AndroidTestDependencies.instrumentation_runner
     }
@@ -41,7 +42,7 @@ android {
     kotlinOptions {
         jvmTarget = Java.java_version
     }
-    sourceSets{
+    sourceSets {
         test.resources.srcDirs += "src/test/res"
     }
     // remove need for apply plugin: 'de.mannodermaus.android-junit5' in build.gradle(project)
@@ -60,6 +61,7 @@ dependencies {
     implementation Dependencies.kotlin_coroutines_play_services
     implementation Dependencies.retrofit
     implementation Dependencies.retrofit_gson
+    implementation "androidx.multidex:multidex:2.0.1"
 
     // dependencies
     implementation Dependencies.dagger
@@ -70,9 +72,12 @@ dependencies {
     implementation Dependencies.kotlin_coroutines
     implementation Dependencies.kotlin_coroutines_android
     implementation Dependencies.kotlin_coroutines_play_services
+    implementation Dependencies.room_runtime
+    implementation Dependencies.room_ktx
 
     // Annotation Processing
     kapt AnnotationProcessing.dagger_compiler
+    kapt AnnotationProcessing.room_compiler
 
     // Support
     implementation SupportDependencies.appcompat
