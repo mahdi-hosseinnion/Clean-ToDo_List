@@ -59,10 +59,10 @@ interface TaskDao {
 
     //get queries
     @Query("""SELECT * FROM tasks """)
-    suspend fun searchTask(): List<TaskCacheEntity>
-
-    @Query("""SELECT * FROM tasks """)
     suspend fun getAllTasks(): List<TaskCacheEntity>
+
+    @Query("""SELECT * FROM tasks WHERE id = :primaryKey """)
+    suspend fun getTaskById(primaryKey: String): TaskCacheEntity?
 
     //search queries
 

@@ -2,6 +2,7 @@ package com.example.clean_todo_list.framework.datasource.cache.abstraction
 
 import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.framework.datasource.cache.database.TaskDao.Companion.TASK_PAGINATION_PAGE_SIZE
+import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
 
 interface TaskDaoService {
     suspend fun insertTask(task: Task): Long
@@ -17,7 +18,7 @@ interface TaskDaoService {
         newIsDone: Boolean
     ): Int
 
-    suspend fun searchTask(): List<Task>
+    suspend fun getAllTasks(): List<Task>
 
     suspend fun searchTaskById(primaryKey: String): Task?
 
@@ -26,8 +27,6 @@ interface TaskDaoService {
     suspend fun insertTasks(tasks: List<Task>): LongArray
 
     suspend fun updateIsDone(primaryKey: String, isDone: Boolean): Int
-
-    suspend fun getAllTasks(): List<Task>
 
     suspend fun searchTasksOrderByDateDESC(
         query: String,
@@ -57,7 +56,7 @@ interface TaskDaoService {
 
     suspend fun returnOrderedQuery(
         query: String,
-        filterAndOrder: String,
+        filterAndOrder: FilterAndOrder,
         page: Int
     ): List<Task>
 }
