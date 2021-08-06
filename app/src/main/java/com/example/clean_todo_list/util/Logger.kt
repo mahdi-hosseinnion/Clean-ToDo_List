@@ -19,6 +19,7 @@ fun cLog(message: String?, className: String? = null) {
     message?.let {
         if (!DEBUG) {
             FirebaseCrashlytics.getInstance().log(className.toString() + ": " + message)
+            FirebaseCrashlytics.getInstance().recordException(RuntimeException(message))
         }
     }
 }
