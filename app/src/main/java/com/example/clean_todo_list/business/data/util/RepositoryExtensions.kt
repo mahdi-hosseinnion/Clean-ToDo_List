@@ -9,6 +9,7 @@ import com.example.clean_todo_list.business.data.network.NetworkConstants.NETWOR
 import com.example.clean_todo_list.business.data.network.NetworkErrors.NETWORK_ERROR_TIMEOUT
 import com.example.clean_todo_list.business.data.network.NetworkErrors.NETWORK_ERROR_UNKNOWN
 import com.example.clean_todo_list.business.data.util.GenericErrors.ERROR_UNKNOWN
+import com.example.clean_todo_list.util.cLog
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withContext
@@ -27,10 +28,11 @@ suspend fun <T> safeApiCall(
     return withContext(dispatcher) {
         try {
             // throws TimeoutCancellationException
-            withTimeout(NETWORK_TIMEOUT){
+            withTimeout(NETWORK_TIMEOUT) {
                 ApiResult.Success(apiCall.invoke())
             }
         } catch (throwable: Throwable) {
+            cLog(throwable.message,"safeApiCall")
             throwable.printStackTrace()
             when (throwable) {
                 is TimeoutCancellationException -> {
@@ -66,10 +68,11 @@ suspend fun <T> safeCacheCall(
     return withContext(dispatcher) {
         try {
             // throws TimeoutCancellationException
-            withTimeout(CACHE_TIMEOUT){
+            withTimeout(CACHE_TIMEOUT) {
                 CacheResult.Success(cacheCall.invoke())
             }
         } catch (throwable: Throwable) {
+            cLog(throwable.message,"safeCacheCall")
             throwable.printStackTrace()
             when (throwable) {
 

@@ -8,6 +8,7 @@ import com.example.clean_todo_list.business.domain.model.TaskFactory
 import com.example.clean_todo_list.business.interactors.tasklist.DeleteMultipleTask.Companion.DELETE_TASKS_ERRORS
 import com.example.clean_todo_list.business.interactors.tasklist.DeleteMultipleTask.Companion.DELETE_TASKS_SUCCESS
 import com.example.clean_todo_list.di.DependencyContainer
+import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListStateEvent
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
@@ -67,7 +68,7 @@ class DeleteMultipleTaskTest {
 
     @Test
     fun deleteTasks_success_confirmCacheAndNetworkUpdated() = runBlocking {
-        val tasksInCache = taskCacheDataSource.searchTask("", "", 1)
+        val tasksInCache = taskCacheDataSource.searchTask("", FilterAndOrder.DATE_ASC, 1)
 
         val tasksToDelete = ArrayList<Task>()
         for (i in 0..(tasksInCache.size.div(2))) {
@@ -87,7 +88,7 @@ class DeleteMultipleTaskTest {
             )
         }
         //confirm tasks were deleted in cache
-        val tasksInCacheAfterDelete = taskCacheDataSource.searchTask("", "", 1)
+        val tasksInCacheAfterDelete = taskCacheDataSource.searchTask("", FilterAndOrder.DATE_ASC, 1)
 
         for (task in tasksToDelete) {
             assertFalse { tasksInCacheAfterDelete.contains(task) }
@@ -107,7 +108,7 @@ class DeleteMultipleTaskTest {
     @Test
     fun deleteTasks_fail_confirmCacheAndNetworkUpdatedViaSuccessfulOnes() = runBlocking {
 
-        val tasksInCacheBeforeDelete = taskCacheDataSource.searchTask("", "", 1)
+        val tasksInCacheBeforeDelete = taskCacheDataSource.searchTask("", FilterAndOrder.DATE_ASC, 1)
         val tasksInNetworkBeforeDelete = taskNetworkDataSource.getAllTasks()
 
         val validTasks = ArrayList<Task>()
@@ -163,7 +164,7 @@ class DeleteMultipleTaskTest {
     @Test
     fun forceException_fail_confirmCacheAndNetworkUnUpdated() = runBlocking {
 
-        val tasksInCacheBeforeDelete = taskCacheDataSource.searchTask("", "", 1)
+        val tasksInCacheBeforeDelete = taskCacheDataSource.searchTask("", FilterAndOrder.DATE_ASC, 1)
         val tasksInNetworkBeforeDelete = taskNetworkDataSource.getAllTasks()
 
         val validTasks = ArrayList<Task>()

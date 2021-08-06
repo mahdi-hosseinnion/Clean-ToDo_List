@@ -4,6 +4,7 @@ import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.framework.datasource.network.abstraction.TaskFirestoreService
 import com.example.clean_todo_list.framework.datasource.network.mappers.NetworkMapper
 import com.example.clean_todo_list.framework.datasource.network.model.TaskNetworkEntity
+import com.example.clean_todo_list.util.cLog
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -34,6 +35,9 @@ constructor(
             .collection(TASKS_COLLECTION)
             .document(entity.id)
             .set(entity)
+            .addOnFailureListener {
+                cLog(it.message, "insertOrUpdateTask")
+            }
             .await()
     }
 
@@ -44,6 +48,9 @@ constructor(
             .collection(TASKS_COLLECTION)
             .document(primaryKey)
             .delete()
+            .addOnFailureListener {
+                cLog(it.message, "deleteTask")
+            }
             .await()
     }
 
@@ -55,6 +62,9 @@ constructor(
             .collection(TASKS_COLLECTION)
             .document(entity.id)
             .set(entity)
+            .addOnFailureListener {
+                cLog(it.message, "insertDeletedTask")
+            }
             .await()
     }
 
@@ -71,7 +81,10 @@ constructor(
                 val documentRef = collectionRef.document(task.id)
                 batch.set(documentRef, NetworkMapper.mapDomainModelToEntity(task))
             }
-        }.await()
+        }.addOnFailureListener {
+            cLog(it.message, "insertDeletedTasks")
+        }
+            .await()
     }
 
     override suspend fun deleteDeletedTask(task: Task) {
@@ -82,6 +95,9 @@ constructor(
             .collection(TASKS_COLLECTION)
             .document(entity.id)
             .delete()
+            .addOnFailureListener {
+                cLog(it.message, "deleteDeletedTask")
+            }
             .await()
     }
 
@@ -98,6 +114,8 @@ constructor(
                 val documentRef = collectionRef.document(task.id)
                 batch.delete(documentRef)
             }
+        }.addOnFailureListener {
+            cLog(it.message, "deleteDeletedTasks")
         }.await()
     }
 
@@ -108,6 +126,9 @@ constructor(
                 .document(USER_ID)
                 .collection(TASKS_COLLECTION)
                 .get()
+                .addOnFailureListener {
+                    cLog(it.message, "getDeletedTasks")
+                }
                 .await()
                 .toObjects(TaskNetworkEntity::class.java)
         )
@@ -119,11 +140,16 @@ constructor(
             .collection(TASKS_COLLECTION)
             .document(USER_ID)
             .delete()
+            .addOnFailureListener {
+                cLog(it.message, "deleteAllTasks1")
+            }
             .await()
         firestore
             .collection(DELETES_COLLECTION)
             .document(USER_ID)
-            .delete()
+            .delete().addOnFailureListener {
+                cLog(it.message, "deleteAllTasks2")
+            }
             .await()
     }
 
@@ -134,6 +160,9 @@ constructor(
             .collection(TASKS_COLLECTION)
             .document(task.id)
             .get()
+            .addOnFailureListener {
+                cLog(it.message, "searchTask")
+            }
             .await()
             .toObject(TaskNetworkEntity::class.java)?.let {
                 NetworkMapper.mapEntityToDomainModel(it)
@@ -147,6 +176,9 @@ constructor(
                 .document(USER_ID)
                 .collection(TASKS_COLLECTION)
                 .get()
+                .addOnFailureListener {
+                    cLog(it.message, "getAllTasks")
+                }
                 .await()
                 .toObjects(TaskNetworkEntity::class.java)
         )
@@ -169,6 +201,8 @@ constructor(
                 val documentRef = collectionRef.document(task.id)
                 batch.set(documentRef, entity)
             }
+        }.addOnFailureListener {
+            cLog(it.message, "insertOrUpdateTasks")
         }.await()
 
     }
@@ -180,6 +214,9 @@ constructor(
             .collection(TASKS_COLLECTION)
             .document(taskId)
             .update("isDone", isDone)
+            .addOnFailureListener {
+                cLog(it.message, "updateIsDone")
+            }
             .await()
     }
 

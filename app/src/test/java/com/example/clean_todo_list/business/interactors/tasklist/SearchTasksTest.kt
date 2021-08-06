@@ -8,7 +8,7 @@ import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.interactors.tasklist.SearchTasks.Companion.SEARCH_TASKS_NO_MATCHING_RESULTS
 import com.example.clean_todo_list.business.interactors.tasklist.SearchTasks.Companion.SEARCH_TASKS_SUCCESS
 import com.example.clean_todo_list.di.DependencyContainer
-import com.example.clean_todo_list.framework.datasource.database.ORDER_BY_ASC_DATE_UPDATED
+import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListStateEvent
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
@@ -57,7 +57,7 @@ class SearchTasksTest {
         )
     }
 
-    private val filterAndOrder = ORDER_BY_ASC_DATE_UPDATED
+    private val filterAndOrder = FilterAndOrder.DATE_ASC
 
     @Test
     fun blankQuery_success_confirmAllTaskReceived() = runBlocking {

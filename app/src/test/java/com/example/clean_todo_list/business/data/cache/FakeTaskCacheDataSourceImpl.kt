@@ -3,7 +3,10 @@ package com.example.clean_todo_list.business.data.cache
 import com.example.clean_todo_list.business.data.cache.abstraction.TaskCacheDataSource
 import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.util.DateUtil
-import com.example.clean_todo_list.framework.datasource.database.TASK_PAGINATION_PAGE_SIZE
+import com.example.clean_todo_list.framework.datasource.cache.database.TaskDao.Companion.TASK_PAGINATION_PAGE_SIZE
+import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
+import java.util.logging.Filter
+
 
 private const val TAG = "FakeTaskCacheDataSource"
 const val FORCE_EXCEPTION = "FORCE_EXCEPTION"
@@ -72,7 +75,7 @@ class FakeTaskCacheDataSourceImpl(
     // simulate SQLite "LIKE" query on title and body
     override suspend fun searchTask(
         query: String,
-        filterAndOrder: String,
+        filterAndOrder: FilterAndOrder,
         page: Int
     ): List<Task> {
         if (query == FORCE_EXCEPTION) {

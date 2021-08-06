@@ -5,6 +5,7 @@ import com.example.clean_todo_list.business.data.cache.abstraction.TaskCacheData
 import com.example.clean_todo_list.business.data.util.safeCacheCall
 import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.state.*
+import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListViewState
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +18,7 @@ class SearchTasks(
 
     fun searchTasks(
         query: String,
-        filterAndOrder: String,
+        filterAndOrder: FilterAndOrder,
         page: Int,
         stateEvent: StateEvent
     ): Flow<DataState<TaskListViewState>?> = flow {

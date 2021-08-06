@@ -13,6 +13,7 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
     id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -65,11 +66,12 @@ dependencies {
 
     // dependencies
     implementation Dependencies.dagger
+    //firebase
+    implementation platform(Dependencies.firebase_bom)
     implementation Dependencies.firebase_firestore
     implementation Dependencies.firebase_auth
     implementation Dependencies.firebase_analytics
     implementation Dependencies.firebase_crashlytics
-    implementation platform(Dependencies.firebase_bom)
     implementation Dependencies.kotlin_coroutines
     implementation Dependencies.kotlin_coroutines_android
     implementation Dependencies.kotlin_coroutines_play_services
