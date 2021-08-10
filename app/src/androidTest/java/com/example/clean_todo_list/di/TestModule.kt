@@ -4,10 +4,13 @@ import androidx.room.Room
 import com.example.clean_todo_list.framework.datasource.cache.database.TaskDataBase
 import com.example.clean_todo_list.framework.presentation.TestBaseApplication
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
+//firestore docs
+//https://firebase.google.com/docs/emulator-suite/connect_and_prototype#locally_initialize_a_firebase_project
 @Module
 object TestModule {
 
@@ -25,8 +28,20 @@ object TestModule {
     @JvmStatic
     @Singleton
     @Provides
-    fun provideFirebaseFirestore(): FirebaseFirestore {
-        return FirebaseFirestore.getInstance()
+    fun provideFirestoreSetting(): FirebaseFirestoreSettings =
+        FirebaseFirestoreSettings.Builder()
+            .setPersistenceEnabled(false)
+            .build()
+
+
+    @JvmStatic
+    @Singleton
+    @Provides
+    fun provideFirebaseFirestore(settings: FirebaseFirestoreSettings): FirebaseFirestore {
+        val firestore = FirebaseFirestore.getInstance()
+        firestore.firestoreSettings = settings
+        firestore.useEmulator("10.0.2.2", 8080)
+        return firestore
     }
 
 }

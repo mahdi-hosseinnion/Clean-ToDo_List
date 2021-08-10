@@ -1,6 +1,6 @@
 package com.example.clean_todo_list.di
 
-import com.example.clean_todo_list.framework.TempTest
+import com.example.clean_todo_list.framework.datasource.network.TaskFirestoreServiceTest
 import com.example.clean_todo_list.framework.presentation.TestBaseApplication
 import dagger.BindsInstance
 import dagger.Component
@@ -22,5 +22,5 @@ interface TestAppComponent : AppComponent {
 
     }
 
-    fun inject(tempTest: TempTest)
+    fun inject(taskFirestoreServiceTest: TaskFirestoreServiceTest)
 }
