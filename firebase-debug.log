@@ -1,26 +1,26 @@
-[debug] [2021-08-10T15:11:19.445Z] ----------------------------------------------------------------------
-[debug] [2021-08-10T15:11:19.448Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\mahdi\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start --only firestore
-[debug] [2021-08-10T15:11:19.449Z] CLI Version:   9.16.0
-[debug] [2021-08-10T15:11:19.449Z] Platform:      win32
-[debug] [2021-08-10T15:11:19.449Z] Node Version:  v14.17.4
-[debug] [2021-08-10T15:11:19.451Z] Time:          Tue Aug 10 2021 19:41:19 GMT+0430 (Iran Daylight Time)
-[debug] [2021-08-10T15:11:19.451Z] ----------------------------------------------------------------------
+[debug] [2021-08-13T14:36:27.132Z] ----------------------------------------------------------------------
+[debug] [2021-08-13T14:36:27.135Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\mahdi\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start --only firestore
+[debug] [2021-08-13T14:36:27.135Z] CLI Version:   9.16.0
+[debug] [2021-08-13T14:36:27.135Z] Platform:      win32
+[debug] [2021-08-13T14:36:27.136Z] Node Version:  v14.17.4
+[debug] [2021-08-13T14:36:27.137Z] Time:          Fri Aug 13 2021 19:06:27 GMT+0430 (Iran Daylight Time)
+[debug] [2021-08-13T14:36:27.137Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2021-08-10T15:11:19.543Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2021-08-10T15:11:19.543Z] > authorizing via signed-in user (ssmmhh1382@gmail.com)
+[debug] [2021-08-13T14:36:27.230Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-08-13T14:36:27.231Z] > authorizing via signed-in user (ssmmhh1382@gmail.com)
 [info] i  emulators: Starting emulators: firestore {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: firestore"}}
-[debug] [2021-08-10T15:11:19.564Z] [hub] writing locator at C:\Users\mahdi\AppData\Local\Temp\hub-clean-todo-a134e.json
+[debug] [2021-08-13T14:36:27.251Z] [hub] writing locator at C:\Users\mahdi\AppData\Local\Temp\hub-clean-todo-a134e.json
 [warn] !  firestore: Did not find a Cloud Firestore rules file specified in a firebase.json config file. {"metadata":{"emulator":{"name":"firestore"},"message":"Did not find a Cloud Firestore rules file specified in a firebase.json config file."}}
 [warn] !  firestore: The emulator will default to allowing all reads and writes. Learn more about this option: https://firebase.google.com/docs/emulator-suite/install_and_configure#security_rules_configuration. {"metadata":{"emulator":{"name":"firestore"},"message":"The emulator will default to allowing all reads and writes. Learn more about this option: https://firebase.google.com/docs/emulator-suite/install_and_configure#security_rules_configuration."}}
-[debug] [2021-08-10T15:11:19.581Z] Ignoring unsupported arg: projectId {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: projectId"}}
-[debug] [2021-08-10T15:11:19.581Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
-[debug] [2021-08-10T15:11:19.581Z] Starting Firestore Emulator with command {"binary":"java","args":["-Dgoogle.cloud_firestore.debug_log_level=FINE","-Duser.language=en","-jar","C:\\Users\\mahdi\\.cache\\firebase\\emulators\\cloud-firestore-emulator-v1.13.1.jar","--host","localhost","--port",8080],"optionalArgs":["port","webchannel_port","host","rules","functions_emulator","seed_from_export"],"joinArgs":false} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Dgoogle.cloud_firestore.debug_log_level=FINE\",\"-Duser.language=en\",\"-jar\",\"C:\\\\Users\\\\mahdi\\\\.cache\\\\firebase\\\\emulators\\\\cloud-firestore-emulator-v1.13.1.jar\",\"--host\",\"localhost\",\"--port\",8080],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"functions_emulator\",\"seed_from_export\"],\"joinArgs\":false}"}}
+[debug] [2021-08-13T14:36:27.267Z] Ignoring unsupported arg: projectId {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: projectId"}}
+[debug] [2021-08-13T14:36:27.268Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2021-08-13T14:36:27.268Z] Starting Firestore Emulator with command {"binary":"java","args":["-Dgoogle.cloud_firestore.debug_log_level=FINE","-Duser.language=en","-jar","C:\\Users\\mahdi\\.cache\\firebase\\emulators\\cloud-firestore-emulator-v1.13.1.jar","--host","localhost","--port",8080],"optionalArgs":["port","webchannel_port","host","rules","functions_emulator","seed_from_export"],"joinArgs":false} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Dgoogle.cloud_firestore.debug_log_level=FINE\",\"-Duser.language=en\",\"-jar\",\"C:\\\\Users\\\\mahdi\\\\.cache\\\\firebase\\\\emulators\\\\cloud-firestore-emulator-v1.13.1.jar\",\"--host\",\"localhost\",\"--port\",8080],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"functions_emulator\",\"seed_from_export\"],\"joinArgs\":false}"}}
 [info] i  firestore: Firestore Emulator logging to firestore-debug.log {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator logging to \u001b[1mfirestore-debug.log\u001b[22m"}}
-[debug] [2021-08-10T15:11:21.295Z] Aug 10, 2021 7:41:21 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketServer start
-INFO: Started WebSocket server on ws://localhost:53488
- {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 10, 2021 7:41:21 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketServer start\r\nINFO: Started WebSocket server on ws://localhost:53488\r\n"}}
-[debug] [2021-08-10T15:11:21.391Z] API endpoint: http://localhost {"metadata":{"emulator":{"name":"firestore"},"message":"API endpoint: http://localhost"}}
-[debug] [2021-08-10T15:11:21.392Z] :8080
+[debug] [2021-08-13T14:36:28.930Z] Aug 13, 2021 7:06:28 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketServer start
+INFO: Started WebSocket server on ws://localhost:60691
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 13, 2021 7:06:28 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketServer start\r\nINFO: Started WebSocket server on ws://localhost:60691\r\n"}}
+[debug] [2021-08-13T14:36:29.024Z] API endpoint: http://localhost {"metadata":{"emulator":{"name":"firestore"},"message":"API endpoint: http://localhost"}}
+[debug] [2021-08-13T14:36:29.025Z] :8080
 If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
 
    export FIRESTORE_EMULATOR_HOST=localhost:8080
@@ -28,11 +28,11 @@ If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment
 Dev App Server is now running.
 
  {"metadata":{"emulator":{"name":"firestore"},"message":":8080\nIf you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:\r\n\n   export FIRESTORE_EMULATOR_HOST=localhost:8080\n\nDev App Server is now running.\n\r\n"}}
-[debug] [2021-08-10T15:11:21.684Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
-[debug] [2021-08-10T15:11:21.684Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
-[debug] [2021-08-10T15:11:21.685Z] Starting Emulator UI with command {"binary":"node","args":["C:\\Users\\mahdi\\.cache\\firebase\\emulators\\ui-v1.6.0\\server.bundle.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"C:\\\\Users\\\\mahdi\\\\.cache\\\\firebase\\\\emulators\\\\ui-v1.6.0\\\\server.bundle.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[debug] [2021-08-13T14:36:29.088Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2021-08-13T14:36:29.088Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2021-08-13T14:36:29.088Z] Starting Emulator UI with command {"binary":"node","args":["C:\\Users\\mahdi\\.cache\\firebase\\emulators\\ui-v1.6.0\\server.bundle.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"C:\\\\Users\\\\mahdi\\\\.cache\\\\firebase\\\\emulators\\\\ui-v1.6.0\\\\server.bundle.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
 [info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
-[debug] [2021-08-10T15:11:21.851Z] Web / API server started at localhost:4000
+[debug] [2021-08-13T14:36:29.246Z] Web / API server started at localhost:4000
  {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at localhost:4000\n"}}
 [info] 
 ┌─────────────────────────────────────────────────────────────┐
@@ -50,12 +50,12 @@ Dev App Server is now running.
 
 Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
  
-[debug] [2021-08-10T15:11:37.153Z] Aug 10, 2021 7:41:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+[debug] [2021-08-13T14:36:40.805Z] Aug 13, 2021 7:06:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected HTTP/2 connection.
- {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 10, 2021 7:41:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\r\nINFO: Detected HTTP/2 connection.\r\n"}}
-[debug] [2021-08-10T15:11:37.889Z] Aug 10, 2021 7:41:37 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization warnAboutSecuredJwt
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 13, 2021 7:06:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\r\nINFO: Detected HTTP/2 connection.\r\n"}}
+[debug] [2021-08-13T14:36:41.607Z] Aug 13, 2021 7:06:41 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization warnAboutSecuredJwt
 WARNING: expected an unsecured JWT, the emulator does not validate JWTs and IS NOT SECURE
- {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 10, 2021 7:41:37 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization warnAboutSecuredJwt\r\nWARNING: expected an unsecured JWT, the emulator does not validate JWTs and IS NOT SECURE\r\n"}}
-[debug] [2021-08-10T15:11:38.349Z] Aug 10, 2021 7:41:38 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization warnAboutSecuredJwt
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 13, 2021 7:06:41 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization warnAboutSecuredJwt\r\nWARNING: expected an unsecured JWT, the emulator does not validate JWTs and IS NOT SECURE\r\n"}}
+[debug] [2021-08-13T14:36:42.015Z] Aug 13, 2021 7:06:42 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization warnAboutSecuredJwt
 WARNING: expected an unsecured JWT, the emulator does not validate JWTs and IS NOT SECURE
- {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 10, 2021 7:41:38 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization warnAboutSecuredJwt\r\nWARNING: expected an unsecured JWT, the emulator does not validate JWTs and IS NOT SECURE\r\n"}}
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 13, 2021 7:06:42 PM com.google.cloud.datastore.emulator.impl.context.EmulatorAuthorization warnAboutSecuredJwt\r\nWARNING: expected an unsecured JWT, the emulator does not validate JWTs and IS NOT SECURE\r\n"}}
