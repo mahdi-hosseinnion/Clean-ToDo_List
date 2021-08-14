@@ -1,7 +1,9 @@
 package com.example.clean_todo_list.di
 
+import android.app.Application
 import androidx.room.Room
 import com.example.clean_todo_list.framework.datasource.cache.database.TaskDataBase
+import com.example.clean_todo_list.framework.datasource.data.TaskDataFactory
 import com.example.clean_todo_list.framework.presentation.TestBaseApplication
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
@@ -42,6 +44,13 @@ object TestModule {
         firestore.firestoreSettings = settings
         firestore.useEmulator("10.0.2.2", 8080)
         return firestore
+    }
+
+    @JvmStatic
+    @Singleton
+    @Provides
+    fun provideTaskDataFactory(application: TestBaseApplication): TaskDataFactory {
+        return TaskDataFactory(application)
     }
 
 }

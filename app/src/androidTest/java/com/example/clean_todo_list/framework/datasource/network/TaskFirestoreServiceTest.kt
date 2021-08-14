@@ -6,6 +6,7 @@ import com.example.clean_todo_list.business.domain.model.TaskFactory
 import com.example.clean_todo_list.di.TestAppComponent
 import com.example.clean_todo_list.framework.datasource.network.abstraction.TaskFirestoreService
 import com.example.clean_todo_list.framework.datasource.network.implemetation.TaskFirestoreServiceImpl
+import com.example.clean_todo_list.util.printLogD
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -19,6 +20,9 @@ class TaskFirestoreServiceTest : FirebaseBaseTest() {
     //system under test
     lateinit var taskFirestoreService: TaskFirestoreService
 
+    init {
+        insertTestData()
+    }
 
     @Before
     fun init_systemUnderTest() {
@@ -44,6 +48,17 @@ class TaskFirestoreServiceTest : FirebaseBaseTest() {
         assertEquals(task.body, insertedTask?.body)
         assertEquals(task.isDone, insertedTask?.isDone)
         assertEquals(task.created_at, insertedTask?.created_at)
+    }
+
+    //dummy test
+    @Test
+    fun insertTestData_ManualTest() = runBlocking {
+        val insertedData = taskFirestoreService.getAllTasks()
+        printLogD("insertTestData_ManualTest", "insertedDataSize: ${insertedData.size}")
+        for (task in insertedData) {
+            printLogD("insertTestData_ManualTest", task.toString())
+        }
+        assertEquals(11, insertedData.size)
     }
 
     override fun inject() {
