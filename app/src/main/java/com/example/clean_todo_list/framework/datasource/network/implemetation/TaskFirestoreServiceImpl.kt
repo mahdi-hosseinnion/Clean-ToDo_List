@@ -1,6 +1,7 @@
 package com.example.clean_todo_list.framework.datasource.network.implemetation
 
 import com.example.clean_todo_list.business.domain.model.Task
+import com.example.clean_todo_list.business.domain.util.DateUtil
 import com.example.clean_todo_list.framework.datasource.network.abstraction.TaskFirestoreService
 import com.example.clean_todo_list.framework.datasource.network.mappers.NetworkMapper
 import com.example.clean_todo_list.framework.datasource.network.model.TaskNetworkEntity
@@ -213,7 +214,10 @@ constructor(
             .document(USER_ID)
             .collection(TASKS_COLLECTION)
             .document(taskId)
-            .update("isDone", isDone)
+            .update(
+                "isDone", isDone,
+                "updated_at", Timestamp.now()
+            )
             .addOnFailureListener {
                 cLog(it.message, "updateIsDone")
             }

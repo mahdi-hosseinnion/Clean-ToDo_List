@@ -1,13 +1,11 @@
 package com.example.clean_todo_list.business.interactors.splash
 
-import android.util.Log
 import com.example.clean_todo_list.business.data.cache.abstraction.TaskCacheDataSource
 import com.example.clean_todo_list.business.data.network.abstraction.TaskNetworkDataSource
 import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.model.TaskFactory
 import com.example.clean_todo_list.business.domain.util.DateUtil
 import com.example.clean_todo_list.di.DependencyContainer
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -61,7 +59,7 @@ class SyncTasksTest {
     @Test
     fun syncTask_insert_addRandomTasksToCacheThenSyncAndConfirmNetworkUpdated() = runBlocking {
 
-        val randomTasks = TaskFactory.createListOfTask(50)
+        val randomTasks = TaskFactory.createListOfRandomTasks(50)
 
         taskCacheDataSource.insertTasks(randomTasks)
 
@@ -84,7 +82,7 @@ class SyncTasksTest {
     @Test
     fun syncTask_insert_addRandomTaskToNetworkThenSyncAndConfirmCacheUpdated() = runBlocking {
 
-        val randomTasks = TaskFactory.createListOfTask(50)
+        val randomTasks = TaskFactory.createListOfRandomTasks(50)
 
         taskNetworkDataSource.insertOrUpdateTasks(randomTasks)
 

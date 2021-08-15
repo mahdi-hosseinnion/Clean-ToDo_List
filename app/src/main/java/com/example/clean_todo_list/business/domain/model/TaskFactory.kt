@@ -20,7 +20,7 @@ object TaskFactory {
         created_at = DateUtil.getCurrentTimestamp()
     )
 
-    fun createListOfTask(count: Int): List<Task> {
+    fun createListOfRandomTasks(count: Int): List<Task> {
         val result = ArrayList<Task>()
         for (i in 0 until count) {
             //random true or false for empty or full body
