@@ -4,7 +4,11 @@ import com.example.clean_todo_list.business.domain.model.Task
 
 interface TaskFirestoreService {
 
-    suspend fun insertOrUpdateTask(task: Task)
+    suspend fun insertTask(task: Task)
+
+    suspend fun insertTasks(tasks: List<Task>)
+
+    suspend fun updateTask(task: Task, updated_at: Long)
 
     suspend fun deleteTask(primaryKey: String)
 
@@ -23,8 +27,6 @@ interface TaskFirestoreService {
     suspend fun searchTask(task: Task): Task?
 
     suspend fun getAllTasks():List<Task>
-
-    suspend fun insertOrUpdateTasks(tasks: List<Task>)
 
     suspend fun updateIsDone(taskId: String, isDone: Boolean)
 }

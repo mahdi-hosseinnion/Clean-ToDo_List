@@ -3,10 +3,12 @@ package com.example.clean_todo_list.framework.datasource.network
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import com.example.clean_todo_list.BaseFirebaseTest
 import com.example.clean_todo_list.business.domain.model.TaskFactory
+import com.example.clean_todo_list.business.domain.util.DateUtil
 import com.example.clean_todo_list.di.TestAppComponent
 import com.example.clean_todo_list.framework.datasource.network.abstraction.TaskFirestoreService
 import com.example.clean_todo_list.framework.datasource.network.implemetation.TaskFirestoreServiceImpl
 import com.example.clean_todo_list.util.printLogD
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -52,7 +54,7 @@ class TaskFirestoreServiceTest : BaseFirebaseTest() {
             taskFirestoreService.searchTask(task)
         )
         //insert that task
-        taskFirestoreService.insertOrUpdateTask(task)
+        taskFirestoreService.insertTask(task)
         //check task actually inserted
         val insertedTask = taskFirestoreService.searchTask(task)
         //check like this b/c updated_at will update in insertOrUpdateTask function
@@ -78,7 +80,12 @@ class TaskFirestoreServiceTest : BaseFirebaseTest() {
             body = "A VERY FUN BODY FOR UPDATE THIS TASK HAHA"
         )
         //update in network
-        taskFirestoreService.insertOrUpdateTask(taskToUpdate)
+        //make sure update at updated
+        delay(2_000)
+        taskFirestoreService.updateTask(
+            taskToUpdate,
+            DateUtil.getCurrentTimestamp()
+        )
 
         //confirm task was updated
         val updatedTask = taskFirestoreService.searchTask(taskToUpdate)
@@ -126,7 +133,7 @@ class TaskFirestoreServiceTest : BaseFirebaseTest() {
         val tasksToInsert = TaskFactory.createListOfRandomTasks(10)
 
         //insert them
-        taskFirestoreService.insertOrUpdateTasks(tasksToInsert)
+        taskFirestoreService.insertTasks(tasksToInsert)
 
         //confirm tasks inserted
         val allTasksInNetworkAfterInsert = taskFirestoreService.getAllTasks()

@@ -12,8 +12,19 @@ class TaskNetworkDataSourceImpl
 constructor(
     private val firestoreService: TaskFirestoreService
 ) : TaskNetworkDataSource {
-    override suspend fun insertOrUpdateTask(task: Task) =
-        firestoreService.insertOrUpdateTask(task)
+
+    override suspend fun insertTask(task: Task) {
+        firestoreService.insertTask(task)
+    }
+
+    override suspend fun insertTasks(tasks: List<Task>) {
+        firestoreService.insertTasks(tasks)
+    }
+
+    override suspend fun updateTask(task: Task, updated_at: Long) {
+        firestoreService.updateTask(task, updated_at)
+    }
+
 
     override suspend fun deleteTask(primaryKey: String) =
         firestoreService.deleteTask(primaryKey)
@@ -42,10 +53,8 @@ constructor(
     override suspend fun getAllTasks(): List<Task> =
         firestoreService.getAllTasks()
 
-    override suspend fun insertOrUpdateTasks(tasks: List<Task>) =
-        firestoreService.insertOrUpdateTasks(tasks)
 
     override suspend fun updateIsDone(taskId: String, isDone: Boolean) {
-        firestoreService.updateIsDone(taskId,isDone)
+        firestoreService.updateIsDone(taskId, isDone)
     }
 }

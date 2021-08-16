@@ -72,7 +72,7 @@ class RestoreDeletedTask(
             launch {
                 //insert into 'tasks' node
                 safeApiCall(IO) {
-                    taskNetworkDataSource.insertOrUpdateTask(task)
+                    taskNetworkDataSource.insertTask(task)
                 }
             }
             launch {

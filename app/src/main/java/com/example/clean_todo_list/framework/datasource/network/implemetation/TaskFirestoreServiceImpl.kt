@@ -27,9 +27,44 @@ constructor(
     private val firestore: FirebaseFirestore
 ) : TaskFirestoreService {
 
-    override suspend fun insertOrUpdateTask(task: Task) {
+    override suspend fun insertTask(task: Task) {
         val entity = NetworkMapper.mapDomainModelToEntity(task)
-        entity.updated_at = Timestamp.now()
+        firestore
+            .collection(TASKS_COLLECTION)
+            .document(USER_ID)
+            .collection(TASKS_COLLECTION)
+            .document(entity.id)
+            .set(entity)
+            .addOnFailureListener {
+                cLog(it.message, "insertOrUpdateTask")
+            }
+            .await()
+    }
+
+    override suspend fun insertTasks(tasks: List<Task>) {
+        if (tasks.size > 500) {
+            throw Exception("Cannot insert more than 500 notes at a time into firestore.")
+        }
+
+        val collectionRef = firestore
+            .collection(TASKS_COLLECTION)
+            .document(USER_ID)
+            .collection(TASKS_COLLECTION)
+
+        firestore.runBatch { batch ->
+            for (task in tasks) {
+                val entity = NetworkMapper.mapDomainModelToEntity(task)
+                val documentRef = collectionRef.document(task.id)
+                batch.set(documentRef, entity)
+            }
+        }.addOnFailureListener {
+            cLog(it.message, "insertOrUpdateTasks")
+        }.await()
+    }
+
+    override suspend fun updateTask(task: Task, updated_at: Long) {
+        val entity = NetworkMapper.mapDomainModelToEntity(task)
+        entity.updated_at = DateUtil.convertUnixTimestampToFirebaseTimestamp(updated_at)
         firestore
             .collection(TASKS_COLLECTION)
             .document(USER_ID)
@@ -185,28 +220,6 @@ constructor(
         )
     }
 
-    override suspend fun insertOrUpdateTasks(tasks: List<Task>) {
-        if (tasks.size > 500) {
-            throw Exception("Cannot insert more than 500 notes at a time into firestore.")
-        }
-
-        val collectionRef = firestore
-            .collection(TASKS_COLLECTION)
-            .document(USER_ID)
-            .collection(TASKS_COLLECTION)
-
-        firestore.runBatch { batch ->
-            for (task in tasks) {
-                val entity = NetworkMapper.mapDomainModelToEntity(task)
-                entity.updated_at = Timestamp.now()
-                val documentRef = collectionRef.document(task.id)
-                batch.set(documentRef, entity)
-            }
-        }.addOnFailureListener {
-            cLog(it.message, "insertOrUpdateTasks")
-        }.await()
-
-    }
 
     override suspend fun updateIsDone(taskId: String, isDone: Boolean) {
         firestore

@@ -51,7 +51,8 @@ class FakeTaskCacheDataSourceImpl(
         primaryKey: String,
         newTitle: String,
         newBody: String,
-        newIsDone: Boolean
+        newIsDone: Boolean,
+        updated_at:Long
     ): Int {
         if (primaryKey == FORCE_EXCEPTION) {
             throw Exception("updateTask error")
@@ -63,8 +64,8 @@ class FakeTaskCacheDataSourceImpl(
             title = newTitle,
             body = newBody,
             isDone = newIsDone,
-            updated_at = DateUtil.getCurrentTimestamp(),
-            created_at = tasksData[primaryKey]?.created_at ?: DateUtil.getCurrentTimestamp()
+            updated_at = updated_at,
+            created_at = tasksData[primaryKey]?.created_at ?: updated_at
         )
         return tasksData.replace(primaryKey, updatedTask)?.let {
             1//success

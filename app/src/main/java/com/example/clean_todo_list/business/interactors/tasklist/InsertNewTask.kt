@@ -74,7 +74,7 @@ class InsertNewTask(
         if (messageType == MessageType.Success) {
             //we don't care about api result b/c app will sync data in splash screen anyway
             safeApiCall(IO) {
-                taskNetworkDataSource.insertOrUpdateTask(newTask)
+                taskNetworkDataSource.insertTask(newTask)
             }
         }
     }

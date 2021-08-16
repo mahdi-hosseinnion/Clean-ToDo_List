@@ -2,6 +2,7 @@ package com.example.clean_todo_list.business.data.cache.implementation
 
 import com.example.clean_todo_list.business.data.cache.abstraction.TaskCacheDataSource
 import com.example.clean_todo_list.business.domain.model.Task
+import com.example.clean_todo_list.business.domain.util.DateUtil
 import com.example.clean_todo_list.framework.datasource.cache.abstraction.TaskDaoService
 import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
 import javax.inject.Inject
@@ -28,9 +29,10 @@ constructor(
         primaryKey: String,
         newTitle: String,
         newBody: String,
-        newIsDone: Boolean
+        newIsDone: Boolean,
+        updated_at: Long
     ): Int =
-        taskDaoService.updateTask(primaryKey, newTitle, newBody, newIsDone)
+        taskDaoService.updateTask(primaryKey, newTitle, newBody, newIsDone,updated_at)
 
     override suspend fun searchTask(
         query: String,

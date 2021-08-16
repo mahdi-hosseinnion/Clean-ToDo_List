@@ -3,6 +3,7 @@ package com.example.clean_todo_list.framework.datasource.cache
 import com.example.clean_todo_list.BaseCacheTest
 import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.model.TaskFactory
+import com.example.clean_todo_list.business.domain.util.DateUtil
 import com.example.clean_todo_list.di.TestAppComponent
 import com.example.clean_todo_list.framework.datasource.cache.abstraction.TaskDaoService
 import com.example.clean_todo_list.framework.datasource.cache.implementation.TaskDaoServiceImpl
@@ -223,7 +224,8 @@ class TaskDaoServiceTest : BaseCacheTest() {
             primaryKey = randomTask.id,
             newTitle = newTitle,
             newBody = newBody,
-            newIsDone = newIsDone
+            newIsDone = newIsDone,
+            updated_at = DateUtil.getCurrentTimestamp()
         )
 
         //Assert: confirm updated

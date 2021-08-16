@@ -15,7 +15,8 @@ interface TaskDaoService {
         primaryKey: String,
         newTitle: String,
         newBody: String,
-        newIsDone: Boolean
+        newIsDone: Boolean,
+        updated_at: Long
     ): Int
 
     suspend fun getAllTasks(): List<Task>

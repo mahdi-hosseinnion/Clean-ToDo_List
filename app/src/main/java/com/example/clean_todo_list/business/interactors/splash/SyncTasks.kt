@@ -106,9 +106,7 @@ class SyncTasks
                 } ?: taskCacheDataSource.insertTask(taskInNetwork)
             }
             //remaining cache(does not exist in network)
-            for (task in tasksInCache) {
-                taskNetworkDataSource.insertOrUpdateTask(task)
-            }
+            taskNetworkDataSource.insertTasks(tasksInCache)
 
         } catch (e: Exception) {
             Log.e(TAG, "syncNetworkTasksWithCachedTasks: ${e.message}", e)
@@ -122,17 +120,22 @@ class SyncTasks
     ) {
         if (cachedTask.updated_at > networkTask.updated_at) {
             // update network (cache has newer data)
+            //updated_atShouldBeUpdatedToNow is false b/c user is not updating the task
             safeApiCall(IO) {
-                taskNetworkDataSource.insertOrUpdateTask(cachedTask)
+                taskNetworkDataSource.updateTask(
+                    task = cachedTask,
+                    updated_at = cachedTask.updated_at
+                )
             }
-        } else {
+        } else if (cachedTask.updated_at < networkTask.updated_at) {
             // update cache (network has newer data)
             safeCacheCall(IO) {
                 taskCacheDataSource.updateTask(
                     primaryKey = networkTask.id,
                     newTitle = networkTask.title,
                     newBody = networkTask.body,
-                    newIsDone = networkTask.isDone
+                    newIsDone = networkTask.isDone,
+                    updated_at = networkTask.updated_at
                 )
             }
         }

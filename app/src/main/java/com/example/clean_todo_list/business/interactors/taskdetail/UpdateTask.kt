@@ -7,6 +7,7 @@ import com.example.clean_todo_list.business.data.util.safeApiCall
 import com.example.clean_todo_list.business.data.util.safeCacheCall
 import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.state.*
+import com.example.clean_todo_list.business.domain.util.DateUtil
 import com.example.clean_todo_list.framework.presentation.taskdetail.state.TaskDetailViewState
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
@@ -21,13 +22,16 @@ class UpdateTask(
         task: Task,
         stateEvent: StateEvent
     ): Flow<DataState<TaskDetailViewState>?> = flow {
+        //updated at in network and cache should be the same (prevent use less sync)
 
+        val updated_at = DateUtil.getCurrentTimestamp()
         val cacheResult = safeCacheCall(IO) {
             taskCacheDataSource.updateTask(
                 task.id,
                 task.title,
                 task.body,
-                task.isDone
+                task.isDone,
+                updated_at
             )
         }
 
@@ -62,16 +66,17 @@ class UpdateTask(
         emit(cacheResponse)
 
         if (cacheResponse?.stateMessage?.response?.messageType == MessageType.Success) {
-            updateTaskInNetwork(task)
+            updateTaskInNetwork(task, updated_at)
         }
     }
 
-    private suspend fun updateTaskInNetwork(task: Task) {
+    private suspend fun updateTaskInNetwork(task: Task, updated_at: Long) {
         safeApiCall(IO) {
-            taskNetworkDataSource.insertOrUpdateTask(task)
+            taskNetworkDataSource.updateTask(task, updated_at)
         }
     }
-    companion object{
+
+    companion object {
         val UPDATE_TASK_SUCCESS = "Successfully updated task."
         val UPDATE_TASK_FAILED = "Failed to update task."
         val UPDATE_TASK_FAILED_PK = "Update failed. task is missing primary key."

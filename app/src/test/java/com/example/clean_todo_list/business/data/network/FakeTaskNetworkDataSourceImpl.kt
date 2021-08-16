@@ -2,13 +2,27 @@ package com.example.clean_todo_list.business.data.network
 
 import com.example.clean_todo_list.business.data.network.abstraction.TaskNetworkDataSource
 import com.example.clean_todo_list.business.domain.model.Task
+import com.example.clean_todo_list.business.domain.util.DateUtil
 
 class FakeTaskNetworkDataSourceImpl(
     private val tasksData: HashMap<String, Task>,
     private val deletedTasksData: HashMap<String, Task>
 ) : TaskNetworkDataSource {
-    override suspend fun insertOrUpdateTask(task: Task) {
+
+    override suspend fun insertTask(task: Task) {
         tasksData[task.id] = task
+    }
+
+    override suspend fun insertTasks(tasks: List<Task>) {
+        for (task in tasks) {
+            tasksData[task.id] = task
+        }
+    }
+
+    override suspend fun updateTask(task: Task, updated_at: Long) {
+        tasksData[task.id] = task.copy(
+            updated_at = updated_at
+        )
     }
 
     override suspend fun deleteTask(primaryKey: String) {
@@ -49,12 +63,6 @@ class FakeTaskNetworkDataSourceImpl(
 
     override suspend fun getAllTasks(): List<Task> {
         return ArrayList(tasksData.values)
-    }
-
-    override suspend fun insertOrUpdateTasks(tasks: List<Task>) {
-        for (task in tasks) {
-            tasksData[task.id] = task
-        }
     }
 
     override suspend fun updateIsDone(taskId: String, isDone: Boolean) {

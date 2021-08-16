@@ -6,7 +6,9 @@ import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.model.TaskFactory
 import com.example.clean_todo_list.business.domain.util.DateUtil
 import com.example.clean_todo_list.di.DependencyContainer
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.util.*
@@ -57,12 +59,105 @@ class SyncTasksTest {
     }
 
     @Test
+    fun doSuccessiveUpdatesOccur() = runBlocking {
+
+        // update a single task with new timestamp
+        val newDate = DateUtil.getCurrentTimestamp().minus(Random.nextInt(1_000))
+        val allTasksInNetwork = taskNetworkDataSource.getAllTasks()
+        val updatedTask =
+            allTasksInNetwork.random().copy(
+                updated_at = newDate
+            )
+        taskNetworkDataSource.updateTask(updatedTask, newDate)
+
+        syncTasks.syncTasks()
+
+        delay(1001)
+
+        // simulate launch app again
+        syncTasks.syncTasks()
+
+        // confirm the date was not updated a second time
+        val tasks = taskNetworkDataSource.getAllTasks()
+        for (task in tasks) {
+            if (task.id.equals(updatedTask.id)) {
+                Assertions.assertTrue { task.updated_at.equals(newDate) }
+            }
+        }
+    }
+
+    @Test
+    fun checkUpdatedAtDates() = runBlocking {
+
+        // update a single task with new timestamp
+        val newDate = DateUtil.getCurrentTimestamp().minus(Random.nextInt(10, 1_000))
+        val allTasksInNetwork = taskNetworkDataSource.getAllTasks()
+        val updatedTask =
+            allTasksInNetwork.random().copy(
+                updated_at = newDate
+            )
+        taskNetworkDataSource.updateTask(updatedTask, newDate)
+
+        syncTasks.syncTasks()
+        // confirm only a single 'updated_at' date was updated
+        val tasks = taskNetworkDataSource.getAllTasks()
+        for (task in tasks) {
+            taskCacheDataSource.searchTaskById(task.id)?.let { n ->
+                println("date: ${n.updated_at}")
+                if (n.id.equals(updatedTask.id)) {
+                    Assertions.assertTrue { n.updated_at.equals(newDate) }
+                } else {
+                    Assertions.assertFalse { n.updated_at.equals(newDate) }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun updateTaskInCache_thenSyncTwice() = runBlocking {
+        //update a task in cache
+        val allTaskInCache = taskCacheDataSource.getAllTasks()
+        val newDate = DateUtil.getCurrentTimestamp()
+        val taskToUpdate = allTaskInCache.random()
+
+        taskCacheDataSource.updateTask(
+            primaryKey = taskToUpdate.id,
+            newTitle = "its is the best title",
+            newBody = "this is not the best body",
+            newIsDone = true,
+            updated_at = newDate
+        )
+
+        //simulate some work with app here
+        delay(2_000)
+        //close and then relaunch app
+        syncTasks.syncTasks()
+        //simulate some work with app here
+        delay(2_000)
+        //close and then relaunch app
+        syncTasks.syncTasks()
+
+        //now check if cache update is the same (update at should not change
+        // b/c task did not update after newDate)
+
+        assertEquals(
+            newDate,
+            taskCacheDataSource.searchTaskById(taskToUpdate.id)?.updated_at
+        )
+
+    }
+
+    @Test
     fun syncTask_insert_addRandomTasksToCacheThenSyncAndConfirmNetworkUpdated() = runBlocking {
 
         val randomTasks = TaskFactory.createListOfRandomTasks(50)
 
         taskCacheDataSource.insertTasks(randomTasks)
-
+        delay(2_000)
+        syncTasks.syncTasks()
+        delay(2_000)
+        syncTasks.syncTasks()
+        delay(2_000)
         syncTasks.syncTasks()
 
         for (task in randomTasks) {
@@ -84,7 +179,7 @@ class SyncTasksTest {
 
         val randomTasks = TaskFactory.createListOfRandomTasks(50)
 
-        taskNetworkDataSource.insertOrUpdateTasks(randomTasks)
+        taskNetworkDataSource.insertTasks(randomTasks)
 
         syncTasks.syncTasks()
 
@@ -124,7 +219,8 @@ class SyncTasksTest {
                 taskToUpdate.id,
                 taskToUpdate.title,
                 taskToUpdate.body,
-                taskToUpdate.isDone
+                taskToUpdate.isDone,
+                taskToUpdate.updated_at
             )
             updatedTasks.add(taskToUpdate)
         }
@@ -164,8 +260,9 @@ class SyncTasksTest {
                 updated_at = DateUtil.getCurrentTimestamp(),
                 created_at = task.created_at
             )
-            taskNetworkDataSource.insertOrUpdateTask(
-                taskToUpdate
+            taskNetworkDataSource.updateTask(
+                taskToUpdate,
+                taskToUpdate.updated_at
             )
             updatedTasks.add(taskToUpdate)
         }

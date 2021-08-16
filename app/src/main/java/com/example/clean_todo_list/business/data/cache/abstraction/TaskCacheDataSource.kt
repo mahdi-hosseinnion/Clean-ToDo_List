@@ -1,6 +1,7 @@
 package com.example.clean_todo_list.business.data.cache.abstraction
 
 import com.example.clean_todo_list.business.domain.model.Task
+import com.example.clean_todo_list.business.domain.util.DateUtil
 import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
 
 interface TaskCacheDataSource {
@@ -15,7 +16,8 @@ interface TaskCacheDataSource {
         primaryKey: String,
         newTitle: String,
         newBody: String,
-        newIsDone: Boolean
+        newIsDone: Boolean,
+        updated_at: Long
     ): Int
 
     suspend fun searchTask(

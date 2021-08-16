@@ -33,13 +33,14 @@ constructor(
         primaryKey: String,
         newTitle: String,
         newBody: String,
-        newIsDone: Boolean
+        newIsDone: Boolean,
+        updated_at: Long
     ): Int = taskDao.updateTask(
         primaryKey,
         newTitle,
         newBody,
         newIsDone,
-        DateUtil.getCurrentTimestamp()
+        updated_at
     )
 
 

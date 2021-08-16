@@ -90,9 +90,18 @@ class UpdateTaskTestTest {
             cacheTask?.updated_at
         )
         //confirm network was updated
+        val networkTask=taskNetworkDataSource.searchTask(taskToUpdate)
         assertEquals(
-            taskToUpdate,
-            taskNetworkDataSource.searchTask(taskToUpdate)
+            taskToUpdate.title,
+            networkTask?.title
+        )
+        assertEquals(
+            taskToUpdate.body,
+            networkTask?.body
+        )
+        assertNotEquals(
+            taskToUpdate.updated_at,
+            networkTask?.updated_at
         )
     }
 
