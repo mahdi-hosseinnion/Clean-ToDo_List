@@ -52,7 +52,6 @@ interface TaskDaoService {
         pageSize: Int = TASK_PAGINATION_PAGE_SIZE
     ): List<Task>
 
-    suspend fun getNumTasks(): Int
 
     suspend fun returnOrderedQuery(
         query: String,

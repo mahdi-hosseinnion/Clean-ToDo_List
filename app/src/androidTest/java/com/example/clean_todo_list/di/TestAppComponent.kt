@@ -1,5 +1,6 @@
 package com.example.clean_todo_list.di
 
+import com.example.clean_todo_list.framework.datasource.cache.TaskDaoServiceTest
 import com.example.clean_todo_list.framework.datasource.network.TaskFirestoreServiceTest
 import com.example.clean_todo_list.framework.presentation.TestBaseApplication
 import dagger.BindsInstance
@@ -23,4 +24,6 @@ interface TestAppComponent : AppComponent {
     }
 
     fun inject(taskFirestoreServiceTest: TaskFirestoreServiceTest)
+
+    fun inject(taskDaoServiceTest: TaskDaoServiceTest)
 }

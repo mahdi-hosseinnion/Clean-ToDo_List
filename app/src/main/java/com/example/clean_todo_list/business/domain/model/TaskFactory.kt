@@ -28,21 +28,35 @@ object TaskFactory {
             //random true or false for done or ongoing task
             val coin1 = Random.nextBoolean()
             result.add(
-                createTask(
-                    id = UUID.randomUUID().toString(),
-                    title = UUID.randomUUID().toString(),
-                    body = if (coin) UUID.randomUUID().toString() else null,
-                    isDone = coin1
-                )
+                createRandomTask()
             )
         }
         return result
     }
 
-    fun createRandomTask(): Task = createTask(
-        UUID.randomUUID().toString(),
-        UUID.randomUUID().toString(),
-        UUID.randomUUID().toString(),
-        Random.nextBoolean()
-    )
+    fun createRandomTask(): Task {
+        val now = DateUtil.getCurrentTimestamp()
+        val range = 100_000
+        val coin1 = Random.nextBoolean()
+        val coin2 = Random.nextBoolean()
+
+        val created_at = Random.nextLong(now.minus(range), now.plus(range))
+        val updated_at =
+            if (coin1)
+                created_at//task did not updated
+            else
+                Random.nextLong(created_at, created_at.plus(range))//task have been updated
+
+        if (created_at > updated_at) {
+            throw Exception("created_at should not be greater then updated_at value")
+        }
+        return Task(
+            id = UUID.randomUUID().toString(),
+            title = UUID.randomUUID().toString(),
+            body = if (coin2) UUID.randomUUID().toString() else "",//empty or not empty body
+            isDone = Random.nextBoolean(),
+            updated_at = updated_at,
+            created_at = created_at
+        )
+    }
 }

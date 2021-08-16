@@ -98,8 +98,6 @@ constructor(
     )
 
 
-    override suspend fun getNumTasks(): Int = taskDao.getNumOfTasks()
-
     override suspend fun returnOrderedQuery(
         query: String,
         filterAndOrder: FilterAndOrder,

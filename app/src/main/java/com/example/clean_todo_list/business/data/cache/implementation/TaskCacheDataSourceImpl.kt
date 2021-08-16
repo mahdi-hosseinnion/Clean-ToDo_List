@@ -32,9 +32,12 @@ constructor(
     ): Int =
         taskDaoService.updateTask(primaryKey, newTitle, newBody, newIsDone)
 
-    override suspend fun searchTask(query: String, filterAndOrder: FilterAndOrder, page: Int): List<Task> {
-        TODO("Check filterAndOrder and make query")
-    }
+    override suspend fun searchTask(
+        query: String,
+        filterAndOrder: FilterAndOrder,
+        page: Int
+    ): List<Task> =
+        taskDaoService.returnOrderedQuery(query, filterAndOrder, page)
 
     override suspend fun getAllTasks(): List<Task> =
         taskDaoService.getAllTasks()

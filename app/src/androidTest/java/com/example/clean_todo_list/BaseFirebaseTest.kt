@@ -11,7 +11,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-abstract class FirebaseBaseTest : BaseTest() {
+abstract class BaseFirebaseTest : BaseTest() {
 
     @Inject
     lateinit var firebaseAuth: FirebaseAuth

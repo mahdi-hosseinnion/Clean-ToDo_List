@@ -1,10 +1,8 @@
 package com.example.clean_todo_list.framework.datasource.network
 
-import android.text.format.DateUtils
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
-import com.example.clean_todo_list.FirebaseBaseTest
+import com.example.clean_todo_list.BaseFirebaseTest
 import com.example.clean_todo_list.business.domain.model.TaskFactory
-import com.example.clean_todo_list.business.domain.util.DateUtil
 import com.example.clean_todo_list.di.TestAppComponent
 import com.example.clean_todo_list.framework.datasource.network.abstraction.TaskFirestoreService
 import com.example.clean_todo_list.framework.datasource.network.implemetation.TaskFirestoreServiceImpl
@@ -29,7 +27,7 @@ Test cases:
 8. delete a 'deleted tasks' (task from "deletes" node). CBS
  */
 @RunWith(AndroidJUnit4ClassRunner::class)
-class TaskFirestoreServiceTest : FirebaseBaseTest() {
+class TaskFirestoreServiceTest : BaseFirebaseTest() {
 
     //system under test
     lateinit var taskFirestoreService: TaskFirestoreService
