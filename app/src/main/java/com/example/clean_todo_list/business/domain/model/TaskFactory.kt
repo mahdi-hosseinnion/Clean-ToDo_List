@@ -22,11 +22,8 @@ object TaskFactory {
 
     fun createListOfRandomTasks(count: Int): List<Task> {
         val result = ArrayList<Task>()
-        for (i in 0 until count) {
-            //random true or false for empty or full body
-            val coin = Random.nextBoolean()
-            //random true or false for done or ongoing task
-            val coin1 = Random.nextBoolean()
+        repeat(count) {
+
             result.add(
                 createRandomTask()
             )
