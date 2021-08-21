@@ -71,7 +71,6 @@ dependencies {
     implementation Dependencies.material_dialogs
     implementation Dependencies.material_dialogs_input
     implementation Dependencies.play_core
-    implementation Dependencies.leak_canary
     implementation Dependencies.dagger
     implementation Dependencies.room_runtime
     implementation Dependencies.room_ktx
@@ -86,11 +85,6 @@ dependencies {
     implementation Dependencies.firebase_analytics
     implementation Dependencies.firebase_crashlytics
     implementation AndroidTestDependencies.idling_resource
-
-    implementation SupportDependencies.swipe_refresh_layout
-    implementation SupportDependencies.appcompat
-    implementation SupportDependencies.constraintlayout
-    implementation SupportDependencies.material_design
 
     // Annotation Processing
     kapt AnnotationProcessing.dagger_compiler
@@ -123,5 +117,7 @@ dependencies {
     androidTestImplementation AndroidTestDependencies.text_core_ktx
     androidTestImplementation AndroidTestDependencies.navigation_testing
     debugImplementation AndroidTestDependencies.fragment_testing
+    //TODO fix this (make two apps while running app)
+//    debugImplementation Dependencies.leak_canary
     kaptAndroidTest AnnotationProcessing.dagger_compiler
 }

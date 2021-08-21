@@ -17,7 +17,7 @@ object Versions {
     val material_design = "1.1.0"
     val play_core = "1.7.1"
     val play_services = "4.3.8"
-    val leak_canary = "2.0-alpha-3"
+    val leak_canary = "2.7"
     val swipe_refresh_layout = "1.1.0-alpha03"
     val firebase_bom = "28.3.0"
     val firebase_firestore = "21.4.2"
