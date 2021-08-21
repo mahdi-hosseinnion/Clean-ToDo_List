@@ -71,7 +71,7 @@ interface TaskDao {
         SELECT * FROM tasks 
         WHERE title LIKE '%' || :query || '%' 
         OR body LIKE '%' || :query || '%' 
-        ORDER BY updated_at DESC LIMIT (:page * :pageSize)
+        ORDER BY created_at DESC LIMIT (:page * :pageSize)
     """
     )
     suspend fun searchTasksOrderByDateDESC(
@@ -85,7 +85,7 @@ interface TaskDao {
         SELECT * FROM tasks 
         WHERE title LIKE '%' || :query || '%' 
         OR body LIKE '%' || :query || '%' 
-        ORDER BY updated_at ASC LIMIT (:page * :pageSize)
+        ORDER BY created_at ASC LIMIT (:page * :pageSize)
     """
     )
     suspend fun searchTasksOrderByDateASC(
