@@ -22,7 +22,7 @@ sealed class TaskListStateEvent : StateEvent {
     }
 
     // for testing
-    class InsertMultipleTasksEvent(
+/*    class InsertMultipleTasksEvent(
         val numTasks: Int
     ) : TaskListStateEvent() {
 
@@ -35,7 +35,7 @@ sealed class TaskListStateEvent : StateEvent {
         }
 
         override fun shouldDisplayProgressBar() = true
-    }
+    }*/
 
     class DeleteTaskEvent(
         val task: Task

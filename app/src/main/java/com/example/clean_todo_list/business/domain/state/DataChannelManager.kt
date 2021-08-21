@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.*
 @ExperimentalCoroutinesApi
 abstract class DataChannelManager<ViewState> {
 
-    private val dataChannel = BroadcastChannel<DataState<ViewState>>(Channel.BUFFERED)
     private var channelScope: CoroutineScope? = null
     private val stateEventManager: StateEventManager = StateEventManager()
 
@@ -22,38 +21,9 @@ abstract class DataChannelManager<ViewState> {
 
     fun setupChannel(){
         cancelJobs()
-        initChannel()
-    }
-
-    private fun initChannel(){
-        dataChannel
-            .asFlow()
-            .onEach{ dataState ->
-                withContext(Main){
-                    dataState.data?.let { data ->
-                        handleNewData(data)
-                    }
-                    dataState.stateMessage?.let { stateMessage ->
-                        handleNewStateMessage(stateMessage)
-                    }
-                    dataState.stateEvent?.let { stateEvent ->
-                        removeStateEvent(stateEvent)
-                    }
-                }
-            }
-            .launchIn(getChannelScope())
     }
 
     abstract fun handleNewData(data: ViewState)
-
-    private fun offerToDataChannel(dataState: DataState<ViewState>){
-        dataChannel.let {
-            if(!it.isClosedForSend){
-                printLogD("DCM", "offer to channel!")
-                it.offer(dataState)
-            }
-        }
-    }
 
     fun launchJob(
         stateEvent: StateEvent,
@@ -65,7 +35,17 @@ abstract class DataChannelManager<ViewState> {
             jobFunction
                 .onEach { dataState ->
                     dataState?.let { dState ->
-                        offerToDataChannel(dState)
+                        withContext(Main){
+                            dataState.data?.let { data ->
+                                handleNewData(data)
+                            }
+                            dataState.stateMessage?.let { stateMessage ->
+                                handleNewStateMessage(stateMessage)
+                            }
+                            dataState.stateEvent?.let { stateEvent ->
+                                removeStateEvent(stateEvent)
+                            }
+                        }
                     }
                 }
                 .launchIn(getChannelScope())
@@ -77,9 +57,11 @@ abstract class DataChannelManager<ViewState> {
         if(isJobAlreadyActive(stateEvent)){
             return false
         }
-        // if a dialog is showing, do not allow new StateEvents
+        // Check the top of the stack, if a dialog is showing, do not allow new StateEvents
         if(!isMessageStackEmpty()){
-            return false
+            if(messageStack[0].response.uiComponentType == UIComponentType.Dialog){
+                return false
+            }
         }
         return true
     }
@@ -148,6 +130,7 @@ abstract class DataChannelManager<ViewState> {
     }
 
 }
+
 
 
 

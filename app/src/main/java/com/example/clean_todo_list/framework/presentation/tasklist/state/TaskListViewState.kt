@@ -3,6 +3,7 @@ package com.example.clean_todo_list.framework.presentation.tasklist.state
 import android.os.Parcelable
 import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.state.ViewState
+import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -13,8 +14,7 @@ data class TaskListViewState(
     var searchQuery: String? = null,
     var page: Int? = null,
     var isQueryExhausted: Boolean? = null,
-    var filter: String? = null,
-    var order: String? = null,
+    val filterAndOrder: FilterAndOrder? = null,
     var layoutManagerState: Parcelable? = null,//for process death
     var numTasksInCache: Int? = null
 ) : Parcelable, ViewState {

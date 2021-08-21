@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">Clean ToDo List</string>
+    <string name="app_name">Clean ToDo</string>
+    <string name="enter_title">Enter a title</string>
+    <string name="ok">OK</string>
+    <string name="undo">Undo</string>
+    <string name="success">Success</string>
+    <string name="error">Error</string>
+    <string name="info">Info</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+
 </resources>

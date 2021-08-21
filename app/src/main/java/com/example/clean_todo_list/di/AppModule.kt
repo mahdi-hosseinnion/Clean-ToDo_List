@@ -27,17 +27,6 @@ import javax.inject.Singleton
 @Module
 object AppModule {
 
-
-    @JvmStatic
-    @Singleton
-    @Provides
-    fun provideSharedPrefsEditor(
-        sharedPreferences: SharedPreferences
-    ): SharedPreferences.Editor {
-        return sharedPreferences.edit()
-    }
-
-
     @JvmStatic
     @Singleton
     @Provides
