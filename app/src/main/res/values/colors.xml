@@ -7,4 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="task_is_done_color">#646464</color>
+    <color name="task_is_not_done_color">#141414</color>
+
 </resources>

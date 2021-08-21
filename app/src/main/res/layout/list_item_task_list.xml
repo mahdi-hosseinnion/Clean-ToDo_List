@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="10"
-        android:textSize="32sp" />
+        android:textSize="24sp" />
 
     <CheckBox
         android:id="@+id/isDone_checkBox"

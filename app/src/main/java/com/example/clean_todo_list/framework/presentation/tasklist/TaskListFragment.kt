@@ -144,8 +144,8 @@ class TaskListFragment(
         toastShort("onItemSelected clicked with position: $position \n title: ${item.title}")
     }
 
-    override fun onChangeIsDoneSelected(taskId: String, newIsDone: Boolean) {
-        toastShort("onChangeIsDoneSelected clicked with taskId: $taskId \n newIsDone: ${newIsDone}")
+    override fun onChangeIsDoneSelected(taskId: String, newIsDone: Boolean, title: String?) {
+        printLogD("onChangeIsDoneSelected","clicked with title: $title \n newIsDone: ${newIsDone} \n taskId: $taskId")
         viewModel.setStateEvent(ChangeTaskDoneStateEvent(taskId, newIsDone))
     }
 
