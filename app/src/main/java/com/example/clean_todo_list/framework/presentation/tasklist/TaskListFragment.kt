@@ -110,7 +110,6 @@ class TaskListFragment(
                         viewModel.setQueryExhausted(true)
                     }
                     listAdapter?.submitList(it)
-                    listAdapter?.notifyDataSetChanged()
                 }
             }
         }
