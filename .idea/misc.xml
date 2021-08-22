@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/0AndroidProject/Clean_ToDo_List/app/src/main/res/layout/activity_main.xml" value="0.17481884057971014" />
+        <entry key="..\:/0AndroidProject/Clean_ToDo_List/app/src/main/res/layout/fragment_task_detail.xml" value="0.17074275362318841" />
         <entry key="..\:/0AndroidProject/Clean_ToDo_List/app/src/main/res/layout/fragment_task_list.xml" value="0.11272727272727273" />
         <entry key="..\:/0AndroidProject/Clean_ToDo_List/app/src/main/res/layout/list_item_task_list.xml" value="0.2552083333333333" />
       </map>

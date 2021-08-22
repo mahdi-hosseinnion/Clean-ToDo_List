@@ -9,5 +9,7 @@
     <string name="are_you_sure">Are you sure?</string>
     <string name="cancel">Cancel</string>
     <string name="yes">Yes</string>
+    <!--    ERRORS-->
+    <string name="error_retrieving_task_from_bundle">Unable to retrieving selected task</string>
 
 </resources>

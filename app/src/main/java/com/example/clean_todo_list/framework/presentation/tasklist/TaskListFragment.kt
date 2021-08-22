@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.clean_todo_list.R
@@ -14,6 +16,7 @@ import com.example.clean_todo_list.business.domain.model.TaskFactory
 import com.example.clean_todo_list.business.domain.state.DialogInputCaptureCallback
 import com.example.clean_todo_list.databinding.FragmentTaskListBinding
 import com.example.clean_todo_list.framework.presentation.common.BaseTaskFragment
+import com.example.clean_todo_list.framework.presentation.taskdetail.TASK_DETAIL_SELECTED_TASK_BUNDLE_KEY
 import com.example.clean_todo_list.framework.presentation.taskdetail.TaskListViewModel
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListStateEvent.*
 import com.example.clean_todo_list.util.printLogD
@@ -105,7 +108,7 @@ class TaskListFragment(
             vs?.let { viewState ->
             }
         }
-        viewModel.items.observe(viewLifecycleOwner){
+        viewModel.items.observe(viewLifecycleOwner) {
             listAdapter?.submitList(it)
         }
     }
@@ -136,11 +139,20 @@ class TaskListFragment(
     }
 
     override fun onItemSelected(position: Int, item: Task) {
-        toastShort("onItemSelected clicked with position: $position \n title: ${item.title}")
+        printLogD("onItemSelected", "clicked with position: $position \n item title: ${item.title}")
+        //TODO consider using only item id to pass it instead of bundle
+        val bundle = bundleOf(TASK_DETAIL_SELECTED_TASK_BUNDLE_KEY to item)
+        findNavController().navigate(
+            R.id.action_taskListFragment_to_taskDetailFragment,
+            bundle
+        )
     }
 
     override fun onChangeIsDoneSelected(taskId: String, newIsDone: Boolean, title: String?) {
-        printLogD("onChangeIsDoneSelected","clicked with title: $title \n newIsDone: ${newIsDone} \n taskId: $taskId")
+        printLogD(
+            "onChangeIsDoneSelected",
+            "clicked with title: $title \n newIsDone: ${newIsDone} \n taskId: $taskId"
+        )
         viewModel.setStateEvent(ChangeTaskDoneStateEvent(taskId, newIsDone))
     }
 

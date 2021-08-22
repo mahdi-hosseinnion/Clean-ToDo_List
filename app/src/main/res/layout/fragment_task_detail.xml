@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <EditText
+        android:id="@+id/title_detail"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="30" />
+
+    <CheckBox
+        android:id="@+id/isDone_detail"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20" />
+
+    <EditText
+        android:id="@+id/body_detail"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="50" />
+</LinearLayout>

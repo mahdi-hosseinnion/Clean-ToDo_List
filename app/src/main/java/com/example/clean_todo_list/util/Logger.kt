@@ -17,6 +17,7 @@ fun printLogD(className: String?, message: String) {
 
 fun cLog(message: String?, className: String? = null) {
     message?.let {
+        Log.e(TAG, "$className: message: $message ")
         if (!DEBUG) {
             FirebaseCrashlytics.getInstance().log(className.toString() + ": " + message)
             FirebaseCrashlytics.getInstance().recordException(RuntimeException(message))
