@@ -4,9 +4,11 @@ import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.util.DateUtil
 import com.example.clean_todo_list.framework.datasource.cache.abstraction.TaskDaoService
 import com.example.clean_todo_list.framework.datasource.cache.database.TaskDao
+import com.example.clean_todo_list.framework.datasource.cache.database.observeOrderedQuery
 import com.example.clean_todo_list.framework.datasource.cache.database.returnOrderedQuery
 import com.example.clean_todo_list.framework.datasource.cache.mappers.CacheMapper
 import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -105,6 +107,14 @@ constructor(
         page: Int
     ): List<Task> = CacheMapper.mapEntityListToDomainModelList(
         taskDao.returnOrderedQuery(query = query, filterAndOrder = filterAndOrder, page = page)
+    )
+
+    override fun observeOrderedQuery(
+        query: String,
+        filterAndOrder: FilterAndOrder,
+        page: Int
+    ): Flow<List<Task>> = CacheMapper.mapEntityFlowToDomainModelFlow(
+        taskDao.observeOrderedQuery(query = query, filterAndOrder = filterAndOrder, page = page)
     )
 }
 

@@ -8,6 +8,7 @@ import androidx.room.Query
 import com.example.clean_todo_list.framework.datasource.cache.model.TaskCacheEntity
 import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
 import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TaskDao {
@@ -122,6 +123,64 @@ interface TaskDao {
         pageSize: Int = TASK_PAGINATION_PAGE_SIZE
     ): List<TaskCacheEntity>
 
+    //observe queries
+
+    @Query(
+        """
+        SELECT * FROM tasks 
+        WHERE title LIKE '%' || :query || '%' 
+        OR body LIKE '%' || :query || '%' 
+        ORDER BY created_at DESC LIMIT (:page * :pageSize)
+    """
+    )
+    fun observeTasksOrderByDateDESC(
+        query: String,
+        page: Int,
+        pageSize: Int = TASK_PAGINATION_PAGE_SIZE
+    ): Flow<List<TaskCacheEntity>>
+
+    @Query(
+        """
+        SELECT * FROM tasks 
+        WHERE title LIKE '%' || :query || '%' 
+        OR body LIKE '%' || :query || '%' 
+        ORDER BY created_at ASC LIMIT (:page * :pageSize)
+    """
+    )
+    fun observeTasksOrderByDateASC(
+        query: String,
+        page: Int,
+        pageSize: Int = TASK_PAGINATION_PAGE_SIZE
+    ): Flow<List<TaskCacheEntity>>
+
+    @Query(
+        """
+        SELECT * FROM tasks 
+        WHERE title LIKE '%' || :query || '%' 
+        OR body LIKE '%' || :query || '%' 
+        ORDER BY title DESC LIMIT (:page * :pageSize)
+    """
+    )
+    fun observeTasksOrderByTitleDESC(
+        query: String,
+        page: Int,
+        pageSize: Int = TASK_PAGINATION_PAGE_SIZE
+    ): Flow<List<TaskCacheEntity>>
+
+    @Query(
+        """
+        SELECT * FROM tasks 
+        WHERE title LIKE '%' || :query || '%' 
+        OR body LIKE '%' || :query || '%' 
+        ORDER BY title ASC LIMIT (:page * :pageSize)
+    """
+    )
+    fun observeTasksOrderByTitleASC(
+        query: String,
+        page: Int,
+        pageSize: Int = TASK_PAGINATION_PAGE_SIZE
+    ): Flow<List<TaskCacheEntity>>
+
     //other queries
     @Query("""SELECT COUNT(*) FROM tasks """)
     suspend fun getNumOfTasks(): Int
@@ -162,6 +221,43 @@ suspend fun TaskDao.returnOrderedQuery(
     }
     TITLE_ACS -> {
         searchTasksOrderByTitleASC(
+            query = query,
+            page = page,
+            pageSize = pageSize
+        )
+    }
+}
+
+fun TaskDao.observeOrderedQuery(
+    query: String,
+    filterAndOrder: FilterAndOrder,
+    page: Int,
+    pageSize: Int = TaskDao.TASK_PAGINATION_PAGE_SIZE
+): Flow<List<TaskCacheEntity>> = when (filterAndOrder) {
+
+    DATE_DESC -> {
+        observeTasksOrderByDateDESC(
+            query = query,
+            page = page,
+            pageSize = pageSize
+        )
+    }
+    DATE_ASC -> {
+        observeTasksOrderByDateASC(
+            query = query,
+            page = page,
+            pageSize = pageSize
+        )
+    }
+    TITLE_DESC -> {
+        observeTasksOrderByTitleDESC(
+            query = query,
+            page = page,
+            pageSize = pageSize
+        )
+    }
+    TITLE_ACS -> {
+        observeTasksOrderByTitleASC(
             query = query,
             page = page,
             pageSize = pageSize

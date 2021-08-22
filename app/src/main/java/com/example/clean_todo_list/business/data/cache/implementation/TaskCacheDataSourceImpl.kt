@@ -5,6 +5,7 @@ import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.util.DateUtil
 import com.example.clean_todo_list.framework.datasource.cache.abstraction.TaskDaoService
 import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -32,7 +33,7 @@ constructor(
         newIsDone: Boolean,
         updated_at: Long
     ): Int =
-        taskDaoService.updateTask(primaryKey, newTitle, newBody, newIsDone,updated_at)
+        taskDaoService.updateTask(primaryKey, newTitle, newBody, newIsDone, updated_at)
 
     override suspend fun searchTask(
         query: String,
@@ -40,6 +41,14 @@ constructor(
         page: Int
     ): List<Task> =
         taskDaoService.returnOrderedQuery(query, filterAndOrder, page)
+
+    override suspend fun observeTasksInCache(
+        query: String,
+        filterAndOrder: FilterAndOrder,
+        page: Int
+    ): Flow<List<Task>> =
+        taskDaoService.observeOrderedQuery(query, filterAndOrder, page)
+
 
     override suspend fun getAllTasks(): List<Task> =
         taskDaoService.getAllTasks()
