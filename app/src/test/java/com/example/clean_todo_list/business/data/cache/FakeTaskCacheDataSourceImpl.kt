@@ -2,10 +2,11 @@ package com.example.clean_todo_list.business.data.cache
 
 import com.example.clean_todo_list.business.data.cache.abstraction.TaskCacheDataSource
 import com.example.clean_todo_list.business.domain.model.Task
-import com.example.clean_todo_list.business.domain.util.DateUtil
+import com.example.clean_todo_list.business.domain.model.TaskFactory
 import com.example.clean_todo_list.framework.datasource.cache.database.TaskDao.Companion.TASK_PAGINATION_PAGE_SIZE
 import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
-import java.util.logging.Filter
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 
 private const val TAG = "FakeTaskCacheDataSource"
@@ -52,7 +53,7 @@ class FakeTaskCacheDataSourceImpl(
         newTitle: String,
         newBody: String,
         newIsDone: Boolean,
-        updated_at:Long
+        updated_at: Long
     ): Int {
         if (primaryKey == FORCE_EXCEPTION) {
             throw Exception("updateTask error")
@@ -94,6 +95,30 @@ class FakeTaskCacheDataSourceImpl(
             }
         }
         return results
+    }
+
+    override suspend fun observeTasksInCache(
+        query: String,
+        filterAndOrder: FilterAndOrder,
+        page: Int
+    ): Flow<List<Task>> = flow {
+        if (query == FORCE_EXCEPTION) {
+            throw Exception("Something went searching the cache for tasks.")
+        }
+        val results: ArrayList<Task> = ArrayList()
+
+        for (task in tasksData.values) {
+            if (task.title.contains(query)) {
+                results.add(task)
+            } else if (task.body.contains(query)) {
+                results.add(task)
+            }
+            if (results.size >= (page * TASK_PAGINATION_PAGE_SIZE)) {
+                break
+            }
+        }
+        emit(listOf(TaskFactory.createTask(title = filterAndOrder.name)))
+        emit(results)
     }
 
     override suspend fun getAllTasks(): List<Task> = ArrayList(tasksData.values)
