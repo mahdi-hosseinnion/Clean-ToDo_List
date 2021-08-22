@@ -77,6 +77,8 @@ dependencies {
     implementation Dependencies.markdown_processor
     implementation Dependencies.retrofit
     implementation Dependencies.retrofit_gson
+    //coroutines
+    implementation Dependencies.lifecycle_coroutines
     //firebase
     implementation platform(Dependencies.firebase_bom)
     implementation Dependencies.firebase_firestore

@@ -1,6 +1,5 @@
 package com.example.clean_todo_list.di
 
-import android.content.SharedPreferences
 import com.example.clean_todo_list.business.data.cache.abstraction.TaskCacheDataSource
 import com.example.clean_todo_list.business.data.cache.implementation.TaskCacheDataSourceImpl
 import com.example.clean_todo_list.business.data.network.abstraction.TaskNetworkDataSource
@@ -22,8 +21,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Singleton
 
+@ExperimentalCoroutinesApi
 @Module
 object AppModule {
 
@@ -132,6 +133,7 @@ object AppModule {
             InsertNewTask(taskCacheDataSource, taskNetworkDataSource),
             DeleteTask(taskCacheDataSource, taskNetworkDataSource),
             SearchTasks(taskCacheDataSource),
+            ObserveTaskInCache(taskCacheDataSource),
             GetNumTasks(taskCacheDataSource),
             RestoreDeletedTask(taskCacheDataSource, taskNetworkDataSource),
             DeleteMultipleTask(taskCacheDataSource, taskNetworkDataSource),

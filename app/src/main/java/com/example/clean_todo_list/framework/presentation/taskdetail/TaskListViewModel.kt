@@ -2,6 +2,7 @@ package com.example.clean_todo_list.framework.presentation.taskdetail
 
 import android.content.SharedPreferences
 import android.os.Parcelable
+import androidx.lifecycle.asLiveData
 import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.state.DataState
 import com.example.clean_todo_list.business.domain.state.StateEvent
@@ -122,6 +123,14 @@ constructor(
         launchJob(stateEvent, job)
     }
 
+    private val _items = taskListInteractors.observeTaskInCache.execute(
+        defaultQuery = getSearchQuery(),
+        defaultFilterAndOrder = getFilterAndOrder(),
+        defaultPage = getPage()
+    ).asLiveData()
+
+    val items = _items
+
     private fun getPage(): Int = getCurrentViewStateOrNew().page ?: 1
 
     private fun getFilterAndOrder(): FilterAndOrder =
@@ -147,14 +156,15 @@ constructor(
         if (!isQueryExhausted()) {
             clearLayoutManagerState()
             incrementPageNumber()
-            setStateEvent(SearchTasksEvent())
         }
     }
 
     private fun incrementPageNumber() {
         val outDate = getCurrentViewStateOrNew()
+        val newPage = outDate.page?.plus(1) ?: 2
+        taskListInteractors.observeTaskInCache.setPage(newPage)
         val update = outDate.copy(
-            page = outDate.page?.plus(1) ?: 2
+            page = newPage
         )
         setViewState(update)
     }

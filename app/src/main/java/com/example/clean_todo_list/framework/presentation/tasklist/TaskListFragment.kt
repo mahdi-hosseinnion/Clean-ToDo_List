@@ -103,15 +103,10 @@ class TaskListFragment(
     private fun subscribeObservers() {
         viewModel.viewState.observe(viewLifecycleOwner) { vs ->
             vs?.let { viewState ->
-                viewState.taskList?.let {
-                    if (viewModel.isPaginationExhausted()
-                        && !viewModel.isQueryExhausted()
-                    ) {
-                        viewModel.setQueryExhausted(true)
-                    }
-                    listAdapter?.submitList(it)
-                }
             }
+        }
+        viewModel.items.observe(viewLifecycleOwner){
+            listAdapter?.submitList(it)
         }
     }
 
