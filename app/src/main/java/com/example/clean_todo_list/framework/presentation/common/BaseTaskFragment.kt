@@ -2,6 +2,7 @@ package com.example.clean_todo_list.framework.presentation.common
 
 import android.content.Context
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.clean_todo_list.framework.presentation.MainActivity
 import com.example.clean_todo_list.framework.presentation.utils.UIController
 
@@ -32,5 +33,11 @@ abstract class BaseTaskFragment : Fragment() {
             }
         }
     }
+    //util functions
+
+    fun navigateBack() {
+        findNavController().popBackStack()
+    }
+
 
 }

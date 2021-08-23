@@ -2,18 +2,15 @@ package com.example.clean_todo_list.framework.presentation.taskdetail
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.clean_todo_list.R
 import com.example.clean_todo_list.business.domain.model.Task
-import com.example.clean_todo_list.business.domain.state.MessageType
-import com.example.clean_todo_list.business.domain.state.Response
-import com.example.clean_todo_list.business.domain.state.StateMessage
-import com.example.clean_todo_list.business.domain.state.UIComponentType
+import com.example.clean_todo_list.business.domain.state.*
+import com.example.clean_todo_list.business.interactors.common.DeleteTask.Companion.DELETE_TASK_SUCCESS
 import com.example.clean_todo_list.databinding.FragmentTaskDetailBinding
 import com.example.clean_todo_list.framework.presentation.common.BaseTaskFragment
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListStateEvent
@@ -42,8 +39,20 @@ class TaskDetailFragment(
 
     val viewModel: TaskDetailViewModel by viewModels { viewModelFactory }
 
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentTaskDetailBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         getSelectedTaskFromPreviousFragment()
         subscribeObserves()
     }
@@ -56,8 +65,28 @@ class TaskDetailFragment(
                 }
             }
         }
+        val stateMessageCallback = object : StateMessageCallback {
+            override fun removeMessageFromStack() {
+                viewModel.clearStateMessage()
+            }
+        }
         viewModel.stateMessage.observe(viewLifecycleOwner) { stateMessage ->
-            toastShort(stateMessage?.response?.message ?: "")
+
+            stateMessage?.response?.let { response ->
+                when (response.message) {
+
+                    DELETE_TASK_SUCCESS -> {
+                        navigateBack()
+                    }
+                    else -> {
+                        uiController.onResponseReceived(
+                            response = response,
+                            stateMessageCallback = stateMessageCallback
+                        )
+                    }
+                }
+
+            }
         }
     }
 
@@ -96,15 +125,41 @@ class TaskDetailFragment(
         )
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_delete -> {
+                showAreYouSureDialogForDelete()
+                true
+            }
+            else -> false
+        }
+    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentTaskDetailBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+    private fun showAreYouSureDialogForDelete() {
+        val callback = object : AreYouSureCallback {
+            override fun proceed() {
+                viewModel.deleteTask()
+            }
+
+            override fun cancel() {}
+        }
+        viewModel.setStateEvent(
+            TaskListStateEvent.CreateStateMessageEvent(
+                stateMessage = StateMessage(
+                    response = Response(
+                        message = getString(R.string.are_you_sure_delete),
+                        uiComponentType = UIComponentType.AreYouSureDialog(
+                            callback = callback
+                        ),
+                        messageType = MessageType.Info
+                    )
+                )
+            )
+        )
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.taskdetail_fragment_menu, menu)
     }
 
     override fun onDestroyView() {
