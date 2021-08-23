@@ -6,7 +6,9 @@ import com.example.clean_todo_list.business.domain.state.StateMessage
 
 sealed class TaskDetailStateEvent : StateEvent {
 
-    object UpdateTaskDetailEvent : TaskDetailStateEvent() {
+    data class UpdateTaskEvent(
+        val task: Task
+    ) : TaskDetailStateEvent() {
 
         override fun errorInfo(): String {
             return "Error updating task."
@@ -20,7 +22,7 @@ sealed class TaskDetailStateEvent : StateEvent {
     }
 
     class DeleteTaskDetailEvent(
-        val task:Task
+        val task: Task
     ) : TaskDetailStateEvent() {
 
         override fun errorInfo(): String {

@@ -1,26 +1,25 @@
 package com.example.clean_todo_list.framework.presentation.taskdetail
 
 import android.os.Bundle
-import android.util.Log
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.lifecycleScope
 import com.example.clean_todo_list.R
 import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.state.*
 import com.example.clean_todo_list.business.interactors.common.DeleteTask.Companion.DELETE_TASK_SUCCESS
+import com.example.clean_todo_list.business.interactors.taskdetail.UpdateTask.Companion.UPDATE_TASK_SUCCESS
 import com.example.clean_todo_list.databinding.FragmentTaskDetailBinding
 import com.example.clean_todo_list.framework.presentation.common.BaseTaskFragment
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListStateEvent
 import com.example.clean_todo_list.util.Constants.TAG
 import com.example.clean_todo_list.util.cLog
-import com.example.clean_todo_list.util.printLogD
-import com.example.clean_todo_list.util.toastLong
-import com.example.clean_todo_list.util.toastShort
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.collect
 
 const val TASK_DETAIL_STATE_BUNDLE_KEY =
     "com.example.clean_todo_list.framework.presentation.taskdetail.state"
@@ -53,8 +52,39 @@ class TaskDetailFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+        setupUi()
         getSelectedTaskFromPreviousFragment()
         subscribeObserves()
+    }
+
+    private fun setupUi() {
+        binding.doneFab.hide()
+        binding.doneFab.setOnClickListener {
+            viewModel.updateTask()
+        }
+        binding.titleDetail.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (p0.toString() != viewModel.viewState.value?.task?.title) {
+                    viewModel.setTitle(p0.toString())
+                }
+            }
+        })
+        binding.bodyDetail.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (p0.toString() != viewModel.viewState.value?.task?.body) {
+                    viewModel.setBody(p0.toString())
+                }
+            }
+        })
+
     }
 
     private fun subscribeObserves() {
@@ -78,6 +108,10 @@ class TaskDetailFragment(
                     DELETE_TASK_SUCCESS -> {
                         navigateBack()
                     }
+                    UPDATE_TASK_SUCCESS -> {
+                        uiController.hideSoftKeyboard()
+                        navigateBack()
+                    }
                     else -> {
                         uiController.onResponseReceived(
                             response = response,
@@ -88,11 +122,26 @@ class TaskDetailFragment(
 
             }
         }
+        //https://youtu.be/B8ppnjGPAGE?t=1101
+        lifecycleScope.launchWhenStarted {
+            viewModel.shouldDisplaySaveEditButton.collect { shouldDisplaySaveEditButton ->
+                if (shouldDisplaySaveEditButton) {
+                    binding.doneFab.show()
+                } else {
+                    binding.doneFab.hide()
+                }
+            }
+        }
+
     }
 
     private fun setTaskData(task: Task) {
-        binding.titleDetail.setText(task.title)
-        binding.bodyDetail.setText(task.body)
+        if (binding.titleDetail.text.toString() != task.title) {
+            binding.titleDetail.setText(task.title)
+        }
+        if (binding.bodyDetail.text.toString() != task.body) {
+            binding.bodyDetail.setText(task.body)
+        }
         binding.isDoneDetail.isChecked = task.isDone
 
     }
@@ -101,7 +150,7 @@ class TaskDetailFragment(
     private fun getSelectedTaskFromPreviousFragment() {
         arguments?.let { args ->
             (args.getParcelable(TASK_DETAIL_SELECTED_TASK_BUNDLE_KEY) as Task?)?.let { selectedTask ->
-                viewModel.setTask(selectedTask)
+                viewModel.setOriginalTask(selectedTask)
 
             } ?: onErrorRetrievingTaskFromPreviousFragment()
         } ?: onErrorRetrievingTaskFromPreviousFragment()
