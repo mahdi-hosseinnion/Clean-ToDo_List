@@ -148,7 +148,7 @@ constructor(
             val originalBody = getCurrentViewStateOrNew().originalTask?.body ?: ""
 
             return@combine title != originalTitle || body != originalBody
-        }
+        }.distinctUntilChanged()
 
     companion object {
         private const val TAG = "TaskDetailViewModel"
