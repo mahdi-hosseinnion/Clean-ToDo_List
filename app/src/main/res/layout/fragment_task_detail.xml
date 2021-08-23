@@ -2,19 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <EditText
-        android:id="@+id/title_detail"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="30" />
+        android:layout_height="56dp"
 
-    <CheckBox
-        android:id="@+id/isDone_detail"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="20" />
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/isDone_detail"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:foregroundGravity="center"
+            android:gravity="center" />
+
+        <EditText
+            android:id="@+id/title_detail"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10" />
+    </LinearLayout>
+
 
     <EditText
         android:id="@+id/body_detail"
