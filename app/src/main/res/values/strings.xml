@@ -18,5 +18,6 @@
     <string name="search">Search</string>
     <string name="filter_order">Filter and order</string>
     <string name="search_hint">Search…</string>
+    <string name="task_details">Task Details</string>
 
 </resources>

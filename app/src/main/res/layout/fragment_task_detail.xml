@@ -14,19 +14,48 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="?colorPrimary">
+            android:background="?colorPrimary"
+            app:contentInsetStart="0dp"
+            app:contentInsetStartWithNavigation="0dp">
 
-            <ImageButton
-                android:id="@+id/delete_task_btn"
-                android:layout_width="56dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="end|center"
-                android:background="@android:color/transparent"
-                android:clickable="true"
-                android:contentDescription="Delete Task"
-                android:focusable="true"
-                android:src="@drawable/ic_baseline_delete_24"
-                android:tint="@color/delete_red" />
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/detail_back_btn"
+                    android:layout_width="56dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start|center"
+                    android:background="@android:color/transparent"
+                    android:foregroundGravity="center"
+                    android:src="@drawable/ic_baseline_arrow_back_24"
+                    android:tint="@color/white" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:gravity="start|center"
+                    android:text="@string/task_details"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <ImageButton
+                    android:id="@+id/delete_task_btn"
+                    android:layout_width="56dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end|center"
+                    android:background="@android:color/transparent"
+                    android:clickable="true"
+                    android:contentDescription="Delete Task"
+                    android:focusable="true"
+                    android:src="@drawable/ic_baseline_delete_24"
+                    android:tint="@color/delete_red" />
+            </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout

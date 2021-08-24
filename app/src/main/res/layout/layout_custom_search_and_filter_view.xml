@@ -52,9 +52,13 @@
             android:id="@+id/default_title_txt"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:textColor="@color/white" />
-
+            android:layout_marginStart="16dp"
+            android:gravity="start|center"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
         <ImageButton
             android:id="@+id/default_search_btn"
             android:layout_width="56dp"

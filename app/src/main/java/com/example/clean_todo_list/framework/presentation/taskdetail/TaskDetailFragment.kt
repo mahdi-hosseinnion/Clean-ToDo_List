@@ -90,6 +90,11 @@ class TaskDetailFragment(
             viewModel.updateTask()
         }
 
+        binding.detailBackBtn.setOnClickListener {
+            uiController.hideSoftKeyboard()
+            navigateBack()
+        }
+
     }
 
     private fun subscribeObserves() {
