@@ -103,7 +103,7 @@ class CustomSearchAndFilterView(
         }
     }
 
-    fun setStateToSearching() {
+    private fun setStateToSearching() {
         interaction?.forceKeyBoardToOpenForEditText(searchSearchEdt)
 
         defaultStateContainer.invisible()
@@ -112,9 +112,12 @@ class CustomSearchAndFilterView(
         searchSearchEdt.addTextChangedListener(onSearchViewTextChangeListener)
         //change state
         searchViewState = SearchViewState.VISIBLE
+        interaction?.onSearchStateChanged(SearchViewState.VISIBLE)
+
     }
 
-    fun setStateToDefault() {
+    private fun setStateToDefault() {
+
         interaction?.hideSoftKeyboard()
 
         defaultStateContainer.visible()
@@ -122,8 +125,10 @@ class CustomSearchAndFilterView(
         //others
         searchSearchEdt.removeTextChangedListener(onSearchViewTextChangeListener)
         searchSearchEdt.setText("")
+        interaction?.onSearchTextChanged("")
         //change state
         searchViewState = SearchViewState.INVISIBLE
+        interaction?.onSearchStateChanged(SearchViewState.INVISIBLE)
 
     }
 
@@ -136,7 +141,7 @@ class CustomSearchAndFilterView(
         }
     }
 
-    private sealed class SearchViewState {
+    sealed class SearchViewState {
         object VISIBLE : SearchViewState()
         object INVISIBLE : SearchViewState()
 
@@ -153,6 +158,8 @@ class CustomSearchAndFilterView(
         fun onFilterButtonClicked()
 
         fun onSearchTextChanged(text: String)
+
+        fun onSearchStateChanged(newState: SearchViewState)
 
     }
 }

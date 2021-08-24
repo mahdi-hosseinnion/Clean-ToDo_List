@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -62,6 +63,17 @@ class TaskListFragment(
 
     private fun setupUI() {
         binding.searchAndFilterView.interaction = this
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            searchBackStackCallback
+        )
+    }
+
+    private val searchBackStackCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            binding.searchAndFilterView.onBackClicked()
+        }
+
     }
 
     private fun setupRecyclerView() {
@@ -188,6 +200,18 @@ class TaskListFragment(
     override fun onSearchTextChanged(text: String) {
         viewModel.setQuery(text)
     }
+
+    override fun onSearchStateChanged(newState: CustomSearchAndFilterView.SearchViewState) =
+        when (newState) {
+            is CustomSearchAndFilterView.SearchViewState.VISIBLE -> {
+                searchBackStackCallback.isEnabled = true
+            }
+            is CustomSearchAndFilterView.SearchViewState.INVISIBLE -> {
+                searchBackStackCallback.isEnabled = false
+            }
+
+        }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

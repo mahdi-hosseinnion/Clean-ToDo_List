@@ -15,7 +15,7 @@
             android:id="@+id/search_back_btn"
             android:layout_width="56dp"
             android:layout_height="match_parent"
-            android:background="?colorPrimary"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_baseline_arrow_back_24"
             android:tint="@color/white" />
 
@@ -24,6 +24,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@android:color/transparent"
             android:hint="@string/search_hint"
             android:textColor="@color/white"
             android:textColorHint="@color/white" />
@@ -32,7 +33,7 @@
             android:id="@+id/search_remove_btn"
             android:layout_width="56dp"
             android:layout_height="match_parent"
-            android:background="?colorPrimary"
+            android:background="@android:color/transparent"
 
             android:src="@drawable/ic_baseline_close_24"
             android:tint="@color/white"
@@ -58,7 +59,7 @@
             android:id="@+id/default_search_btn"
             android:layout_width="56dp"
             android:layout_height="match_parent"
-            android:background="?colorPrimary"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_search_black_24dp"
             android:tint="@color/white" />
 
@@ -67,7 +68,7 @@
             android:id="@+id/default_filter_btn"
             android:layout_width="56dp"
             android:layout_height="match_parent"
-            android:background="?colorPrimary"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_round_filter_list_24"
             android:tint="@color/white" />
 
