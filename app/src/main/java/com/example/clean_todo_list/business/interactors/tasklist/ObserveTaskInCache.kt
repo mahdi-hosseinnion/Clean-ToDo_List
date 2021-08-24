@@ -5,8 +5,10 @@ import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.state.*
 import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 
+@FlowPreview
 @ExperimentalCoroutinesApi
 class ObserveTaskInCache(
     private val taskCacheDataSource: TaskCacheDataSource
@@ -26,19 +28,19 @@ class ObserveTaskInCache(
         _page.value = defaultPage
         //combine 3 flow to TasksQueryRequirement (every time one of them change the combine return new TasksQueryRequirement)
         return combine(
-            _query,
+            _query.debounce(QUERY_DEBOUNCE_TIME),
             _filterAndOrder,
             _page
         ) { query, filterAndOrder, page ->
             return@combine TasksQueryRequirement(query, filterAndOrder, page)
             //convert TasksQueryRequirement last value to Flow<List<Task>> from cache
         }.flatMapLatest { taskQueryReq ->
-                return@flatMapLatest taskCacheDataSource.observeTasksInCache(
-                    taskQueryReq.query,
-                    taskQueryReq.filterAndOrder,
-                    taskQueryReq.page
-                )
-            }
+            return@flatMapLatest taskCacheDataSource.observeTasksInCache(
+                taskQueryReq.query,
+                taskQueryReq.filterAndOrder,
+                taskQueryReq.page
+            )
+        }
 
     }
 
@@ -60,4 +62,8 @@ class ObserveTaskInCache(
         val filterAndOrder: FilterAndOrder,
         val page: Int
     )
+
+    companion object {
+        private const val QUERY_DEBOUNCE_TIME: Long = 500
+    }
 }

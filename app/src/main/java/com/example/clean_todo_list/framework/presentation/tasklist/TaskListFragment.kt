@@ -1,9 +1,10 @@
 package com.example.clean_todo_list.framework.presentation.tasklist
 
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -12,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.clean_todo_list.R
 import com.example.clean_todo_list.business.domain.model.Task
-import com.example.clean_todo_list.business.domain.model.TaskFactory
 import com.example.clean_todo_list.business.domain.state.DialogInputCaptureCallback
 import com.example.clean_todo_list.databinding.FragmentTaskListBinding
 import com.example.clean_todo_list.framework.presentation.common.BaseTaskFragment
@@ -28,7 +28,7 @@ import kotlinx.coroutines.FlowPreview
 @ExperimentalCoroutinesApi
 class TaskListFragment(
     private val viewModelFactory: ViewModelProvider.Factory
-) : BaseTaskFragment(), TaskListAdapter.Interaction {
+) : BaseTaskFragment(), TaskListAdapter.Interaction, CustomSearchAndFilterView.Interaction {
 
     private var _binding: FragmentTaskListBinding? = null
 
@@ -50,12 +50,18 @@ class TaskListFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+        setupUI()
         setupRecyclerView()
         setupFAB()
         setupSwipeRefresh()
         startNewSearch()
         subscribeObservers()
 
+    }
+
+    private fun setupUI() {
+        binding.searchAndFilterView.interaction = this
     }
 
     private fun setupRecyclerView() {
@@ -162,9 +168,29 @@ class TaskListFragment(
         }
     }
 
+
+    override fun forceKeyBoardToOpenForEditText(editText: EditText) {
+        editText.requestFocus()
+        val imm: InputMethodManager =
+            activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
+    }
+
+    override fun hideSoftKeyboard() {
+        uiController.hideSoftKeyboard()
+    }
+
+    override fun onFilterButtonClicked() {
+        toastShort("FilterButtonClicked")
+//        TODO("Not yet implemented")
+    }
+
+    override fun onSearchTextChanged(text: String) {
+        viewModel.setQuery(text)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }

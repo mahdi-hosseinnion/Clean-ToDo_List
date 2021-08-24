@@ -3,13 +3,11 @@ package com.example.clean_todo_list.framework.presentation.taskdetail
 import android.content.SharedPreferences
 import android.os.Parcelable
 import androidx.lifecycle.asLiveData
-import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.state.DataState
 import com.example.clean_todo_list.business.domain.state.StateEvent
 import com.example.clean_todo_list.business.interactors.tasklist.TaskListInteractors
 import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
 import com.example.clean_todo_list.framework.presentation.common.BaseViewModel
-import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListStateEvent
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListStateEvent.*
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListViewState
 import com.example.clean_todo_list.util.printLogD
@@ -26,6 +24,7 @@ constructor(
     private val sharedPreferences: SharedPreferences,
     private val sharedPrefsEditor: SharedPreferences.Editor
 ) : BaseViewModel<TaskListViewState>() {
+
     init {
         setTaskFilterAndOrder(FilterAndOrder.DATE_DESC)
     }
@@ -214,5 +213,9 @@ constructor(
         val update = getCurrentViewStateOrNew()
         update.layoutManagerState = layoutManagerState
         setViewState(update)
+    }
+
+    fun setQuery(query: String) {
+        taskListInteractors.observeTaskInCache.setQuery(query)
     }
 }
