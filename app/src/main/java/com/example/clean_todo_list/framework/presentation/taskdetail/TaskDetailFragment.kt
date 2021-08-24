@@ -51,7 +51,6 @@ class TaskDetailFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
         setupUi()
         getSelectedTaskFromPreviousFragment()
         subscribeObserves()
@@ -59,9 +58,7 @@ class TaskDetailFragment(
 
     private fun setupUi() {
         binding.doneFab.hide()
-        binding.doneFab.setOnClickListener {
-            viewModel.updateTask()
-        }
+
         binding.titleDetail.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
@@ -84,6 +81,14 @@ class TaskDetailFragment(
                 }
             }
         })
+        //onClicks
+        binding.deleteTaskBtn.setOnClickListener {
+            showAreYouSureDialogForDelete()
+        }
+
+        binding.doneFab.setOnClickListener {
+            viewModel.updateTask()
+        }
 
     }
 
@@ -174,15 +179,6 @@ class TaskDetailFragment(
         )
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_delete -> {
-                showAreYouSureDialogForDelete()
-                true
-            }
-            else -> false
-        }
-    }
 
     private fun showAreYouSureDialogForDelete() {
         val callback = object : AreYouSureCallback {
@@ -207,9 +203,6 @@ class TaskDetailFragment(
         )
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.taskdetail_fragment_menu, menu)
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
