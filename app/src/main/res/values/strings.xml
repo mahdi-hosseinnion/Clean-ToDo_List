@@ -16,8 +16,16 @@
     <string name="yes">Yes</string>
     <string name="delete_task">Delete task</string>
     <string name="search">Search</string>
-    <string name="filter_order">Filter and order</string>
+    <string name="sort_order">Sort and order</string>
     <string name="search_hint">Search…</string>
     <string name="task_details">Task Details</string>
+    <string name="sort_name">Task name</string>
+    <string name="sort_creation_date">Task creation date</string>
+    <string name="sort_by">Sort by</string>
+    <string name="sort_by_name_or_date">Sort by name or date?</string>
+    <string name="ascending_or_descending_order">Ascending or descending order</string>
+    <string name="order_ACS">Ascending</string>
+    <string name="order_DECS">Descending</string>
+    <string name="apply">Apply</string>
 
 </resources>

@@ -3,13 +3,14 @@ package com.example.clean_todo_list.framework.presentation.taskdetail
 import android.content.SharedPreferences
 import android.os.Parcelable
 import androidx.lifecycle.asLiveData
-import com.example.clean_todo_list.business.domain.state.DataState
-import com.example.clean_todo_list.business.domain.state.StateEvent
+import com.example.clean_todo_list.business.domain.state.*
 import com.example.clean_todo_list.business.interactors.tasklist.TaskListInteractors
+import com.example.clean_todo_list.framework.datasource.cache.util.APP_DEFAULT_SORT
 import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
 import com.example.clean_todo_list.framework.presentation.common.BaseViewModel
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListStateEvent.*
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListViewState
+import com.example.clean_todo_list.util.cLog
 import com.example.clean_todo_list.util.printLogD
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -26,7 +27,7 @@ constructor(
 ) : BaseViewModel<TaskListViewState>() {
 
     init {
-        setTaskFilterAndOrder(FilterAndOrder.DATE_DESC)
+        setTaskFilterAndOrder(APP_DEFAULT_SORT)
     }
 
     override fun handleNewData(data: TaskListViewState) {
@@ -88,7 +89,7 @@ constructor(
                 }
                 taskListInteractors.searchTasks.searchTasks(
                     query = getSearchQuery(),
-                    filterAndOrder = getFilterAndOrder(),
+                    filterAndOrder = getSort(),
                     page = getPage(),
                     stateEvent = stateEvent
                 )
@@ -124,16 +125,13 @@ constructor(
 
     private val _items = taskListInteractors.observeTaskInCache.execute(
         defaultQuery = getSearchQuery(),
-        defaultFilterAndOrder = getFilterAndOrder(),
+        defaultFilterAndOrder = getSort(),
         defaultPage = getPage()
     ).asLiveData()
 
     val items = _items
 
     private fun getPage(): Int = getCurrentViewStateOrNew().page ?: 1
-
-    private fun getFilterAndOrder(): FilterAndOrder =
-        getCurrentViewStateOrNew().filterAndOrder ?: FilterAndOrder.DATE_DESC
 
     private fun getSearchQuery(): String = getCurrentViewStateOrNew().searchQuery ?: ""
 
@@ -217,5 +215,31 @@ constructor(
 
     fun setQuery(query: String) {
         taskListInteractors.observeTaskInCache.setQuery(query)
+    }
+
+    fun getSort(): FilterAndOrder {
+        val sort = getCurrentViewStateOrNew().filterAndOrder
+        return if (sort != null) {
+            setStateEvent(
+                CreateStateMessageEvent(
+                    StateMessage(
+                        Response(
+                            message = "No sort found!",
+                            uiComponentType = UIComponentType.Toast,
+                            messageType = MessageType.Error
+                        )
+                    )
+                )
+            )
+            cLog("THERE IS NO SORT IN VIEW STATE ", "$TAG getSort")
+            sort
+        } else {
+            APP_DEFAULT_SORT
+        }
+    }
+
+    companion object {
+        private const val TAG = "TaskListViewModel"
+        private const val NO_SORT_FOUND = "No sort found!"
     }
 }

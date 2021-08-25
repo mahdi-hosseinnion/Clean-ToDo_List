@@ -6,3 +6,5 @@ enum class FilterAndOrder {
     TITLE_DESC,
     TITLE_ACS
 }
+
+val APP_DEFAULT_SORT = FilterAndOrder.DATE_DESC

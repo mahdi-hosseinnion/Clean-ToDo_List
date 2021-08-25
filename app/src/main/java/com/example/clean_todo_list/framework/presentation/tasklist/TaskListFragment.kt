@@ -193,9 +193,9 @@ class TaskListFragment(
     }
 
     override fun onFilterButtonClicked() {
-        toastShort("FilterButtonClicked")
-//        TODO("Not yet implemented")
+        showChangeFilterBottomSheet()
     }
+
 
     override fun onSearchTextChanged(text: String) {
         viewModel.setQuery(text)
@@ -212,6 +212,12 @@ class TaskListFragment(
 
         }
 
+
+    private fun showChangeFilterBottomSheet() {
+        val defaultSort = viewModel.getSort()
+        val bottomSheet = ChangeFilterBottomSheet(defaultSort)
+        bottomSheet.show(childFragmentManager, ChangeFilterBottomSheet.TAG)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
