@@ -33,10 +33,11 @@ constructor(
             try {
                 withTimeout(TaskNetworkSyncTimeout) {
                     val deleteJob = syncDeletedTasks.syncDeletedTasks()
-                    //TODO FIX THIS BUG THE DELETE NOTE SHOULD NOT RETURN FAILURE
-//                    if (deleteJob?.stateMessage?.response?.messageType == MessageType.Success) {
-                    syncTasks.syncTasks()
-//                    }
+
+                    if (deleteJob?.stateMessage?.response?.messageType == MessageType.Success) {
+                        syncTasks.syncTasks()
+                    }
+
                 }
             } catch (throwable: Throwable) {
                 throwable.printStackTrace()
@@ -59,6 +60,7 @@ constructor(
     }
 
     companion object {
+        private const val TAG = "TaskNetworkSyncManager"
         private const val TaskNetworkSyncTimeout: Long = 10_000
     }
 }

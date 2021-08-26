@@ -28,6 +28,7 @@ class SyncDeletedTasks(
 
         if (networkStateMessageResponse?.messageType != MessageType.Success
             &&
+            //if error is not NETWORK_DATA_NULL
             (networkStateMessageResponse?.message?.contains(NetworkErrors.NETWORK_DATA_NULL) == false)
         ) {
             return DataState.error(
@@ -54,7 +55,11 @@ class SyncDeletedTasks(
                 override suspend fun handleSuccess(resultObj: Int): DataState<Int>? {
                     printLogD("SyncDeletedTasks", "Successfully deleted $resultObj task")
                     return DataState.data(
-                        response = null,
+                        response = Response(
+                            message = DELETE_ALL_DELETED_TASKS_SUCCESS,
+                            uiComponentType = UIComponentType.None,
+                            messageType = MessageType.Success
+                        ),
                         stateEvent = null,
                         data = resultObj
                     )
@@ -103,6 +108,8 @@ class SyncDeletedTasks(
             "Unable get all tasks from network"
         private const val THERE_IS_NO_TASK_IN_DELETE_NODE_TO_DELETE =
             "There is not any task in delete task to delete"
+        private const val DELETE_ALL_DELETED_TASKS_SUCCESS =
+                "Successfully delete all deleted tasks"
 
     }
 }
