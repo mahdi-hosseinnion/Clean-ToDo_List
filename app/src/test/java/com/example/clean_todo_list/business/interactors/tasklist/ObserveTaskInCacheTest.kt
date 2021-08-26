@@ -151,7 +151,7 @@ class ObserveTaskInCacheTest {
             }
         }
         delay(200)
-        observeTaskInCache.setFilterAndOrder(finalFilter)
+        observeTaskInCache.setSortAndOrder(finalFilter)
         delay(200)
         job.cancelAndJoin()
 
@@ -235,7 +235,7 @@ class ObserveTaskInCacheTest {
         }
         delay(100)
         observeTaskInCache.setPage(newPage)
-        observeTaskInCache.setFilterAndOrder(newFilter)
+        observeTaskInCache.setSortAndOrder(newFilter)
         observeTaskInCache.setQuery(newQuery)
         delay(100)
         job.cancelAndJoin()

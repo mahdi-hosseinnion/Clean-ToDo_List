@@ -14,7 +14,7 @@ class ObserveTaskInCache(
     private val taskCacheDataSource: TaskCacheDataSource
 ) {
     private val _query = MutableStateFlow<String>("")
-    private val _filterAndOrder = MutableStateFlow<SortAndOrder>(SortAndOrder.CREATED_DATE_DESC)
+    private val _sortAndOrder = MutableStateFlow<SortAndOrder>(SortAndOrder.CREATED_DATE_DESC)
     private val _page = MutableStateFlow<Int>(1)
 
     fun execute(
@@ -24,12 +24,12 @@ class ObserveTaskInCache(
     ): Flow<List<Task>> {
         //set default values to flows
         _query.value = defaultQuery
-        _filterAndOrder.value = defaultSortAndOrder
+        _sortAndOrder.value = defaultSortAndOrder
         _page.value = defaultPage
         //combine 3 flow to TasksQueryRequirement (every time one of them change the combine return new TasksQueryRequirement)
         return combine(
             _query.debounce(QUERY_DEBOUNCE_TIME),
-            _filterAndOrder,
+            _sortAndOrder,
             _page
         ) { query, filterAndOrder, page ->
             return@combine TasksQueryRequirement(query, filterAndOrder, page)
@@ -48,8 +48,8 @@ class ObserveTaskInCache(
         _query.value = query
     }
 
-    fun setFilterAndOrder(sortAndOrder: SortAndOrder) {
-        _filterAndOrder.value = sortAndOrder
+    fun setSortAndOrder(sortAndOrder: SortAndOrder) {
+        _sortAndOrder.value = sortAndOrder
     }
 
     fun setPage(page: Int) {

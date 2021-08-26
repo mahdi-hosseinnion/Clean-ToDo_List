@@ -35,6 +35,12 @@
     <string name="apply">Apply</string>
     <string name="Exit">Exit</string>
     <string name="try_again">Try again</string>
+    <string name="newer_to_older_or_older_to_newer">Order by newer to older or older to newer</string>
+    <string name="newer_to_older">Newer to older</string>
+    <string name="older_to_newer">Older to newer</string>
+    <string name="a_to_z_or_z_to_a">Order by A to Z or Z to A</string>
+    <string name="a_to_z">A to Z</string>
+    <string name="z_to_a">Z to A</string>
 
 
 </resources>

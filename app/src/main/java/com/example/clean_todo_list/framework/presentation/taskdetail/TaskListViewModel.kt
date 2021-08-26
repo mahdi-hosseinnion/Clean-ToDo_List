@@ -27,7 +27,7 @@ constructor(
 ) : BaseViewModel<TaskListViewState>() {
 
     init {
-        setTaskFilterAndOrder(APP_DEFAULT_SORT)
+        setSort(APP_DEFAULT_SORT)
     }
 
     override fun handleNewData(data: TaskListViewState) {
@@ -141,12 +141,6 @@ constructor(
         setViewState(update)
     }
 
-    private fun setTaskFilterAndOrder(sortAndOrder: SortAndOrder) {
-        val current = getCurrentViewStateOrNew()
-        val update = current.copy(sortAndOrder = sortAndOrder)
-        setViewState(update)
-    }
-
     override fun initNewViewState(): TaskListViewState = TaskListViewState()
 
     fun nextPage() {
@@ -237,6 +231,18 @@ constructor(
             APP_DEFAULT_SORT
         }
     }
+
+    fun setSort(newSort: SortAndOrder) {
+        val current = getCurrentViewStateOrNew()
+        val update = current.copy(sortAndOrder = newSort)
+        setViewState(update)
+        taskListInteractors.observeTaskInCache.setSortAndOrder(newSort)
+    }
+
+    fun saveNewSort(newSort: SortAndOrder) {
+//        TODO("Not yet implemented")
+    }
+
 
     companion object {
         private const val TAG = "TaskListViewModel"

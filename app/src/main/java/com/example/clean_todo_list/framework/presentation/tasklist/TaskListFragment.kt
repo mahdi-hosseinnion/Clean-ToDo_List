@@ -213,8 +213,13 @@ class TaskListFragment(
 
     private fun showChangeFilterBottomSheet() {
         val defaultSort = viewModel.getSort()
-        val bottomSheet = ChangeSortBottomSheet(defaultSort) {
 
+        val bottomSheet = ChangeSortBottomSheet(defaultSort) { selectedSort ->
+
+            if (defaultSort != selectedSort) {
+                viewModel.saveNewSort(selectedSort)
+                viewModel.setSort(selectedSort)
+            }
         }
         bottomSheet.show(childFragmentManager, ChangeSortBottomSheet.TAG)
     }

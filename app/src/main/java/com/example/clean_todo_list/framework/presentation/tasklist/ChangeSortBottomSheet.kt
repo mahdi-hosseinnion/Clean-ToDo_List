@@ -6,17 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.clean_todo_list.R
 import com.example.clean_todo_list.databinding.BottomSheetChangeFilterBinding
-import com.example.clean_todo_list.framework.datasource.cache.util.APP_DEFAULT_SORT
 import com.example.clean_todo_list.framework.datasource.cache.util.SortAndOrder
 import com.example.clean_todo_list.framework.datasource.cache.util.SortAndOrder.*
 import com.example.clean_todo_list.util.cLog
 import com.example.clean_todo_list.util.toastLong
-import com.example.clean_todo_list.util.toastShort
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class ChangeSortBottomSheet(
     private val defaultSortAndOrder: SortAndOrder,
-    private val onChangeSort: () -> Unit
+    private val onChangeSort: (selectedSort: SortAndOrder) -> Unit
 ) : BottomSheetDialogFragment() {
 
     private var _binding: BottomSheetChangeFilterBinding? = null
@@ -41,6 +39,16 @@ class ChangeSortBottomSheet(
         binding.bottomSheetDismissBtn.setOnClickListener {
             dismiss()
         }
+        binding.sortCreateDate.setOnCheckedChangeListener { _, checked ->
+            if (checked) {
+                setOrderTextForDate()
+            }
+        }
+        binding.sortName.setOnCheckedChangeListener { _, checked ->
+            if (checked) {
+                setOrderTextForName()
+            }
+        }
         when (defaultSortAndOrder) {
             CREATED_DATE_DESC -> {
                 binding.sortCreateDate.isChecked = true
@@ -59,6 +67,8 @@ class ChangeSortBottomSheet(
                 binding.orderAsc.isChecked = true
             }
         }
+
+
         binding.applyBtn.setOnClickListener {
             onApplyClicked(
                 sortCreatedAt = binding.sortCreateDate.isChecked,
@@ -67,6 +77,18 @@ class ChangeSortBottomSheet(
                 orderDESC = binding.orderDesc.isChecked
             )
         }
+    }
+
+    private fun setOrderTextForName() {
+        binding.ascOrDescTxt.text = getString(R.string.a_to_z_or_z_to_a)
+        binding.orderAsc.text = getString(R.string.a_to_z)
+        binding.orderDesc.text = getString(R.string.z_to_a)
+    }
+
+    private fun setOrderTextForDate() {
+        binding.ascOrDescTxt.text = getString(R.string.newer_to_older_or_older_to_newer)
+        binding.orderAsc.text = getString(R.string.older_to_newer)
+        binding.orderDesc.text = getString(R.string.newer_to_older)
     }
 
     private fun onApplyClicked(
@@ -91,12 +113,15 @@ class ChangeSortBottomSheet(
             }
         }
         if (result != null) {
-            toastShort("you select is: \n ${result.name}")
+            onChangeSort(result)
+            dismiss()
         } else {
             toastLong(getString(R.string.change_sort_bottom_sheet_error))
-            cLog("NULL FINAL RESULT with " +
-                    "sortCreatedAt: $sortCreatedAt, sortName: $sortName, " +
-                    "orderACS: $orderACS, orderDESC: $orderDESC ","$TAG, onApplyClicked")
+            cLog(
+                "NULL FINAL RESULT with " +
+                        "sortCreatedAt: $sortCreatedAt, sortName: $sortName, " +
+                        "orderACS: $orderACS, orderDESC: $orderDESC ", "$TAG, onApplyClicked"
+            )
         }
     }
 
