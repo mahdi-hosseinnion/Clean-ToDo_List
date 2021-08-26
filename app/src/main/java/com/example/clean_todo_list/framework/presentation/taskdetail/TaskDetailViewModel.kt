@@ -11,11 +11,14 @@ import com.example.clean_todo_list.util.cLog
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @ExperimentalCoroutinesApi
 @FlowPreview
+@Singleton
 class TaskDetailViewModel
-//TODO CHECK FOR @INJECT
+@Inject
 constructor(
     private val taskDetailInteractors: TaskDetailInteractors
 ) : BaseViewModel<TaskDetailViewState>() {

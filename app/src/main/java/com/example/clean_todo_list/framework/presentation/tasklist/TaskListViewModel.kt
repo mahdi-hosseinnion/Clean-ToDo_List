@@ -1,4 +1,4 @@
-package com.example.clean_todo_list.framework.presentation.taskdetail
+package com.example.clean_todo_list.framework.presentation.tasklist
 
 import android.content.SharedPreferences
 import android.os.Parcelable
@@ -17,11 +17,15 @@ import com.example.clean_todo_list.util.printLogD
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @ExperimentalCoroutinesApi
 @FlowPreview
+//TODO("make sure inject is necessary)
+@Singleton
 class TaskListViewModel
-//TODO CHECK FOR @INJECT?
+@Inject
 constructor(
     private val taskListInteractors: TaskListInteractors,
     private val sharedPreferences: SharedPreferences,

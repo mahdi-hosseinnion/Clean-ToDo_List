@@ -18,7 +18,6 @@ import com.example.clean_todo_list.business.domain.state.DialogInputCaptureCallb
 import com.example.clean_todo_list.databinding.FragmentTaskListBinding
 import com.example.clean_todo_list.framework.presentation.common.BaseTaskFragment
 import com.example.clean_todo_list.framework.presentation.taskdetail.TASK_DETAIL_SELECTED_TASK_BUNDLE_KEY
-import com.example.clean_todo_list.framework.presentation.taskdetail.TaskListViewModel
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListStateEvent.*
 import com.example.clean_todo_list.util.printLogD
 import kotlinx.coroutines.ExperimentalCoroutinesApi

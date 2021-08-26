@@ -3,12 +3,12 @@ package com.example.clean_todo_list.business.interactors.splash
 import com.example.clean_todo_list.business.data.cache.CacheResponseHandler
 import com.example.clean_todo_list.business.data.cache.abstraction.TaskCacheDataSource
 import com.example.clean_todo_list.business.data.network.ApiResponseHandler
+import com.example.clean_todo_list.business.data.network.NetworkErrors
 import com.example.clean_todo_list.business.data.network.abstraction.TaskNetworkDataSource
 import com.example.clean_todo_list.business.data.util.safeApiCall
 import com.example.clean_todo_list.business.data.util.safeCacheCall
 import com.example.clean_todo_list.business.domain.model.Task
-import com.example.clean_todo_list.business.domain.state.DataState
-import com.example.clean_todo_list.business.domain.state.StateEvent
+import com.example.clean_todo_list.business.domain.state.*
 import com.example.clean_todo_list.util.printLogD
 import kotlinx.coroutines.Dispatchers.IO
 
@@ -21,11 +21,28 @@ class SyncDeletedTasks(
     private val taskNetworkDataSource: TaskNetworkDataSource
 ) {
 
-    suspend fun syncDeletedTasks() {
+    suspend fun syncDeletedTasks(): DataState<Int>? {
+        val networkResponse = getAllTasksFromNetwork()
+        //TODO MAKE SURE IF NETWORK RETURN NULL ITS STILL OK (ApiResponseHandler)
+        val networkStateMessageResponse = networkResponse?.stateMessage?.response
 
-        val allTasksInNetwork = getAllTasksFromNetwork()
+        if (networkStateMessageResponse?.messageType != MessageType.Success
+            &&
+            (networkStateMessageResponse?.message?.contains(NetworkErrors.NETWORK_DATA_NULL) == false)
+        ) {
+            return DataState.error(
+                response = Response(
+                    message = GET_ALL_TASK_FROM_NETWORK_ERROR,
+                    uiComponentType = UIComponentType.None,
+                    messageType = MessageType.Error
+                ),
+                null
+            )
+        }
 
-        if (allTasksInNetwork.isNotEmpty()) {
+        val allTasksInNetwork = networkResponse?.data ?: emptyList()
+
+        return if (allTasksInNetwork.isNotEmpty()) {
             val cacheResult = safeCacheCall(IO) {
                 taskCacheDataSource.deleteTasks(allTasksInNetwork)
             }
@@ -35,7 +52,7 @@ class SyncDeletedTasks(
                 stateEvent = null
             ) {
                 override suspend fun handleSuccess(resultObj: Int): DataState<Int>? {
-                    printLogD("syncNote", "Successfully deleted $resultObj task")
+                    printLogD("SyncDeletedTasks", "Successfully deleted $resultObj task")
                     return DataState.data(
                         response = null,
                         stateEvent = null,
@@ -43,26 +60,49 @@ class SyncDeletedTasks(
                     )
                 }
             }.getResult()
+        } else {
+            return DataState.data(
+                response = Response(
+                    message = THERE_IS_NO_TASK_IN_DELETE_NODE_TO_DELETE,
+                    uiComponentType = UIComponentType.None,
+                    messageType = MessageType.Success
+                ),
+                null,
+                stateEvent = null
+            )
         }
     }
 
-    private suspend fun getAllTasksFromNetwork(): List<Task> {
+    private suspend fun getAllTasksFromNetwork(): DataState<List<Task>>? {
 
         val networkResult = safeApiCall(IO) {
             taskNetworkDataSource.getDeletedTasks()
         }
-        val networkResponse = object : ApiResponseHandler<List<Task>, List<Task>>(
+        return object : ApiResponseHandler<List<Task>, List<Task>>(
             response = networkResult,
             stateEvent = null
         ) {
             override suspend fun handleSuccess(resultObj: List<Task>): DataState<List<Task>>? {
                 return DataState.data(
-                    response = null,
+                    response = Response(
+                        message = GET_ALL_TASK_FROM_NETWORK_SUCCESS,
+                        uiComponentType = UIComponentType.None,
+                        messageType = MessageType.Success
+                    ),
                     data = resultObj,
                     stateEvent = null
                 )
             }
         }.getResult()
-        return networkResponse?.data ?: emptyList()
+    }
+
+    companion object {
+        private const val GET_ALL_TASK_FROM_NETWORK_SUCCESS =
+            "Successfully get all tasks from network"
+        private const val GET_ALL_TASK_FROM_NETWORK_ERROR =
+            "Unable get all tasks from network"
+        private const val THERE_IS_NO_TASK_IN_DELETE_NODE_TO_DELETE =
+            "There is not any task in delete task to delete"
+
     }
 }

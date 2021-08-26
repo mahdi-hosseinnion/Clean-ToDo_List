@@ -9,13 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.clean_todo_list.R
 import com.example.clean_todo_list.databinding.FragmentSplashBinding
-import com.example.clean_todo_list.framework.datasource.network.abstraction.TaskFirestoreService
 import com.example.clean_todo_list.framework.presentation.common.BaseTaskFragment
 import com.example.clean_todo_list.framework.presentation.utils.gone
 import com.example.clean_todo_list.framework.presentation.utils.visible
 import com.example.clean_todo_list.util.printLogD
-import com.example.clean_todo_list.util.toastLong
-import com.example.clean_todo_list.util.toastShort
 import com.google.firebase.auth.FirebaseAuth
 
 class SplashFragment(
@@ -63,7 +60,16 @@ class SplashFragment(
         if (FirebaseAuth.getInstance().currentUser == null) {
             tryToSignInIntoFirestore()
         } else {
-            navNoteListFragment()
+            onUserSyncIn()
+        }
+    }
+
+    private fun onUserSyncIn() {
+        viewModel.performSync()
+        viewModel.hasSyncBeenExecuted.observe(viewLifecycleOwner) {
+            if (it) {
+                navToNoteListFragment()
+            }
         }
     }
 
@@ -72,7 +78,7 @@ class SplashFragment(
             EMAIL, PASSWORD
         ).addOnCompleteListener {
             if (it.isSuccessful) {
-                navNoteListFragment()
+                onUserSyncIn()
             } else {
                 unableToLogIn()
             }
@@ -85,13 +91,9 @@ class SplashFragment(
         binding.tryAgainBtn.visible()
         binding.errorTextView.visible()
 
-
-
-
-
     }
 
-    private fun navNoteListFragment() {
+    private fun navToNoteListFragment() {
         findNavController().navigate(R.id.action_splashFragment_to_taskListFragment)
     }
 

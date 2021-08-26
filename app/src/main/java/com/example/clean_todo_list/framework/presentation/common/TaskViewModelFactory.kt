@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.clean_todo_list.business.interactors.taskdetail.TaskDetailInteractors
 import com.example.clean_todo_list.business.interactors.tasklist.TaskListInteractors
 import com.example.clean_todo_list.framework.presentation.splash.SplashViewModel
+import com.example.clean_todo_list.framework.presentation.splash.TaskNetworkSyncManager
 import com.example.clean_todo_list.framework.presentation.taskdetail.TaskDetailViewModel
-import com.example.clean_todo_list.framework.presentation.taskdetail.TaskListViewModel
+import com.example.clean_todo_list.framework.presentation.tasklist.TaskListViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject
@@ -15,12 +16,11 @@ import javax.inject.Singleton
 
 @FlowPreview
 @ExperimentalCoroutinesApi
-@Singleton
 class TaskViewModelFactory
-@Inject
 constructor(
     private val taskListInteractors: TaskListInteractors,
     private val taskDetailInteractors: TaskDetailInteractors,
+    private val taskNetworkSyncManager: TaskNetworkSyncManager,
     private val sharedPreferences: SharedPreferences,
     private val sharedPrefsEditor: SharedPreferences.Editor
 ) : ViewModelProvider.Factory {
@@ -43,7 +43,9 @@ constructor(
             }
 
             SplashViewModel::class.java -> {
-                SplashViewModel() as T
+                SplashViewModel(
+                    taskNetworkSyncManager = taskNetworkSyncManager
+                ) as T
             }
 
             else -> {
