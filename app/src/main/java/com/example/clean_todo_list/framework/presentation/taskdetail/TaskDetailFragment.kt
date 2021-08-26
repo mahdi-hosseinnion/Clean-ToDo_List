@@ -3,7 +3,9 @@ package com.example.clean_todo_list.framework.presentation.taskdetail
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -52,7 +54,9 @@ class TaskDetailFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUi()
-        getSelectedTaskFromPreviousFragment()
+        if (viewModel.doesNotContainTask()) {
+            getSelectedTaskFromPreviousFragment()
+        }
         subscribeObserves()
     }
 
@@ -93,6 +97,13 @@ class TaskDetailFragment(
         binding.detailBackBtn.setOnClickListener {
             uiController.hideSoftKeyboard()
             navigateBack()
+        }
+
+        binding.isDoneDetail.setOnCheckedChangeListener { _, checked ->
+            if (viewModel.getTaskIsDone() != checked) {
+                viewModel.updateIsDone(checked)
+                viewModel.setTaskIsDone(checked)
+            }
         }
 
     }
@@ -152,7 +163,9 @@ class TaskDetailFragment(
         if (binding.bodyDetail.text.toString() != task.body) {
             binding.bodyDetail.setText(task.body)
         }
-        binding.isDoneDetail.isChecked = task.isDone
+        if (binding.isDoneDetail.isChecked != task.isDone) {
+            binding.isDoneDetail.isChecked = task.isDone
+        }
 
     }
 
