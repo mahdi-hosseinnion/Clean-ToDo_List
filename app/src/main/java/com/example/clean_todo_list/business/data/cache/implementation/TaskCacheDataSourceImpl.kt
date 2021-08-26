@@ -2,9 +2,8 @@ package com.example.clean_todo_list.business.data.cache.implementation
 
 import com.example.clean_todo_list.business.data.cache.abstraction.TaskCacheDataSource
 import com.example.clean_todo_list.business.domain.model.Task
-import com.example.clean_todo_list.business.domain.util.DateUtil
 import com.example.clean_todo_list.framework.datasource.cache.abstraction.TaskDaoService
-import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
+import com.example.clean_todo_list.framework.datasource.cache.util.SortAndOrder
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -37,17 +36,17 @@ constructor(
 
     override suspend fun searchTask(
         query: String,
-        filterAndOrder: FilterAndOrder,
+        sortAndOrder: SortAndOrder,
         page: Int
     ): List<Task> =
-        taskDaoService.returnOrderedQuery(query, filterAndOrder, page)
+        taskDaoService.returnOrderedQuery(query, sortAndOrder, page)
 
     override suspend fun observeTasksInCache(
         query: String,
-        filterAndOrder: FilterAndOrder,
+        sortAndOrder: SortAndOrder,
         page: Int
     ): Flow<List<Task>> =
-        taskDaoService.observeOrderedQuery(query, filterAndOrder, page)
+        taskDaoService.observeOrderedQuery(query, sortAndOrder, page)
 
 
     override suspend fun getAllTasks(): List<Task> =

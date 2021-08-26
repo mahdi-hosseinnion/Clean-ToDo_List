@@ -5,12 +5,11 @@ import com.example.clean_todo_list.business.data.cache.abstraction.TaskCacheData
 import com.example.clean_todo_list.business.data.util.safeCacheCall
 import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.state.*
-import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
+import com.example.clean_todo_list.framework.datasource.cache.util.SortAndOrder
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListViewState
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlin.reflect.jvm.internal.impl.types.TypeSubstitutionKt
 
 class SearchTasks(
     private val taskCacheDataSource: TaskCacheDataSource
@@ -18,7 +17,7 @@ class SearchTasks(
 
     fun searchTasks(
         query: String,
-        filterAndOrder: FilterAndOrder,
+        sortAndOrder: SortAndOrder,
         page: Int,
         stateEvent: StateEvent
     ): Flow<DataState<TaskListViewState>?> = flow {
@@ -28,7 +27,7 @@ class SearchTasks(
         }
         val cacheResult = safeCacheCall(IO) {
             taskCacheDataSource.searchTask(
-                query, filterAndOrder, updatedPage
+                query, sortAndOrder, updatedPage
             )
         }
 

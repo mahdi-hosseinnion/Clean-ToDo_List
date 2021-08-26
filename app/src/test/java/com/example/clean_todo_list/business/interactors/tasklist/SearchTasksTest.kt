@@ -8,7 +8,7 @@ import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.interactors.tasklist.SearchTasks.Companion.SEARCH_TASKS_NO_MATCHING_RESULTS
 import com.example.clean_todo_list.business.interactors.tasklist.SearchTasks.Companion.SEARCH_TASKS_SUCCESS
 import com.example.clean_todo_list.di.DependencyContainer
-import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
+import com.example.clean_todo_list.framework.datasource.cache.util.SortAndOrder
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListStateEvent
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
@@ -57,7 +57,7 @@ class SearchTasksTest {
         )
     }
 
-    private val filterAndOrder = FilterAndOrder.DATE_ASC
+    private val filterAndOrder = SortAndOrder.CREATED_DATE_ASC
 
     @Test
     fun blankQuery_success_confirmAllTaskReceived() = runBlocking {
@@ -66,7 +66,7 @@ class SearchTasksTest {
 
         searchTasks.searchTasks(
             query = query,
-            filterAndOrder = filterAndOrder,
+            sortAndOrder = filterAndOrder,
             page = 1,
             stateEvent = TaskListStateEvent.SearchTasksEvent()
         ).collect { dataState ->
@@ -90,7 +90,7 @@ class SearchTasksTest {
 
         searchTasks.searchTasks(
             query = query,
-            filterAndOrder = filterAndOrder,
+            sortAndOrder = filterAndOrder,
             page = 1,
             stateEvent = TaskListStateEvent.SearchTasksEvent()
         ).collect { dataState ->
@@ -114,7 +114,7 @@ class SearchTasksTest {
 
         searchTasks.searchTasks(
             query = query,
-            filterAndOrder = filterAndOrder,
+            sortAndOrder = filterAndOrder,
             page = 1,
             stateEvent = TaskListStateEvent.SearchTasksEvent()
         ).collect { dataState ->

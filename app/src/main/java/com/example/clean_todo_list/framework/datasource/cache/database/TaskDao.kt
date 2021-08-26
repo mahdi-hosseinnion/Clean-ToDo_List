@@ -6,8 +6,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.clean_todo_list.framework.datasource.cache.model.TaskCacheEntity
-import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
-import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder.*
+import com.example.clean_todo_list.framework.datasource.cache.util.SortAndOrder
+import com.example.clean_todo_list.framework.datasource.cache.util.SortAndOrder.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -193,33 +193,33 @@ interface TaskDao {
 
 suspend fun TaskDao.returnOrderedQuery(
     query: String,
-    filterAndOrder: FilterAndOrder,
+    sortAndOrder: SortAndOrder,
     page: Int,
     pageSize: Int = TaskDao.TASK_PAGINATION_PAGE_SIZE
-): List<TaskCacheEntity> = when (filterAndOrder) {
+): List<TaskCacheEntity> = when (sortAndOrder) {
 
-    DATE_DESC -> {
+    CREATED_DATE_DESC -> {
         searchTasksOrderByDateDESC(
             query = query,
             page = page,
             pageSize = pageSize
         )
     }
-    DATE_ASC -> {
+    CREATED_DATE_ASC -> {
         searchTasksOrderByDateASC(
             query = query,
             page = page,
             pageSize = pageSize
         )
     }
-    TITLE_DESC -> {
+    NAME_DESC -> {
         searchTasksOrderByTitleDESC(
             query = query,
             page = page,
             pageSize = pageSize
         )
     }
-    TITLE_ACS -> {
+    NAME_ACS -> {
         searchTasksOrderByTitleASC(
             query = query,
             page = page,
@@ -230,33 +230,33 @@ suspend fun TaskDao.returnOrderedQuery(
 
 fun TaskDao.observeOrderedQuery(
     query: String,
-    filterAndOrder: FilterAndOrder,
+    sortAndOrder: SortAndOrder,
     page: Int,
     pageSize: Int = TaskDao.TASK_PAGINATION_PAGE_SIZE
-): Flow<List<TaskCacheEntity>> = when (filterAndOrder) {
+): Flow<List<TaskCacheEntity>> = when (sortAndOrder) {
 
-    DATE_DESC -> {
+    CREATED_DATE_DESC -> {
         observeTasksOrderByDateDESC(
             query = query,
             page = page,
             pageSize = pageSize
         )
     }
-    DATE_ASC -> {
+    CREATED_DATE_ASC -> {
         observeTasksOrderByDateASC(
             query = query,
             page = page,
             pageSize = pageSize
         )
     }
-    TITLE_DESC -> {
+    NAME_DESC -> {
         observeTasksOrderByTitleDESC(
             query = query,
             page = page,
             pageSize = pageSize
         )
     }
-    TITLE_ACS -> {
+    NAME_ACS -> {
         observeTasksOrderByTitleASC(
             query = query,
             page = page,

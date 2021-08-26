@@ -3,6 +3,12 @@
     <string name="are_you_sure_delete">Are you sure you want to delete this task?</string>
     <!--    ERRORS-->
     <string name="error_retrieving_task_from_bundle">Unable to retrieving selected task</string>
+    <string name="change_sort_bottom_sheet_error">"Please select at least one sort and order"</string>
+    <string name="login_error">
+                unable to login into firebase \n
+                make sure your device have internet access \n
+                If you live in Iran make sure you are using VPN, because this app use firebase service
+    </string>
     <!--    OTHERS-->
     <string name="app_name">Clean ToDo</string>
     <string name="enter_title">Enter a title</string>
@@ -27,5 +33,8 @@
     <string name="order_ACS">Ascending</string>
     <string name="order_DECS">Descending</string>
     <string name="apply">Apply</string>
+    <string name="Exit">Exit</string>
+    <string name="try_again">Try again</string>
+
 
 </resources>

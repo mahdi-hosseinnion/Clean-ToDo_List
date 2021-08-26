@@ -1,7 +1,7 @@
 package com.example.clean_todo_list.business.data.cache.abstraction
 
 import com.example.clean_todo_list.business.domain.model.Task
-import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
+import com.example.clean_todo_list.framework.datasource.cache.util.SortAndOrder
 import kotlinx.coroutines.flow.Flow
 
 interface TaskCacheDataSource {
@@ -22,13 +22,13 @@ interface TaskCacheDataSource {
 
     suspend fun searchTask(
         query: String,
-        filterAndOrder: FilterAndOrder,
+        sortAndOrder: SortAndOrder,
         page: Int
     ): List<Task>
 
     suspend fun observeTasksInCache(
         query: String,
-        filterAndOrder: FilterAndOrder,
+        sortAndOrder: SortAndOrder,
         page: Int
     ): Flow<List<Task>>
 

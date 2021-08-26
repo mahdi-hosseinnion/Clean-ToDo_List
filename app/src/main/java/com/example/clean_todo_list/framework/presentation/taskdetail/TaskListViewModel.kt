@@ -6,7 +6,7 @@ import androidx.lifecycle.asLiveData
 import com.example.clean_todo_list.business.domain.state.*
 import com.example.clean_todo_list.business.interactors.tasklist.TaskListInteractors
 import com.example.clean_todo_list.framework.datasource.cache.util.APP_DEFAULT_SORT
-import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
+import com.example.clean_todo_list.framework.datasource.cache.util.SortAndOrder
 import com.example.clean_todo_list.framework.presentation.common.BaseViewModel
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListStateEvent.*
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListViewState
@@ -40,7 +40,7 @@ constructor(
             searchQuery = data.searchQuery ?: outdated.searchQuery,
             page = data.page ?: outdated.page,
             isQueryExhausted = data.isQueryExhausted ?: outdated.isQueryExhausted,
-            filterAndOrder = data.filterAndOrder ?: outdated.filterAndOrder,
+            sortAndOrder = data.sortAndOrder ?: outdated.sortAndOrder,
             layoutManagerState = data.layoutManagerState ?: outdated.layoutManagerState,
             numTasksInCache = data.numTasksInCache ?: outdated.numTasksInCache,
         )
@@ -89,7 +89,7 @@ constructor(
                 }
                 taskListInteractors.searchTasks.searchTasks(
                     query = getSearchQuery(),
-                    filterAndOrder = getSort(),
+                    sortAndOrder = getSort(),
                     page = getPage(),
                     stateEvent = stateEvent
                 )
@@ -125,7 +125,7 @@ constructor(
 
     private val _items = taskListInteractors.observeTaskInCache.execute(
         defaultQuery = getSearchQuery(),
-        defaultFilterAndOrder = getSort(),
+        defaultSortAndOrder = getSort(),
         defaultPage = getPage()
     ).asLiveData()
 
@@ -141,9 +141,9 @@ constructor(
         setViewState(update)
     }
 
-    private fun setTaskFilterAndOrder(filterAndOrder: FilterAndOrder) {
+    private fun setTaskFilterAndOrder(sortAndOrder: SortAndOrder) {
         val current = getCurrentViewStateOrNew()
-        val update = current.copy(filterAndOrder = filterAndOrder)
+        val update = current.copy(sortAndOrder = sortAndOrder)
         setViewState(update)
     }
 
@@ -217,8 +217,8 @@ constructor(
         taskListInteractors.observeTaskInCache.setQuery(query)
     }
 
-    fun getSort(): FilterAndOrder {
-        val sort = getCurrentViewStateOrNew().filterAndOrder
+    fun getSort(): SortAndOrder {
+        val sort = getCurrentViewStateOrNew().sortAndOrder
         return if (sort != null) {
             setStateEvent(
                 CreateStateMessageEvent(

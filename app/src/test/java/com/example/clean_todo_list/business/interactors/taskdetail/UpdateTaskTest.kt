@@ -8,7 +8,7 @@ import com.example.clean_todo_list.business.domain.model.TaskFactory
 import com.example.clean_todo_list.business.interactors.taskdetail.UpdateTask.Companion.UPDATE_TASK_FAILED
 import com.example.clean_todo_list.business.interactors.taskdetail.UpdateTask.Companion.UPDATE_TASK_SUCCESS
 import com.example.clean_todo_list.di.DependencyContainer
-import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
+import com.example.clean_todo_list.framework.datasource.cache.util.SortAndOrder
 import com.example.clean_todo_list.framework.presentation.taskdetail.state.TaskDetailStateEvent
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
@@ -60,7 +60,7 @@ class UpdateTaskTestTest {
     @Test
     fun update_success_confirmCacheAndNetworkUpdated() = runBlocking {
         val allTasksInCacheBeforeUpdate = taskCacheDataSource.searchTask(
-            "", FilterAndOrder.DATE_ASC, 1
+            "", SortAndOrder.CREATED_DATE_ASC, 1
         )
         val taskToUpdate = allTasksInCacheBeforeUpdate.random().copy(
             title = UUID.randomUUID().toString(),
@@ -68,7 +68,7 @@ class UpdateTaskTestTest {
         )
         updateTask.updateTask(
             taskToUpdate,
-            TaskDetailStateEvent.UpdateTaskDetailEvent
+            TaskDetailStateEvent.UpdateTaskEvent(taskToUpdate)
         ).collect {
             assertEquals(
                 UPDATE_TASK_SUCCESS,
@@ -112,7 +112,7 @@ class UpdateTaskTestTest {
 
         updateTask.updateTask(
             taskToUpdate,
-            TaskDetailStateEvent.UpdateTaskDetailEvent
+            TaskDetailStateEvent.UpdateTaskEvent(taskToUpdate)
         ).collect {
             assertEquals(
                 UPDATE_TASK_FAILED,
@@ -138,7 +138,7 @@ class UpdateTaskTestTest {
 
         updateTask.updateTask(
             taskToUpdate,
-            TaskDetailStateEvent.UpdateTaskDetailEvent
+            TaskDetailStateEvent.UpdateTaskEvent(taskToUpdate)
         ).collect {
             assert(
 

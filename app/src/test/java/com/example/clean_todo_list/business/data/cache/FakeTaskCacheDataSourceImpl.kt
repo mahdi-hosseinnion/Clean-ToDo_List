@@ -4,7 +4,7 @@ import com.example.clean_todo_list.business.data.cache.abstraction.TaskCacheData
 import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.model.TaskFactory
 import com.example.clean_todo_list.framework.datasource.cache.database.TaskDao.Companion.TASK_PAGINATION_PAGE_SIZE
-import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
+import com.example.clean_todo_list.framework.datasource.cache.util.SortAndOrder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -77,7 +77,7 @@ class FakeTaskCacheDataSourceImpl(
     // simulate SQLite "LIKE" query on title and body
     override suspend fun searchTask(
         query: String,
-        filterAndOrder: FilterAndOrder,
+        sortAndOrder: SortAndOrder,
         page: Int
     ): List<Task> {
         if (query == FORCE_EXCEPTION) {
@@ -99,7 +99,7 @@ class FakeTaskCacheDataSourceImpl(
 
     override suspend fun observeTasksInCache(
         query: String,
-        filterAndOrder: FilterAndOrder,
+        sortAndOrder: SortAndOrder,
         page: Int
     ): Flow<List<Task>> = flow {
         if (query == FORCE_EXCEPTION) {
@@ -117,7 +117,7 @@ class FakeTaskCacheDataSourceImpl(
                 break
             }
         }
-        emit(listOf(TaskFactory.createTask(title = filterAndOrder.name)))
+        emit(listOf(TaskFactory.createTask(title = sortAndOrder.name)))
         emit(results)
     }
 

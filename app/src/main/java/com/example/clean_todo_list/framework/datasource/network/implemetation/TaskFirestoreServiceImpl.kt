@@ -240,6 +240,6 @@ constructor(
     companion object {
         const val TASKS_COLLECTION = "tasks"
         const val DELETES_COLLECTION = "deletes"
-        const val USER_ID = "fkhPBkzvxyeleitHMqFV3LrIFkr2" // hardcoded for single user
+        const val USER_ID = "aEqm03OkhqWJUE81yFLlHXCxkdM2" // hardcoded for single user
     }
 }

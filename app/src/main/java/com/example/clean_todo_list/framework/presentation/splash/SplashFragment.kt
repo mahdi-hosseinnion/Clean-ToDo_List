@@ -9,7 +9,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.clean_todo_list.R
 import com.example.clean_todo_list.databinding.FragmentSplashBinding
+import com.example.clean_todo_list.framework.datasource.network.abstraction.TaskFirestoreService
 import com.example.clean_todo_list.framework.presentation.common.BaseTaskFragment
+import com.example.clean_todo_list.framework.presentation.utils.gone
+import com.example.clean_todo_list.framework.presentation.utils.visible
+import com.example.clean_todo_list.util.printLogD
+import com.example.clean_todo_list.util.toastLong
+import com.example.clean_todo_list.util.toastShort
+import com.google.firebase.auth.FirebaseAuth
 
 class SplashFragment(
     private val viewModelFactory: ViewModelProvider.Factory
@@ -36,7 +43,52 @@ class SplashFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navNoteListFragment()
+        checkFirebaseAuth()
+        setupUi()
+    }
+
+    private fun setupUi() {
+        binding.exitBtn.setOnClickListener {
+            requireActivity().finish()
+        }
+        binding.tryAgainBtn.setOnClickListener {
+            binding.errorTextView.gone()
+            binding.exitBtn.gone()
+            binding.tryAgainBtn.gone()
+            checkFirebaseAuth()
+        }
+    }
+
+    private fun checkFirebaseAuth() {
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            tryToSignInIntoFirestore()
+        } else {
+            navNoteListFragment()
+        }
+    }
+
+    private fun tryToSignInIntoFirestore() {
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(
+            EMAIL, PASSWORD
+        ).addOnCompleteListener {
+            if (it.isSuccessful) {
+                navNoteListFragment()
+            } else {
+                unableToLogIn()
+            }
+        }
+    }
+
+    private fun unableToLogIn() {
+        printLogD("UNABLE TO SIGN IN ", "signInIntoFirestore")
+        binding.exitBtn.visible()
+        binding.tryAgainBtn.visible()
+        binding.errorTextView.visible()
+
+
+
+
+
     }
 
     private fun navNoteListFragment() {
@@ -48,5 +100,9 @@ class SplashFragment(
         _binding = null
     }
 
+    companion object {
+        private const val EMAIL = "testReleaseUser@cleanTodo.com"
+        private const val PASSWORD = "123456789"
+    }
 
 }

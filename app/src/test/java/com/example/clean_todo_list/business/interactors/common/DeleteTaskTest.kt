@@ -8,7 +8,7 @@ import com.example.clean_todo_list.business.domain.model.TaskFactory
 import com.example.clean_todo_list.business.interactors.common.DeleteTask.Companion.DELETE_TASK_FAILED
 import com.example.clean_todo_list.business.interactors.common.DeleteTask.Companion.DELETE_TASK_SUCCESS
 import com.example.clean_todo_list.di.DependencyContainer
-import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
+import com.example.clean_todo_list.framework.datasource.cache.util.SortAndOrder
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListStateEvent
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListViewState
 import kotlinx.coroutines.flow.collect
@@ -60,7 +60,7 @@ class DeleteTaskTest {
     @Test
     fun deleteTask_success_confirmDeletedInCacheAndNetworkAndAddedToDeletedTask() = runBlocking {
 
-        val allTasksInCache = taskCacheDataSource.searchTask("", FilterAndOrder.DATE_ASC, 1)
+        val allTasksInCache = taskCacheDataSource.searchTask("", SortAndOrder.CREATED_DATE_ASC, 1)
         //select random task to delete
         val taskToDelete = allTasksInCache.random()
 
@@ -74,7 +74,7 @@ class DeleteTaskTest {
 
         //confirm note deleted in cache
         val allTasksInCacheAfterDelete = taskCacheDataSource
-            .searchTask("", FilterAndOrder.DATE_ASC, 1)
+            .searchTask("", SortAndOrder.CREATED_DATE_ASC, 1)
         assertFalse { allTasksInCacheAfterDelete.contains(taskToDelete) }
 
         //confirm note deleted in 'tasks' node
@@ -91,7 +91,7 @@ class DeleteTaskTest {
 
     @Test
     fun deleteTask_fail_confirmCacheAndNetworkUnChange() = runBlocking {
-        val allTasksInCache = taskCacheDataSource.searchTask("", FilterAndOrder.DATE_ASC, 1)
+        val allTasksInCache = taskCacheDataSource.searchTask("", SortAndOrder.CREATED_DATE_ASC, 1)
         val allTasksInNetwork = taskNetworkDataSource.getAllTasks()
         //select random task to delete
         val taskToDelete = TaskFactory.createRandomTask()
@@ -120,7 +120,7 @@ class DeleteTaskTest {
 
     @Test
     fun forceException_fail_confirmCacheAndNetworkUnChange() = runBlocking {
-        val allTasksInCache = taskCacheDataSource.searchTask("", FilterAndOrder.DATE_ASC, 1)
+        val allTasksInCache = taskCacheDataSource.searchTask("", SortAndOrder.CREATED_DATE_ASC, 1)
         val allTasksInNetwork = taskNetworkDataSource.getAllTasks()
         //select random task to delete
         val taskToDelete = TaskFactory.createTask(

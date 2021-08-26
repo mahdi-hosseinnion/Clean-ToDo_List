@@ -21,7 +21,6 @@ import com.example.clean_todo_list.framework.presentation.taskdetail.TASK_DETAIL
 import com.example.clean_todo_list.framework.presentation.taskdetail.TaskListViewModel
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListStateEvent.*
 import com.example.clean_todo_list.util.printLogD
-import com.example.clean_todo_list.util.toastShort
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
@@ -203,20 +202,21 @@ class TaskListFragment(
 
     override fun onSearchStateChanged(newState: CustomSearchAndFilterView.SearchViewState) =
         when (newState) {
-            is CustomSearchAndFilterView.SearchViewState.VISIBLE -> {
+            CustomSearchAndFilterView.SearchViewState.VISIBLE -> {
                 searchBackStackCallback.isEnabled = true
             }
-            is CustomSearchAndFilterView.SearchViewState.INVISIBLE -> {
+            CustomSearchAndFilterView.SearchViewState.INVISIBLE -> {
                 searchBackStackCallback.isEnabled = false
             }
-
         }
 
 
     private fun showChangeFilterBottomSheet() {
         val defaultSort = viewModel.getSort()
-        val bottomSheet = ChangeFilterBottomSheet(defaultSort)
-        bottomSheet.show(childFragmentManager, ChangeFilterBottomSheet.TAG)
+        val bottomSheet = ChangeSortBottomSheet(defaultSort) {
+
+        }
+        bottomSheet.show(childFragmentManager, ChangeSortBottomSheet.TAG)
     }
 
     override fun onDestroyView() {

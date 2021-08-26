@@ -5,7 +5,7 @@ import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.model.TaskFactory
 import com.example.clean_todo_list.di.DependencyContainer
 import com.example.clean_todo_list.framework.datasource.cache.database.TaskDao
-import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
+import com.example.clean_todo_list.framework.datasource.cache.util.SortAndOrder
 import com.example.clean_todo_list.util.printLogD
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
@@ -66,7 +66,7 @@ class ObserveTaskInCacheTest {
     @Test
     fun blankQuery_success_confirmAllTaskInCacheReturned() = runBlocking {
 
-        val finalFilter = FilterAndOrder.DATE_DESC
+        val finalFilter = SortAndOrder.CREATED_DATE_DESC
 
         val flowResult: ArrayList<List<Task>> = ArrayList()
 
@@ -105,7 +105,7 @@ class ObserveTaskInCacheTest {
     @Test
     fun randomQuery_success_confirmCorrectQueryReturned() = runBlocking {
         val query = "Mountain"
-        val finalFilter = FilterAndOrder.DATE_DESC
+        val finalFilter = SortAndOrder.CREATED_DATE_DESC
 
         val flowResult: ArrayList<List<Task>> = ArrayList()
 
@@ -139,13 +139,13 @@ class ObserveTaskInCacheTest {
     @Test
     fun changeFilter_success_confirmFilterAndOrderChange() = runBlocking {
 
-        val finalFilter = FilterAndOrder.DATE_DESC
+        val finalFilter = SortAndOrder.CREATED_DATE_DESC
 
         val flowResult: ArrayList<List<Task>> = ArrayList()
 
         val job = launch {
             observeTaskInCache.execute(
-                "", FilterAndOrder.TITLE_ACS, 1
+                "", SortAndOrder.NAME_ACS, 1
             ).collect {
                 flowResult.add(it)
             }
@@ -162,7 +162,7 @@ class ObserveTaskInCacheTest {
 
         //the first value that  FakeTaskCacheDataSourceImpl emits is filter and order in title
         assertEquals(
-            FilterAndOrder.TITLE_ACS.name,
+            SortAndOrder.NAME_ACS.name,
             firstOrder
         )
         assertEquals(
@@ -189,7 +189,7 @@ class ObserveTaskInCacheTest {
 
         val job = launch {
             observeTaskInCache.execute(
-                "", FilterAndOrder.DATE_DESC, 1
+                "", SortAndOrder.CREATED_DATE_DESC, 1
             ).collect {
                 flowResult.add(it)
             }
@@ -220,7 +220,7 @@ class ObserveTaskInCacheTest {
         val countOfTasksInCache = taskCacheDataSource.getNumOfTasks()
         assertTrue { countOfTasksInCache >= count }
         //actual test
-        val newFilter = FilterAndOrder.TITLE_ACS
+        val newFilter = SortAndOrder.NAME_ACS
         val newPage = 3
         val newQuery = "a"
 
@@ -228,7 +228,7 @@ class ObserveTaskInCacheTest {
 
         val job = launch {
             observeTaskInCache.execute(
-                "", FilterAndOrder.DATE_DESC, 1
+                "", SortAndOrder.CREATED_DATE_DESC, 1
             ).collect {
                 flowResult.add(it)
             }

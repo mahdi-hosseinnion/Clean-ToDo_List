@@ -2,7 +2,7 @@ package com.example.clean_todo_list.framework.datasource.cache.abstraction
 
 import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.framework.datasource.cache.database.TaskDao.Companion.TASK_PAGINATION_PAGE_SIZE
-import com.example.clean_todo_list.framework.datasource.cache.util.FilterAndOrder
+import com.example.clean_todo_list.framework.datasource.cache.util.SortAndOrder
 import kotlinx.coroutines.flow.Flow
 
 interface TaskDaoService {
@@ -57,13 +57,13 @@ interface TaskDaoService {
 
     suspend fun returnOrderedQuery(
         query: String,
-        filterAndOrder: FilterAndOrder,
+        sortAndOrder: SortAndOrder,
         page: Int
     ): List<Task>
 
     fun observeOrderedQuery(
         query: String,
-        filterAndOrder: FilterAndOrder,
+        sortAndOrder: SortAndOrder,
         page: Int
     ): Flow<List<Task>>
 }
