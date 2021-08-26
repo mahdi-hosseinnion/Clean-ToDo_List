@@ -6,7 +6,9 @@ import androidx.lifecycle.asLiveData
 import com.example.clean_todo_list.business.domain.state.*
 import com.example.clean_todo_list.business.interactors.tasklist.TaskListInteractors
 import com.example.clean_todo_list.framework.datasource.cache.util.APP_DEFAULT_SORT
+import com.example.clean_todo_list.framework.datasource.cache.util.SORT_AND_ORDER_SP
 import com.example.clean_todo_list.framework.datasource.cache.util.SortAndOrder
+import com.example.clean_todo_list.framework.datasource.cache.util.SortAndOrder.*
 import com.example.clean_todo_list.framework.presentation.common.BaseViewModel
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListStateEvent.*
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListViewState
@@ -27,7 +29,7 @@ constructor(
 ) : BaseViewModel<TaskListViewState>() {
 
     init {
-        setSort(APP_DEFAULT_SORT)
+        setSort(getSavedSort())
     }
 
     override fun handleNewData(data: TaskListViewState) {
@@ -240,7 +242,28 @@ constructor(
     }
 
     fun saveNewSort(newSort: SortAndOrder) {
-//        TODO("Not yet implemented")
+        with(sharedPrefsEditor) {
+            putString(SORT_AND_ORDER_SP, newSort.name)
+            apply()
+        }
+    }
+
+    private fun getSavedSort(): SortAndOrder {
+        val default = APP_DEFAULT_SORT.name
+        return when (sharedPreferences.getString(
+            SORT_AND_ORDER_SP,
+            default
+        )) {
+            CREATED_DATE_DESC.name -> CREATED_DATE_DESC
+
+            CREATED_DATE_ASC.name -> CREATED_DATE_ASC
+
+            NAME_DESC.name -> NAME_DESC
+
+            NAME_ACS.name -> NAME_ACS
+
+            else -> APP_DEFAULT_SORT
+        }
     }
 
 
