@@ -78,7 +78,7 @@ class ObserveTaskInCacheTest {
                 flowResult.add(it)
             }
         }
-        delay(100)
+        delay(DELAY_TIME)
         job.cancelAndJoin()
 
         //confirm result returned
@@ -117,9 +117,9 @@ class ObserveTaskInCacheTest {
                 flowResult.add(it)
             }
         }
-        delay(200)
+        delay(DELAY_TIME)
         observeTaskInCache.setQuery(query)
-        delay(200)
+        delay(DELAY_TIME)
         job.cancelAndJoin()
 
         //confirm result returned
@@ -151,9 +151,9 @@ class ObserveTaskInCacheTest {
                 flowResult.add(it)
             }
         }
-        delay(200)
+        delay(DELAY_TIME)
         observeTaskInCache.setSortAndOrder(finalFilter)
-        delay(200)
+        delay(DELAY_TIME)
         job.cancelAndJoin()
 
         //confirm result returned
@@ -195,9 +195,9 @@ class ObserveTaskInCacheTest {
                 flowResult.add(it)
             }
         }
-        delay(100)
+        delay(DELAY_TIME)
         observeTaskInCache.setPage(2)
-        delay(100)
+        delay(DELAY_TIME)
         job.cancelAndJoin()
 
         //confirm result returned
@@ -234,11 +234,11 @@ class ObserveTaskInCacheTest {
                 flowResult.add(it)
             }
         }
-        delay(100)
+        delay(DELAY_TIME)
         observeTaskInCache.setPage(newPage)
         observeTaskInCache.setSortAndOrder(newFilter)
         observeTaskInCache.setQuery(newQuery)
-        delay(100)
+        delay(DELAY_TIME)
         job.cancelAndJoin()
 
         //confirm result returned
@@ -259,5 +259,8 @@ class ObserveTaskInCacheTest {
             tasksAfterUpdate[0].title.contains(newQuery) ||
                     tasksAfterUpdate[0].body.contains(newQuery)
         }
+    }
+    companion object{
+        private const val DELAY_TIME:Long = 1_000
     }
 }
