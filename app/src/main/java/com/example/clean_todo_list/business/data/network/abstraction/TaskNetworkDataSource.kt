@@ -20,7 +20,7 @@ interface TaskNetworkDataSource {
     suspend fun deleteDeletedTask(task: Task)
 
     suspend fun deleteDeletedTasks(tasks: List<Task>)
-
+    //getDeletedTasks function should not return null b/c SyncDeletedTasks
     suspend fun getDeletedTasks(): List<Task>
 
     suspend fun deleteAllTasks()

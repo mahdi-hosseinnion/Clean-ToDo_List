@@ -15,7 +15,7 @@ class DependencyContainer {
     lateinit var taskDataFactory: TaskDataFactory
 
     // data sets
-    lateinit var tasksData: HashMap<String, Task>
+    private lateinit var tasksData: HashMap<String, Task>
 
     init {
         isUnitTest = true
@@ -32,6 +32,19 @@ class DependencyContainer {
             deletedTasksData = HashMap()
         )
     }
+
+    fun newTaskCacheDataSource(errorCases: List<String> = emptyList()): TaskCacheDataSource =
+        FakeTaskCacheDataSourceImpl(
+            tasksData = HashMap(tasksData),
+            errorCases = errorCases
+        )
+
+    fun newTaskNetworkDataSource(errorCases: List<String> = emptyList()): TaskNetworkDataSource =
+        FakeTaskNetworkDataSourceImpl(
+            tasksData = HashMap(tasksData),
+            deletedTasksData = HashMap(),
+            errorCases = errorCases
+        )
 
 
 }

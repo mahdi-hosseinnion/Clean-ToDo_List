@@ -6,7 +6,8 @@ import com.example.clean_todo_list.business.domain.util.DateUtil
 
 class FakeTaskNetworkDataSourceImpl(
     private val tasksData: HashMap<String, Task>,
-    private val deletedTasksData: HashMap<String, Task>
+    private val deletedTasksData: HashMap<String, Task>,
+    private val errorCases: List<String> = emptyList()
 ) : TaskNetworkDataSource {
 
     override suspend fun insertTask(task: Task) {
@@ -50,6 +51,9 @@ class FakeTaskNetworkDataSourceImpl(
     }
 
     override suspend fun getDeletedTasks(): List<Task> {
+        if (errorCases.contains("getDeletedTasks:Exception")) {
+            throw Exception("Requested exception")
+        }
         return ArrayList(deletedTasksData.values)
     }
 

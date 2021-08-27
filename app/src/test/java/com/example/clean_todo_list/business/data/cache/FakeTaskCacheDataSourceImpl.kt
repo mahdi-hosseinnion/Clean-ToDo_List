@@ -14,7 +14,8 @@ const val FORCE_EXCEPTION = "FORCE_EXCEPTION"
 const val FORCE_GENERAL_FAILURE = "FORCE_GENERAL_FAILURE"
 
 class FakeTaskCacheDataSourceImpl(
-    private val tasksData: HashMap<String, Task>
+    private val tasksData: HashMap<String, Task>,
+    private val errorCases: List<String> = emptyList()
 ) : TaskCacheDataSource {
 
     override suspend fun insertTask(task: Task): Long {
@@ -39,6 +40,9 @@ class FakeTaskCacheDataSourceImpl(
     }
 
     override suspend fun deleteTasks(tasks: List<Task>): Int {
+        if (errorCases.contains("deleteTasks:Exception")) {
+            throw Exception("delete tasks requested exception")
+        }
         var count = 0
         for (task in tasks) {
             if (tasksData.remove(task.id) != null) {

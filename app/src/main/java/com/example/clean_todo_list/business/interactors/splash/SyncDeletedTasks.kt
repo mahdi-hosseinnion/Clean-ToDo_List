@@ -23,14 +23,9 @@ class SyncDeletedTasks(
 
     suspend fun syncDeletedTasks(): DataState<Int>? {
         val networkResponse = getAllTasksFromNetwork()
-        //TODO MAKE SURE IF NETWORK RETURN NULL ITS STILL OK (ApiResponseHandler)
         val networkStateMessageResponse = networkResponse?.stateMessage?.response
 
-        if (networkStateMessageResponse?.messageType != MessageType.Success
-            &&
-            //if error is not NETWORK_DATA_NULL
-            (networkStateMessageResponse?.message?.contains(NetworkErrors.NETWORK_DATA_NULL) == false)
-        ) {
+        if (networkStateMessageResponse?.messageType != MessageType.Success) {
             return DataState.error(
                 response = Response(
                     message = GET_ALL_TASK_FROM_NETWORK_ERROR,
@@ -41,7 +36,7 @@ class SyncDeletedTasks(
             )
         }
 
-        val allTasksInNetwork = networkResponse?.data ?: emptyList()
+        val allTasksInNetwork = networkResponse.data ?: emptyList()
 
         return if (allTasksInNetwork.isNotEmpty()) {
             val cacheResult = safeCacheCall(IO) {
@@ -104,12 +99,12 @@ class SyncDeletedTasks(
     companion object {
         private const val GET_ALL_TASK_FROM_NETWORK_SUCCESS =
             "Successfully get all tasks from network"
-        private const val GET_ALL_TASK_FROM_NETWORK_ERROR =
+        const val GET_ALL_TASK_FROM_NETWORK_ERROR =
             "Unable get all tasks from network"
-        private const val THERE_IS_NO_TASK_IN_DELETE_NODE_TO_DELETE =
+         const val THERE_IS_NO_TASK_IN_DELETE_NODE_TO_DELETE =
             "There is not any task in delete task to delete"
         private const val DELETE_ALL_DELETED_TASKS_SUCCESS =
-                "Successfully delete all deleted tasks"
+            "Successfully delete all deleted tasks"
 
     }
 }
