@@ -220,11 +220,13 @@ constructor(
     fun getSort(): SortAndOrder {
         val sort = getCurrentViewStateOrNew().sortAndOrder
         return if (sort != null) {
+            sort
+        } else {
             setStateEvent(
                 CreateStateMessageEvent(
                     StateMessage(
                         Response(
-                            message = "No sort found!",
+                            message = NO_SORT_FOUND,
                             uiComponentType = UIComponentType.Toast,
                             messageType = MessageType.Error
                         )
@@ -232,8 +234,6 @@ constructor(
                 )
             )
             cLog("THERE IS NO SORT IN VIEW STATE ", "$TAG getSort")
-            sort
-        } else {
             APP_DEFAULT_SORT
         }
     }

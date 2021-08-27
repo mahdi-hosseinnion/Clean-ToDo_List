@@ -116,6 +116,11 @@ class TaskDetailFragment(
                 }
             }
         }
+        viewModel.shouldDisplayProgressBar.observe(viewLifecycleOwner) {
+            it?.let {
+                uiController.displayProgressBar(it)
+            }
+        }
         val stateMessageCallback = object : StateMessageCallback {
             override fun removeMessageFromStack() {
                 viewModel.clearStateMessage()
