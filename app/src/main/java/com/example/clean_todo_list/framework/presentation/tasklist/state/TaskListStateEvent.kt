@@ -98,20 +98,6 @@ sealed class TaskListStateEvent : StateEvent {
         override fun shouldDisplayProgressBar() = false
     }
 
-    class SearchTasksEvent(
-        val clearLayoutManagerState: Boolean = true
-    ) : TaskListStateEvent() {
-
-        override fun errorInfo(): String {
-            return "Error getting list of tasks."
-        }
-
-        override fun eventName(): String {
-            return "SearchTasksEvent"
-        }
-
-        override fun shouldDisplayProgressBar() = true
-    }
 
     class GetNumTasksInCacheEvent : TaskListStateEvent() {
 

@@ -22,8 +22,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import javax.inject.Singleton
 
+@FlowPreview
 @ExperimentalCoroutinesApi
 @Module
 object AppModule {
@@ -132,7 +134,6 @@ object AppModule {
         return TaskListInteractors(
             InsertNewTask(taskCacheDataSource, taskNetworkDataSource),
             DeleteTask(taskCacheDataSource, taskNetworkDataSource),
-            SearchTasks(taskCacheDataSource),
             ObserveTaskInCache(taskCacheDataSource),
             GetNumTasks(taskCacheDataSource),
             RestoreDeletedTask(taskCacheDataSource, taskNetworkDataSource),

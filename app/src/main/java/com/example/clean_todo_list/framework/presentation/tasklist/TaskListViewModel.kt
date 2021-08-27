@@ -37,10 +37,9 @@ constructor(
     }
 
     override fun handleNewData(data: TaskListViewState) {
-        printLogD("handleNewData", "data: ${data.toString()}")
         val outdated = getCurrentViewStateOrNew()
+
         val updatedVieState = TaskListViewState(
-            taskList = data.taskList ?: outdated.taskList,
             newTask = data.newTask ?: outdated.newTask,
             taskPendingDelete = data.taskPendingDelete ?: outdated.taskPendingDelete,
             searchQuery = data.searchQuery ?: outdated.searchQuery,
@@ -50,11 +49,6 @@ constructor(
             layoutManagerState = data.layoutManagerState ?: outdated.layoutManagerState,
             numTasksInCache = data.numTasksInCache ?: outdated.numTasksInCache,
         )
-        printLogD(
-            "handleNewData",
-            "taskListsize :${data.taskList?.size} tasklist: ${data.taskList}"
-        )
-        printLogD("handleNewData", "task ${data.newTask}")
         setViewState(updatedVieState)
     }
 
@@ -85,18 +79,6 @@ constructor(
             is RestoreDeletedTaskEvent -> {
                 taskListInteractors.restoreDeletedTask.restoreDeletedTask(
                     task = stateEvent.task,
-                    stateEvent = stateEvent
-                )
-            }
-
-            is SearchTasksEvent -> {
-                if (stateEvent.clearLayoutManagerState) {
-                    clearLayoutManagerState()
-                }
-                taskListInteractors.searchTasks.searchTasks(
-                    query = getSearchQuery(),
-                    sortAndOrder = getSort(),
-                    page = getPage(),
                     stateEvent = stateEvent
                 )
             }
@@ -141,19 +123,10 @@ constructor(
 
     private fun getSearchQuery(): String = getCurrentViewStateOrNew().searchQuery ?: ""
 
-    private fun clearLayoutManagerState() {
-        val update = getCurrentViewStateOrNew()
-        update.layoutManagerState = null
-        setViewState(update)
-    }
-
     override fun initNewViewState(): TaskListViewState = TaskListViewState()
 
     fun nextPage() {
-        if (!isQueryExhausted()) {
-            clearLayoutManagerState()
-            incrementPageNumber()
-        }
+        //TODO NOT IMPLEMENTED
     }
 
     private fun incrementPageNumber() {
@@ -166,46 +139,6 @@ constructor(
         setViewState(update)
     }
 
-    fun isPaginationExhausted(): Boolean = getTaskListSize() >= getNumTasksInCache()
-
-    private fun getTaskListSize(): Int = getCurrentViewStateOrNew().taskList?.size ?: 0
-
-    private fun getNumTasksInCache(): Int = getCurrentViewStateOrNew().numTasksInCache ?: 0
-
-    fun isQueryExhausted(): Boolean = getCurrentViewStateOrNew().isQueryExhausted ?: true
-
-    fun setQueryExhausted(isExhausted: Boolean) {
-        val update = getCurrentViewStateOrNew()
-        update.isQueryExhausted = isExhausted
-        setViewState(update)
-    }
-
-    fun clearList() {
-        val update = getCurrentViewStateOrNew()
-        update.taskList = ArrayList()
-        setViewState(update)
-    }
-
-    fun loadFirstPage() {
-        setQueryExhausted(false)
-        resetPage()
-        setStateEvent(SearchTasksEvent())
-    }
-
-    private fun resetPage() {
-        val update = getCurrentViewStateOrNew()
-        update.page = 1
-        setViewState(update)
-    }
-
-    fun retrieveNumTasksInCache() {
-        setStateEvent(GetNumTasksInCacheEvent())
-    }
-
-    fun refreshSearchQuery() {
-        setQueryExhausted(false)
-        setStateEvent(SearchTasksEvent(false))
-    }
 
     fun setLayoutManagerState(layoutManagerState: Parcelable) {
         val update = getCurrentViewStateOrNew()

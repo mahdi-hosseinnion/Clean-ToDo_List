@@ -57,7 +57,6 @@ class TaskListFragment(
         setupRecyclerView()
         setupFAB()
         setupSwipeRefresh()
-        startNewSearch()
         subscribeObservers()
 
     }
@@ -154,28 +153,16 @@ class TaskListFragment(
 
     private fun setupSwipeRefresh() {
         binding.swipeRefresh.setOnRefreshListener {
-            startNewSearch()
             binding.swipeRefresh.isRefreshing = false
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.retrieveNumTasksInCache()
-        viewModel.clearList()
-        viewModel.refreshSearchQuery()
-
-    }
 
     override fun onPause() {
         super.onPause()
         saveLayoutManagerState()
     }
 
-    private fun startNewSearch() {
-        viewModel.clearList()
-        viewModel.loadFirstPage()
-    }
 
     override fun onItemSelected(position: Int, item: Task) {
         printLogD("onItemSelected", "clicked with position: $position \n item title: ${item.title}")

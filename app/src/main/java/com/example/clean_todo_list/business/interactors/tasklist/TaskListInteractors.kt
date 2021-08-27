@@ -12,7 +12,6 @@ import kotlinx.coroutines.FlowPreview
 class TaskListInteractors(
     val insertNewTask: InsertNewTask,
     val deleteTask: DeleteTask<TaskListViewState>,
-    val searchTasks: SearchTasks,
     val observeTaskInCache: ObserveTaskInCache,
     val getNumTasks: GetNumTasks,
     val restoreDeletedTask: RestoreDeletedTask,

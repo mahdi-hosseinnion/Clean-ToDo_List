@@ -8,7 +8,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class TaskListViewState(
-    var taskList: ArrayList<Task>? = null,
     var newTask: Task? = null, //task that can be created with fab and dialog
     var taskPendingDelete: TaskPendingDelete? = null,//set when delete is pending (can be undone)
     var searchQuery: String? = null,

@@ -45,6 +45,7 @@ import org.junit.jupiter.api.Test
  *      g) confirm correct results returned
  *
  */
+@FlowPreview
 @ExperimentalCoroutinesApi
 class ObserveTaskInCacheTest {
 
