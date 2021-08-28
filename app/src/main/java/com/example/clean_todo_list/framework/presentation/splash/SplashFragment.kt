@@ -41,24 +41,12 @@ class SplashFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         checkFirebaseAuth()
-        setupUi()
     }
 
-    private fun setupUi() {
-        binding.exitBtn.setOnClickListener {
-            requireActivity().finish()
-        }
-        binding.tryAgainBtn.setOnClickListener {
-            binding.errorTextView.gone()
-            binding.exitBtn.gone()
-            binding.tryAgainBtn.gone()
-            checkFirebaseAuth()
-        }
-    }
 
     private fun checkFirebaseAuth() {
         if (FirebaseAuth.getInstance().currentUser == null) {
-            tryToSignInIntoFirestore()
+            navToLoginFragment()
         } else {
             onUserSyncIn()
         }
@@ -73,25 +61,10 @@ class SplashFragment(
         }
     }
 
-    private fun tryToSignInIntoFirestore() {
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(
-            EMAIL, PASSWORD
-        ).addOnCompleteListener {
-            if (it.isSuccessful) {
-                onUserSyncIn()
-            } else {
-                unableToLogIn()
-            }
-        }
+    private fun navToLoginFragment() {
+        findNavController().navigate(R.id.action_splashFragment_to_logInFragment)
     }
 
-    private fun unableToLogIn() {
-        printLogD("UNABLE TO SIGN IN ", "signInIntoFirestore")
-        binding.exitBtn.visible()
-        binding.tryAgainBtn.visible()
-        binding.errorTextView.visible()
-
-    }
 
     private fun navToNoteListFragment() {
         findNavController().navigate(R.id.action_splashFragment_to_taskListFragment)
@@ -102,9 +75,5 @@ class SplashFragment(
         _binding = null
     }
 
-    companion object {
-        private const val EMAIL = "testReleaseUser@cleanTodo.com"
-        private const val PASSWORD = "123456789"
-    }
 
 }

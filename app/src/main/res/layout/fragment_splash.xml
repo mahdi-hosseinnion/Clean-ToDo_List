@@ -5,39 +5,12 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/error_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:textColor="#E91E63"
-        android:textSize="20sp"
-        android:text="@string/login_error"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Splashing...."
+        android:textSize="24sp" />
 
-    <Button
-        android:id="@+id/tryAgain_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/try_again"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/error_textView"
-        app:layout_constraintStart_toStartOf="@+id/error_textView"
-        app:layout_constraintTop_toBottomOf="@+id/error_textView" />
-
-    <Button
-        android:id="@+id/exit_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/Exit"
-        android:visibility="gone"
-        android:background="@color/delete_red"
-        app:layout_constraintEnd_toEndOf="@+id/tryAgain_btn"
-        app:layout_constraintStart_toStartOf="@+id/tryAgain_btn"
-        app:layout_constraintTop_toBottomOf="@+id/tryAgain_btn" />
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
