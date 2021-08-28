@@ -15,7 +15,7 @@ import com.example.clean_todo_list.business.domain.state.*
 import com.example.clean_todo_list.business.interactors.common.DeleteTask.Companion.DELETE_TASK_SUCCESS
 import com.example.clean_todo_list.business.interactors.taskdetail.UpdateTask.Companion.UPDATE_TASK_SUCCESS
 import com.example.clean_todo_list.databinding.FragmentTaskDetailBinding
-import com.example.clean_todo_list.framework.presentation.common.BaseTaskFragment
+import com.example.clean_todo_list.framework.presentation.common.BaseFragment
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListStateEvent
 import com.example.clean_todo_list.util.Constants.TAG
 import com.example.clean_todo_list.util.cLog
@@ -32,7 +32,7 @@ const val TASK_DETAIL_SELECTED_TASK_BUNDLE_KEY =
 @ExperimentalCoroutinesApi
 class TaskDetailFragment(
     private val viewModelFactory: ViewModelProvider.Factory
-) : BaseTaskFragment(
+) : BaseFragment(
 ) {
 
     private var _binding: FragmentTaskDetailBinding? = null

@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.clean_todo_list.R
 import com.example.clean_todo_list.databinding.FragmentSplashBinding
-import com.example.clean_todo_list.framework.presentation.common.BaseTaskFragment
+import com.example.clean_todo_list.framework.presentation.common.BaseFragment
 import com.example.clean_todo_list.framework.presentation.utils.gone
 import com.example.clean_todo_list.framework.presentation.utils.visible
 import com.example.clean_todo_list.util.printLogD
@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class SplashFragment(
     private val viewModelFactory: ViewModelProvider.Factory
-) : BaseTaskFragment() {
+) : BaseFragment() {
 
     private var _binding: FragmentSplashBinding? = null
 

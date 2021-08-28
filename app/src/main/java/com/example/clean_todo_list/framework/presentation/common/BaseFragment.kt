@@ -7,7 +7,7 @@ import com.example.clean_todo_list.framework.presentation.MainActivity
 import com.example.clean_todo_list.framework.presentation.utils.UIController
 
 
-abstract class BaseTaskFragment : Fragment() {
+abstract class BaseFragment : Fragment() {
 
     lateinit var uiController: UIController
 

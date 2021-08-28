@@ -9,7 +9,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,20 +16,18 @@ import com.example.clean_todo_list.R
 import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.state.*
 import com.example.clean_todo_list.databinding.FragmentTaskListBinding
-import com.example.clean_todo_list.framework.presentation.common.BaseTaskFragment
+import com.example.clean_todo_list.framework.presentation.common.BaseFragment
 import com.example.clean_todo_list.framework.presentation.taskdetail.TASK_DETAIL_SELECTED_TASK_BUNDLE_KEY
 import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListStateEvent.*
 import com.example.clean_todo_list.util.printLogD
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @FlowPreview
 @ExperimentalCoroutinesApi
 class TaskListFragment(
     private val viewModelFactory: ViewModelProvider.Factory
-) : BaseTaskFragment(), TaskListAdapter.Interaction, CustomSearchAndFilterView.Interaction {
+) : BaseFragment(), TaskListAdapter.Interaction, CustomSearchAndFilterView.Interaction {
 
     private var _binding: FragmentTaskListBinding? = null
 
