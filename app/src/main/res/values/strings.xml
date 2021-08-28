@@ -41,6 +41,15 @@
     <string name="a_to_z_or_z_to_a">Order by A to Z or Z to A</string>
     <string name="a_to_z">A to Z</string>
     <string name="z_to_a">Z to A</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="forgot_password_question">forgot password?</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign up</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="submit">Submit</string>
+    <string name="back_to_login">Back to login</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
 
 
 </resources>
