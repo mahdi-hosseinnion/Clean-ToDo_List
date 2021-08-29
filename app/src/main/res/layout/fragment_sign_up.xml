@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="16dp"
-        android:hint="@string/email" />
+        android:hint="@string/email"
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/signup_password_edt"
@@ -56,13 +57,13 @@
             android:text="@string/already_have_an_account" />
 
         <TextView
+            android:id="@+id/signup_login_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginStart="4dp"
             android:gravity="center"
             android:text="@string/login"
-            android:id="@+id/signup_login_btn"
             android:textColor="?colorPrimary" />
     </LinearLayout>
 
