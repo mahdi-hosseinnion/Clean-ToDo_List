@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.example.clean_todo_list.framework.presentation.tasklist.CustomSearchAndFilterView
+        <com.example.clean_todo_list.framework.presentation.task.tasklist.CustomSearchAndFilterView
             android:id="@+id/search_and_filter_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

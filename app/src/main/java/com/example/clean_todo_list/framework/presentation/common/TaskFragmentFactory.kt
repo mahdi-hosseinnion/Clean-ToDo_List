@@ -6,8 +6,8 @@ import com.example.clean_todo_list.framework.presentation.auth.forgotpassword.Fo
 import com.example.clean_todo_list.framework.presentation.auth.login.LogInFragment
 import com.example.clean_todo_list.framework.presentation.auth.signup.SignUpFragment
 import com.example.clean_todo_list.framework.presentation.splash.SplashFragment
-import com.example.clean_todo_list.framework.presentation.taskdetail.TaskDetailFragment
-import com.example.clean_todo_list.framework.presentation.tasklist.TaskListFragment
+import com.example.clean_todo_list.framework.presentation.task.taskdetail.TaskDetailFragment
+import com.example.clean_todo_list.framework.presentation.task.tasklist.TaskListFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject

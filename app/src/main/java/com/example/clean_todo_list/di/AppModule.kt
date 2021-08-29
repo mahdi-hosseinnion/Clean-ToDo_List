@@ -8,9 +8,9 @@ import com.example.clean_todo_list.business.interactors.common.ChangeTaskDoneSta
 import com.example.clean_todo_list.business.interactors.common.DeleteTask
 import com.example.clean_todo_list.business.interactors.splash.SyncDeletedTasks
 import com.example.clean_todo_list.business.interactors.splash.SyncTasks
-import com.example.clean_todo_list.business.interactors.taskdetail.TaskDetailInteractors
-import com.example.clean_todo_list.business.interactors.taskdetail.UpdateTask
-import com.example.clean_todo_list.business.interactors.tasklist.*
+import com.example.clean_todo_list.business.interactors.task.taskdetail.TaskDetailInteractors
+import com.example.clean_todo_list.business.interactors.task.taskdetail.UpdateTask
+import com.example.clean_todo_list.business.interactors.task.tasklist.*
 import com.example.clean_todo_list.framework.datasource.cache.abstraction.TaskDaoService
 import com.example.clean_todo_list.framework.datasource.cache.database.TaskDao
 import com.example.clean_todo_list.framework.datasource.cache.database.TaskDataBase

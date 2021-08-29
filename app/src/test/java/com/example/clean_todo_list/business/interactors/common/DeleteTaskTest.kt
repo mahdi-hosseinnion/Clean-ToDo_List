@@ -9,8 +9,8 @@ import com.example.clean_todo_list.business.interactors.common.DeleteTask.Compan
 import com.example.clean_todo_list.business.interactors.common.DeleteTask.Companion.DELETE_TASK_SUCCESS
 import com.example.clean_todo_list.di.DependencyContainer
 import com.example.clean_todo_list.framework.datasource.cache.util.SortAndOrder
-import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListStateEvent
-import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListViewState
+import com.example.clean_todo_list.framework.presentation.task.tasklist.state.TaskListStateEvent
+import com.example.clean_todo_list.framework.presentation.task.tasklist.state.TaskListViewState
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*

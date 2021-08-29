@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/taskListFragment"
-        android:name="com.example.clean_todo_list.framework.presentation.tasklist.TaskListFragment"
+        android:name="com.example.clean_todo_list.framework.presentation.task.tasklist.TaskListFragment"
         android:label="">
         <action
             android:id="@+id/action_taskListFragment_to_taskDetailFragment"
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/taskDetailFragment"
-        android:name="com.example.clean_todo_list.framework.presentation.taskdetail.TaskDetailFragment"
+        android:name="com.example.clean_todo_list.framework.presentation.task.taskdetail.TaskDetailFragment"
         android:label="">
         <action
             android:id="@+id/action_taskDetailFragment_to_taskListFragment"

@@ -3,16 +3,14 @@ package com.example.clean_todo_list.framework.presentation.common
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.clean_todo_list.business.interactors.taskdetail.TaskDetailInteractors
-import com.example.clean_todo_list.business.interactors.tasklist.TaskListInteractors
+import com.example.clean_todo_list.business.interactors.task.taskdetail.TaskDetailInteractors
+import com.example.clean_todo_list.business.interactors.task.tasklist.TaskListInteractors
 import com.example.clean_todo_list.framework.presentation.splash.SplashViewModel
 import com.example.clean_todo_list.framework.presentation.splash.TaskNetworkSyncManager
-import com.example.clean_todo_list.framework.presentation.taskdetail.TaskDetailViewModel
-import com.example.clean_todo_list.framework.presentation.tasklist.TaskListViewModel
+import com.example.clean_todo_list.framework.presentation.task.taskdetail.TaskDetailViewModel
+import com.example.clean_todo_list.framework.presentation.task.tasklist.TaskListViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @FlowPreview
 @ExperimentalCoroutinesApi

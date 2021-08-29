@@ -8,13 +8,11 @@ import com.example.clean_todo_list.business.domain.model.TaskFactory
 import com.example.clean_todo_list.business.domain.state.ViewState
 import com.example.clean_todo_list.business.interactors.common.ChangeTaskDoneState.Companion.UPDATE_TASK_DONE_STATE_FAILED
 import com.example.clean_todo_list.business.interactors.common.ChangeTaskDoneState.Companion.UPDATE_TASK_DONE_STATE_SUCCESS
-import com.example.clean_todo_list.business.interactors.tasklist.InsertNewTask
 import com.example.clean_todo_list.di.DependencyContainer
-import com.example.clean_todo_list.framework.presentation.tasklist.state.TaskListStateEvent
+import com.example.clean_todo_list.framework.presentation.task.tasklist.state.TaskListStateEvent
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.api.Test
 
 /**

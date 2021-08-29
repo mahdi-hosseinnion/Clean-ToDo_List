@@ -2,8 +2,8 @@ package com.example.clean_todo_list.di
 
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModelProvider
-import com.example.clean_todo_list.business.interactors.taskdetail.TaskDetailInteractors
-import com.example.clean_todo_list.business.interactors.tasklist.TaskListInteractors
+import com.example.clean_todo_list.business.interactors.task.taskdetail.TaskDetailInteractors
+import com.example.clean_todo_list.business.interactors.task.tasklist.TaskListInteractors
 import com.example.clean_todo_list.framework.presentation.common.TaskViewModelFactory
 import com.example.clean_todo_list.framework.presentation.splash.TaskNetworkSyncManager
 import dagger.Module
