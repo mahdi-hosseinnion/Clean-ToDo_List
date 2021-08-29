@@ -1,12 +1,21 @@
 package com.example.clean_todo_list.framework.presentation.auth.login
 
+import com.example.clean_todo_list.business.domain.state.DataState
 import com.example.clean_todo_list.business.domain.state.StateEvent
+import com.example.clean_todo_list.business.interactors.auth.login.LoginUser
+import com.example.clean_todo_list.framework.presentation.auth.login.state.LogInStateEvent
 import com.example.clean_todo_list.framework.presentation.auth.login.state.LogInViewState
 import com.example.clean_todo_list.framework.presentation.common.BaseViewModel
+import com.example.clean_todo_list.framework.presentation.task.taskdetail.state.TaskDetailViewState
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.Flow
 
+@ExperimentalCoroutinesApi
 @FlowPreview
-class LogInViewModel : BaseViewModel<LogInViewState>() {
+class LogInViewModel(
+    private val loginUser: LoginUser
+) : BaseViewModel<LogInViewState>() {
 
     override fun handleNewData(data: LogInViewState) {
         val outdated = getCurrentViewStateOrNew()
@@ -18,10 +27,30 @@ class LogInViewModel : BaseViewModel<LogInViewState>() {
     }
 
     override fun setStateEvent(stateEvent: StateEvent) {
-        TODO("Not yet implemented")
+        val job: Flow<DataState<LogInViewState>?> = when (
+            stateEvent
+        ) {
+            is LogInStateEvent.LoginUserEvent -> {
+                loginUser.execute(stateEvent.email, stateEvent.password, stateEvent)
+            }
+            else -> {
+                emitInvalidStateEvent(stateEvent)
+            }
+        }
+        launchJob(stateEvent, job)
     }
 
     override fun initNewViewState(): LogInViewState = LogInViewState()
 
-    // TODO: Implement the ViewModel
+    fun login(
+        email: String,
+        password: String
+    ) {
+        setStateEvent(
+            LogInStateEvent.LoginUserEvent(
+                email,
+                password
+            )
+        )
+    }
 }

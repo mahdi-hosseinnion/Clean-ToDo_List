@@ -8,12 +8,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.clean_todo_list.R
+import com.example.clean_todo_list.business.interactors.auth.login.LoginUser
 import com.example.clean_todo_list.databinding.FragmentLogInBinding
 import com.example.clean_todo_list.framework.presentation.common.BaseFragment
+import com.example.clean_todo_list.util.toastLong
 import com.example.clean_todo_list.util.toastShort
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
+@ExperimentalCoroutinesApi
 @FlowPreview
 class LogInFragment(
     private val viewModelFactory: ViewModelProvider.Factory
@@ -37,6 +41,22 @@ class LogInFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUi()
+        subscribeObservers()
+    }
+
+    private fun subscribeObservers() {
+        viewModel.shouldDisplayProgressBar.observe(viewLifecycleOwner) {
+            uiController.displayProgressBar(it)
+        }
+        viewModel.stateMessage.observe(viewLifecycleOwner) {
+            it?.let {
+                if (it.response.message == LoginUser.LOGIN_USER_SUCCESS) {
+                    navToApp()
+                }
+                toastLong(it.response.message ?: "")
+                viewModel.clearStateMessage()
+            }
+        }
     }
 
     private fun setupUi() {
@@ -45,7 +65,10 @@ class LogInFragment(
             tryToSignInIntoFirestore()
         }
         binding.loginLoginBtn.setOnClickListener {
-            toastShort("Login system is not ready!")
+            viewModel.login(
+                binding.loginEmailEdt.text.toString(),
+                binding.loginPasswordEdt.text.toString()
+            )
         }
         binding.loginForgotPasswordTxt.setOnClickListener {
             navToForgotPasswordFragment()
@@ -68,14 +91,14 @@ class LogInFragment(
             EMAIL, PASSWORD
         ).addOnCompleteListener {
             if (it.isSuccessful) {
-                onUserLogin()
+                navToApp()
             } else {
                 binding.loginLoginWithTestUserTxt.isEnabled = true
             }
         }
     }
 
-    private fun onUserLogin() {
+    private fun navToApp() {
         findNavController().navigate(R.id.action_logInFragment_to_splashFragment)
     }
 

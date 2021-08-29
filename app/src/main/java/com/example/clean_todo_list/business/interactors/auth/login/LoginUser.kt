@@ -1,16 +1,23 @@
 package com.example.clean_todo_list.business.interactors.auth.login
 
-import android.service.autofill.Dataset
+import com.example.clean_todo_list.business.data.network.NetworkConstants.NETWORK_TIMEOUT
 import com.example.clean_todo_list.business.domain.state.*
 import com.example.clean_todo_list.framework.presentation.auth.login.state.LogInViewState
 import com.example.clean_todo_list.util.printLogD
 import com.example.clean_todo_list.util.printLogE
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withTimeout
+import java.lang.Exception
+import javax.inject.Inject
 
-class LoginUser(
+//TODO AUTH SCOPOE
+class LoginUser
+@Inject
+constructor(
     private val auth: FirebaseAuth
 ) {
 
@@ -21,21 +28,32 @@ class LoginUser(
     ): Flow<DataState<LogInViewState>> = flow {
 
         var result = failResult(stateEvent)
+        try {
+            withTimeout(LOGIN_USER_TIME_OUT) {
 
-        auth.signInWithEmailAndPassword(
-            email,
-            password
-        ).addOnCompleteListener { response ->
-            if (response.isSuccessful) {
-                result = successResult(stateEvent)
-                printLogD(TAG, "Login was successful")
-            } else {
-                result =
-                    response.exception?.message?.let { failResult(stateEvent, it) } ?: failResult(stateEvent)
-                printLogE(TAG, "Login failed cause: ${response.exception}")
+                auth.signInWithEmailAndPassword(
+                    email,
+                    password
+                ).addOnCompleteListener { response ->
+                    if (response.isSuccessful) {
+                        result = successResult(stateEvent)
+                        printLogD(TAG, "Login was successful")
+                    } else {
+                        result =
+                            response.exception?.message?.let { failResult(stateEvent, it) }
+                                ?: failResult(
+                                    stateEvent
+                                )
+                        printLogE(TAG, "Login failed cause: ${response.exception}")
+                    }
+                }.await()
+
             }
-        }.await()
-
+        } catch (throwable: Throwable) {
+            if (throwable is TimeoutCancellationException) {
+                result = failResult(stateEvent, LOGIN_TIME_OUT_ERROR)
+            }
+        }
         emit(result)
 
     }
@@ -57,16 +75,19 @@ class LoginUser(
         message: String = LOGIN_USER_FAILED
     ): DataState<LogInViewState> = DataState.error(
         response = Response(
-            message = LOGIN_USER_SUCCESS,
-            uiComponentType = UIComponentType.None,
-            messageType = MessageType.Success
+            message = message,
+            uiComponentType = UIComponentType.Toast,
+            messageType = MessageType.Error
         ),
         stateEvent = stateEvent
     )
 
     companion object {
         private const val TAG = "LoginInUser"
-        private const val LOGIN_USER_SUCCESS = "Login user was successful"
+        const val LOGIN_USER_SUCCESS = "Login user was successful"
         private const val LOGIN_USER_FAILED = "Unable to login user"
+        private const val LOGIN_TIME_OUT_ERROR =
+            "Login takes too long \n check your connection and try again"
+        private const val LOGIN_USER_TIME_OUT = NETWORK_TIMEOUT
     }
 }

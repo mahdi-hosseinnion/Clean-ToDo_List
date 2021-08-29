@@ -7,6 +7,7 @@ import com.example.clean_todo_list.framework.datasource.network.mappers.NetworkM
 import com.example.clean_todo_list.framework.datasource.network.model.TaskNetworkEntity
 import com.example.clean_todo_list.util.cLog
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -24,14 +25,18 @@ import javax.inject.Singleton
 class TaskFirestoreServiceImpl
 @Inject
 constructor(
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore,
+    private val auth: FirebaseAuth
 ) : TaskFirestoreService {
+
+    private fun userUId(): String =
+        auth.currentUser?.uid ?: throw Throwable(message = "User value is null")
 
     override suspend fun insertTask(task: Task) {
         val entity = NetworkMapper.mapDomainModelToEntity(task)
         firestore
             .collection(TASKS_COLLECTION)
-            .document(USER_ID)
+            .document(userUId())
             .collection(TASKS_COLLECTION)
             .document(entity.id)
             .set(entity)
@@ -48,7 +53,7 @@ constructor(
 
         val collectionRef = firestore
             .collection(TASKS_COLLECTION)
-            .document(USER_ID)
+            .document(userUId())
             .collection(TASKS_COLLECTION)
 
         firestore.runBatch { batch ->
@@ -67,7 +72,7 @@ constructor(
         entity.updated_at = DateUtil.convertUnixTimestampToFirebaseTimestamp(updated_at)
         firestore
             .collection(TASKS_COLLECTION)
-            .document(USER_ID)
+            .document(userUId())
             .collection(TASKS_COLLECTION)
             .document(entity.id)
             .set(entity)
@@ -78,9 +83,10 @@ constructor(
     }
 
     override suspend fun deleteTask(primaryKey: String) {
+
         firestore
             .collection(TASKS_COLLECTION)
-            .document(USER_ID)
+            .document(userUId())
             .collection(TASKS_COLLECTION)
             .document(primaryKey)
             .delete()
@@ -94,7 +100,7 @@ constructor(
         val entity = NetworkMapper.mapDomainModelToEntity(task)
         firestore
             .collection(DELETES_COLLECTION)
-            .document(USER_ID)
+            .document(userUId())
             .collection(TASKS_COLLECTION)
             .document(entity.id)
             .set(entity)
@@ -110,7 +116,7 @@ constructor(
         }
         val collectionRef = firestore
             .collection(DELETES_COLLECTION)
-            .document(USER_ID)
+            .document(userUId())
             .collection(TASKS_COLLECTION)
         firestore.runBatch { batch ->
             for (task in tasks) {
@@ -127,7 +133,7 @@ constructor(
         val entity = NetworkMapper.mapDomainModelToEntity(task)
         firestore
             .collection(DELETES_COLLECTION)
-            .document(USER_ID)
+            .document(userUId())
             .collection(TASKS_COLLECTION)
             .document(entity.id)
             .delete()
@@ -143,7 +149,7 @@ constructor(
         }
         val collectionRef = firestore
             .collection(DELETES_COLLECTION)
-            .document(USER_ID)
+            .document(userUId())
             .collection(TASKS_COLLECTION)
         firestore.runBatch { batch ->
             for (task in tasks) {
@@ -159,7 +165,7 @@ constructor(
         return NetworkMapper.mapEntityListToDomainModelList(
             firestore
                 .collection(DELETES_COLLECTION)
-                .document(USER_ID)
+                .document(userUId())
                 .collection(TASKS_COLLECTION)
                 .get()
                 .addOnFailureListener {
@@ -174,7 +180,7 @@ constructor(
     override suspend fun deleteAllTasks() {
         firestore
             .collection(TASKS_COLLECTION)
-            .document(USER_ID)
+            .document(userUId())
             .delete()
             .addOnFailureListener {
                 cLog(it.message, "deleteAllTasks1")
@@ -182,7 +188,7 @@ constructor(
             .await()
         firestore
             .collection(DELETES_COLLECTION)
-            .document(USER_ID)
+            .document(userUId())
             .delete().addOnFailureListener {
                 cLog(it.message, "deleteAllTasks2")
             }
@@ -192,7 +198,7 @@ constructor(
     override suspend fun searchTask(task: Task): Task? {
         return firestore
             .collection(TASKS_COLLECTION)
-            .document(USER_ID)
+            .document(userUId())
             .collection(TASKS_COLLECTION)
             .document(task.id)
             .get()
@@ -209,7 +215,7 @@ constructor(
         return NetworkMapper.mapEntityListToDomainModelList(
             firestore
                 .collection(TASKS_COLLECTION)
-                .document(USER_ID)
+                .document(userUId())
                 .collection(TASKS_COLLECTION)
                 .get()
                 .addOnFailureListener {
@@ -224,7 +230,7 @@ constructor(
     override suspend fun updateIsDone(taskId: String, isDone: Boolean) {
         firestore
             .collection(TASKS_COLLECTION)
-            .document(USER_ID)
+            .document(userUId())
             .collection(TASKS_COLLECTION)
             .document(taskId)
             .update(
@@ -240,6 +246,6 @@ constructor(
     companion object {
         const val TASKS_COLLECTION = "tasks"
         const val DELETES_COLLECTION = "deletes"
-        const val USER_ID = "aEqm03OkhqWJUE81yFLlHXCxkdM2" // hardcoded for single user
+//        const val USER_ID = "aEqm03OkhqWJUE81yFLlHXCxkdM2" // hardcoded for single user
     }
 }

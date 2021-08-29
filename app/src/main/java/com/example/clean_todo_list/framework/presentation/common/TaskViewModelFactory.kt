@@ -3,8 +3,12 @@ package com.example.clean_todo_list.framework.presentation.common
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.clean_todo_list.business.interactors.auth.login.LoginUser
 import com.example.clean_todo_list.business.interactors.task.taskdetail.TaskDetailInteractors
 import com.example.clean_todo_list.business.interactors.task.tasklist.TaskListInteractors
+import com.example.clean_todo_list.framework.presentation.auth.forgotpassword.ForgotPasswordViewModel
+import com.example.clean_todo_list.framework.presentation.auth.login.LogInViewModel
+import com.example.clean_todo_list.framework.presentation.auth.signup.SignUpViewModel
 import com.example.clean_todo_list.framework.presentation.splash.SplashViewModel
 import com.example.clean_todo_list.framework.presentation.splash.TaskNetworkSyncManager
 import com.example.clean_todo_list.framework.presentation.task.taskdetail.TaskDetailViewModel
@@ -18,6 +22,7 @@ class TaskViewModelFactory
 constructor(
     private val taskListInteractors: TaskListInteractors,
     private val taskDetailInteractors: TaskDetailInteractors,
+    private val loginUser: LoginUser,
     private val taskNetworkSyncManager: TaskNetworkSyncManager,
     private val sharedPreferences: SharedPreferences,
     private val sharedPrefsEditor: SharedPreferences.Editor
@@ -44,6 +49,20 @@ constructor(
                 SplashViewModel(
                     taskNetworkSyncManager = taskNetworkSyncManager
                 ) as T
+            }
+            LogInViewModel::class.java -> {
+                LogInViewModel(
+                    loginUser = loginUser
+                ) as T
+
+            }
+            SignUpViewModel::class.java -> {
+                SignUpViewModel() as T
+
+            }
+            ForgotPasswordViewModel::class.java -> {
+                ForgotPasswordViewModel() as T
+
             }
 
             else -> {

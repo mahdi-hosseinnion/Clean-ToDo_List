@@ -66,10 +66,12 @@ object AppModule {
     @Singleton
     @Provides
     fun provideFirestoreService(
-        firebaseFirestore: FirebaseFirestore
+        firebaseFirestore: FirebaseFirestore,
+        firebaseAuth: FirebaseAuth
     ): TaskFirestoreService {
         return TaskFirestoreServiceImpl(
-            firebaseFirestore
+            firebaseFirestore,
+            firebaseAuth
         )
     }
 
