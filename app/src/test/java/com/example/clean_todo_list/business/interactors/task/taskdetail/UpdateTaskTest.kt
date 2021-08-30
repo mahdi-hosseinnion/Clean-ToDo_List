@@ -3,7 +3,7 @@ package com.example.clean_todo_list.business.interactors.task.taskdetail
 import com.example.clean_todo_list.business.data.cache.CacheErrors.CACHE_ERROR_UNKNOWN
 import com.example.clean_todo_list.business.data.cache.FORCE_EXCEPTION
 import com.example.clean_todo_list.business.data.cache.abstraction.TaskCacheDataSource
-import com.example.clean_todo_list.business.data.network.abstraction.TaskNetworkDataSource
+import com.example.clean_todo_list.business.data.network.task.abstraction.TaskNetworkDataSource
 import com.example.clean_todo_list.business.domain.model.TaskFactory
 import com.example.clean_todo_list.business.interactors.task.taskdetail.UpdateTask.Companion.UPDATE_TASK_FAILED
 import com.example.clean_todo_list.business.interactors.task.taskdetail.UpdateTask.Companion.UPDATE_TASK_SUCCESS

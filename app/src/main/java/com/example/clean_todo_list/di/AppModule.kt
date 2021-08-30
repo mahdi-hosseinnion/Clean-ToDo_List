@@ -2,8 +2,8 @@ package com.example.clean_todo_list.di
 
 import com.example.clean_todo_list.business.data.cache.abstraction.TaskCacheDataSource
 import com.example.clean_todo_list.business.data.cache.implementation.TaskCacheDataSourceImpl
-import com.example.clean_todo_list.business.data.network.abstraction.TaskNetworkDataSource
-import com.example.clean_todo_list.business.data.network.implementation.TaskNetworkDataSourceImpl
+import com.example.clean_todo_list.business.data.network.task.abstraction.TaskNetworkDataSource
+import com.example.clean_todo_list.business.data.network.task.implementation.TaskNetworkDataSourceImpl
 import com.example.clean_todo_list.business.interactors.common.ChangeTaskDoneState
 import com.example.clean_todo_list.business.interactors.common.DeleteTask
 import com.example.clean_todo_list.business.interactors.splash.SyncDeletedTasks
@@ -15,8 +15,8 @@ import com.example.clean_todo_list.framework.datasource.cache.abstraction.TaskDa
 import com.example.clean_todo_list.framework.datasource.cache.database.TaskDao
 import com.example.clean_todo_list.framework.datasource.cache.database.TaskDataBase
 import com.example.clean_todo_list.framework.datasource.cache.implementation.TaskDaoServiceImpl
-import com.example.clean_todo_list.framework.datasource.network.abstraction.TaskFirestoreService
-import com.example.clean_todo_list.framework.datasource.network.implemetation.TaskFirestoreServiceImpl
+import com.example.clean_todo_list.framework.datasource.network.task.abstraction.TaskFirestoreService
+import com.example.clean_todo_list.framework.datasource.network.task.implemetation.TaskFirestoreServiceImpl
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module

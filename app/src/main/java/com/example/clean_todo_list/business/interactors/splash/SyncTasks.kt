@@ -4,16 +4,12 @@ import android.util.Log
 import com.example.clean_todo_list.business.data.cache.CacheResponseHandler
 import com.example.clean_todo_list.business.data.cache.abstraction.TaskCacheDataSource
 import com.example.clean_todo_list.business.data.network.ApiResponseHandler
-import com.example.clean_todo_list.business.data.network.abstraction.TaskNetworkDataSource
+import com.example.clean_todo_list.business.data.network.task.abstraction.TaskNetworkDataSource
 import com.example.clean_todo_list.business.data.util.safeApiCall
 import com.example.clean_todo_list.business.data.util.safeCacheCall
 import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.state.DataState
-import com.example.clean_todo_list.business.domain.state.Response
-import com.example.clean_todo_list.business.domain.state.StateEvent
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.newFixedThreadPoolContext
 import kotlinx.coroutines.withContext
 
 class SyncTasks

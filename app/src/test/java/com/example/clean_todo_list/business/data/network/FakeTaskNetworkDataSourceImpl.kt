@@ -1,8 +1,7 @@
 package com.example.clean_todo_list.business.data.network
 
-import com.example.clean_todo_list.business.data.network.abstraction.TaskNetworkDataSource
+import com.example.clean_todo_list.business.data.network.task.abstraction.TaskNetworkDataSource
 import com.example.clean_todo_list.business.domain.model.Task
-import com.example.clean_todo_list.business.domain.util.DateUtil
 
 class FakeTaskNetworkDataSourceImpl(
     private val tasksData: HashMap<String, Task>,

@@ -2,9 +2,8 @@ package com.example.clean_todo_list
 
 
 import com.example.clean_todo_list.framework.datasource.data.TaskDataFactory
-import com.example.clean_todo_list.framework.datasource.network.implemetation.TaskFirestoreServiceImpl.Companion.TASKS_COLLECTION
-import com.example.clean_todo_list.framework.datasource.network.implemetation.TaskFirestoreServiceImpl.Companion.USER_ID
 import com.example.clean_todo_list.framework.datasource.network.mappers.NetworkMapper
+import com.example.clean_todo_list.framework.datasource.network.task.implemetation.TaskFirestoreServiceImpl.Companion.TASKS_COLLECTION
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.runBlocking
@@ -52,5 +51,6 @@ abstract class BaseFirebaseTest : BaseTest() {
     companion object {
         private const val TEST_EMAIL = "mahdi@test.com"
         private const val TEST_PASSWORD = "password"
+        private const val USER_ID = "gwFPALheP7cOBEh0OcZ24qwEllF2"
     }
 }

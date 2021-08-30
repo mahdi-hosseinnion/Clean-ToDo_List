@@ -1,8 +1,8 @@
-package com.example.clean_todo_list.framework.datasource.network.implemetation
+package com.example.clean_todo_list.framework.datasource.network.task.implemetation
 
 import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.util.DateUtil
-import com.example.clean_todo_list.framework.datasource.network.abstraction.TaskFirestoreService
+import com.example.clean_todo_list.framework.datasource.network.task.abstraction.TaskFirestoreService
 import com.example.clean_todo_list.framework.datasource.network.mappers.NetworkMapper
 import com.example.clean_todo_list.framework.datasource.network.model.TaskNetworkEntity
 import com.example.clean_todo_list.util.cLog

@@ -5,8 +5,8 @@ import com.example.clean_todo_list.BaseFirebaseTest
 import com.example.clean_todo_list.business.domain.model.TaskFactory
 import com.example.clean_todo_list.business.domain.util.DateUtil
 import com.example.clean_todo_list.di.TestAppComponent
-import com.example.clean_todo_list.framework.datasource.network.abstraction.TaskFirestoreService
-import com.example.clean_todo_list.framework.datasource.network.implemetation.TaskFirestoreServiceImpl
+import com.example.clean_todo_list.framework.datasource.network.task.abstraction.TaskFirestoreService
+import com.example.clean_todo_list.framework.datasource.network.task.implemetation.TaskFirestoreServiceImpl
 import com.example.clean_todo_list.util.printLogD
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking

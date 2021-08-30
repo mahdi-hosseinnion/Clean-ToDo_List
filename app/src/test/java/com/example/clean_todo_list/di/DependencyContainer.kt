@@ -4,7 +4,7 @@ import com.example.clean_todo_list.business.data.TaskDataFactory
 import com.example.clean_todo_list.business.data.cache.FakeTaskCacheDataSourceImpl
 import com.example.clean_todo_list.business.data.cache.abstraction.TaskCacheDataSource
 import com.example.clean_todo_list.business.data.network.FakeTaskNetworkDataSourceImpl
-import com.example.clean_todo_list.business.data.network.abstraction.TaskNetworkDataSource
+import com.example.clean_todo_list.business.data.network.task.abstraction.TaskNetworkDataSource
 import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.util.isUnitTest
 

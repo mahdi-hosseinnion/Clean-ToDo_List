@@ -2,15 +2,13 @@ package com.example.clean_todo_list.business.interactors.common
 
 import com.example.clean_todo_list.business.data.cache.CacheResponseHandler
 import com.example.clean_todo_list.business.data.cache.abstraction.TaskCacheDataSource
-import com.example.clean_todo_list.business.data.network.abstraction.TaskNetworkDataSource
+import com.example.clean_todo_list.business.data.network.task.abstraction.TaskNetworkDataSource
 import com.example.clean_todo_list.business.data.util.safeApiCall
 import com.example.clean_todo_list.business.data.util.safeCacheCall
-import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.state.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 
 class ChangeTaskDoneState<_ViewState : ViewState>(
     private val taskCacheDataSource: TaskCacheDataSource,

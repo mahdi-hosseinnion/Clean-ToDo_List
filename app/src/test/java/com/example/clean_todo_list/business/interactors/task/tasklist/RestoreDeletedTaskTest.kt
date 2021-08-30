@@ -4,7 +4,7 @@ import com.example.clean_todo_list.business.data.cache.CacheErrors.CACHE_ERROR_U
 import com.example.clean_todo_list.business.data.cache.FORCE_EXCEPTION
 import com.example.clean_todo_list.business.data.cache.FORCE_GENERAL_FAILURE
 import com.example.clean_todo_list.business.data.cache.abstraction.TaskCacheDataSource
-import com.example.clean_todo_list.business.data.network.abstraction.TaskNetworkDataSource
+import com.example.clean_todo_list.business.data.network.task.abstraction.TaskNetworkDataSource
 import com.example.clean_todo_list.business.domain.model.TaskFactory
 import com.example.clean_todo_list.business.interactors.task.tasklist.RestoreDeletedTask.Companion.RESTORE_TASK_FAILED
 import com.example.clean_todo_list.business.interactors.task.tasklist.RestoreDeletedTask.Companion.RESTORE_TASK_SUCCESS

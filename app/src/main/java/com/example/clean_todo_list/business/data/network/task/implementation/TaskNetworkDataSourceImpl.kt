@@ -1,8 +1,8 @@
-package com.example.clean_todo_list.business.data.network.implementation
+package com.example.clean_todo_list.business.data.network.task.implementation
 
-import com.example.clean_todo_list.business.data.network.abstraction.TaskNetworkDataSource
+import com.example.clean_todo_list.business.data.network.task.abstraction.TaskNetworkDataSource
 import com.example.clean_todo_list.business.domain.model.Task
-import com.example.clean_todo_list.framework.datasource.network.abstraction.TaskFirestoreService
+import com.example.clean_todo_list.framework.datasource.network.task.abstraction.TaskFirestoreService
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -1,8 +1,8 @@
-package com.example.clean_todo_list.framework.datasource.network.abstraction
+package com.example.clean_todo_list.business.data.network.task.abstraction
 
 import com.example.clean_todo_list.business.domain.model.Task
 
-interface TaskFirestoreService {
+interface TaskNetworkDataSource {
 
     suspend fun insertTask(task: Task)
 
@@ -19,14 +19,18 @@ interface TaskFirestoreService {
     suspend fun deleteDeletedTask(task: Task)
 
     suspend fun deleteDeletedTasks(tasks: List<Task>)
-
+    //getDeletedTasks function should not return null b/c SyncDeletedTasks
     suspend fun getDeletedTasks(): List<Task>
 
     suspend fun deleteAllTasks()
 
     suspend fun searchTask(task: Task): Task?
 
-    suspend fun getAllTasks():List<Task>
+    suspend fun getAllTasks(): List<Task>
 
-    suspend fun updateIsDone(taskId: String, isDone: Boolean)
+    suspend fun updateIsDone(
+        taskId: String,
+        isDone: Boolean
+    )
+
 }

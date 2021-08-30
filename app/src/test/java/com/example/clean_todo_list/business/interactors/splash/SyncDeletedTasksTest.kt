@@ -2,7 +2,7 @@ package com.example.clean_todo_list.business.interactors.splash
 
 import com.example.clean_todo_list.business.data.cache.CacheErrors.CACHE_ERROR_UNKNOWN
 import com.example.clean_todo_list.business.data.cache.abstraction.TaskCacheDataSource
-import com.example.clean_todo_list.business.data.network.abstraction.TaskNetworkDataSource
+import com.example.clean_todo_list.business.data.network.task.abstraction.TaskNetworkDataSource
 import com.example.clean_todo_list.business.domain.model.Task
 import com.example.clean_todo_list.business.domain.state.MessageType
 import com.example.clean_todo_list.business.interactors.splash.SyncDeletedTasks.Companion.THERE_IS_NO_TASK_IN_DELETE_NODE_TO_DELETE
