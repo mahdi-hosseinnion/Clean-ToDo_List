@@ -1,12 +1,8 @@
 package com.example.clean_todo_list.framework.datasource.network.auth.implementation
 
-import com.example.clean_todo_list.business.domain.state.DataState
-import com.example.clean_todo_list.business.domain.state.MessageType
-import com.example.clean_todo_list.business.domain.state.Response
-import com.example.clean_todo_list.business.domain.state.UIComponentType
 import com.example.clean_todo_list.framework.datasource.network.auth.abstraction.AuthFirebaseService
-import com.example.clean_todo_list.util.printLogD
-import com.example.clean_todo_list.util.printLogE
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await
 
@@ -14,91 +10,38 @@ class AuthFirebaseServiceImpl(
     private val auth: FirebaseAuth
 ) : AuthFirebaseService {
 
-    override suspend fun login(email: String, password: String): DataState<Nothing> {
-        var result = failResult(LOGIN_UNKNOWN_ERROR)
-
+    override suspend fun login(email: String, password: String): Task<AuthResult>? {
+//        return auth.signInWithEmailAndPassword(email, password).asDeferred().asTask()
+        var result: Task<AuthResult>? = null
         auth.signInWithEmailAndPassword(
             email,
             password
-        ).addOnCompleteListener { response ->
-            if (response.isSuccessful) {
-                result = successResult(LOGIN_SUCCESS)
-                printLogD(TAG, LOGIN_SUCCESS)
-
-            } else {
-                //fail
-                //TODO check for localized message
-                result = failResult(LOGIN_ERROR + response.exception?.localizedMessage)
-                printLogE(TAG, response.exception.toString())
-            }
+        ).addOnCompleteListener {
+            result = it
         }.await()
-
         return result
     }
 
-    override suspend fun signup(email: String, password: String): DataState<Nothing> {
-        var result = failResult(SIGNUP_UNKNOWN_ERROR)
-
+    override suspend fun signup(email: String, password: String): Task<AuthResult>? {
+        var result: Task<AuthResult>? = null
         auth.createUserWithEmailAndPassword(
             email,
             password
-        ).addOnCompleteListener { response ->
-            if (response.isSuccessful) {
-                result = successResult(SIGNUP_SUCCESS)
-                printLogD(TAG, SIGNUP_SUCCESS)
-            } else {
-                //fail
-                //TODO check for localized message
-                result = failResult(SIGNUP_ERROR + response.exception?.localizedMessage)
-                printLogE(TAG, response.exception.toString())
-            }
+        ).addOnCompleteListener {
+            result = it
         }.await()
-
         return result
     }
 
-    override suspend fun sendPasswordResetEmail(email: String): DataState<Nothing> {
-        var result = failResult(SEND_RESET_UNKNOWN_ERROR)
-
+    override suspend fun sendPasswordResetEmail(email: String): Task<Void>? {
+        var result: Task<Void>? = null
         auth.sendPasswordResetEmail(
             email
-        ).addOnCompleteListener { response ->
-            if (response.isSuccessful) {
-                result = successResult(SEND_RESET_SUCCESS)
-                printLogD(TAG, SEND_RESET_SUCCESS)
-            } else {
-                //fail
-                //TODO check for localized message
-                result = failResult(SEND_RESET_ERROR + response.exception?.localizedMessage)
-                printLogE(TAG, response.exception.toString())
-            }
+        ).addOnCompleteListener {
+            result = it
         }.await()
-
         return result
     }
-
-    private fun successResult(
-        message: String
-    ): DataState<Nothing> = DataState.data(
-        response = Response(
-            message = message,
-            uiComponentType = UIComponentType.Toast,
-            messageType = MessageType.Success
-        ),
-        data = null,
-        stateEvent = null
-    )
-
-    private fun failResult(
-        message: String
-    ): DataState<Nothing> = DataState.error(
-        response = Response(
-            message = message,
-            uiComponentType = UIComponentType.Dialog,
-            messageType = MessageType.Error
-        ),
-        stateEvent = null
-    )
 
     companion object {
         private const val TAG = "AuthFirestoreServiceImp"
@@ -121,8 +64,8 @@ class AuthFirebaseServiceImpl(
             "Unable to send password reset email!\nreason: unknown"
     }
 
-    //TODO ADD PERSAION LANGUAGE
-    //doc: https://firebase.google.com/docs/auth/android/manage-users#send_a_password_reset_email
+//TODO ADD PERSAION LANGUAGE
+//doc: https://firebase.google.com/docs/auth/android/manage-users#send_a_password_reset_email
 //    auth.setLanguageCode("fr")
 //    // To apply the default app language instead of explicitly setting it.
 //// auth.useAppLanguage()
