@@ -2,6 +2,8 @@ package com.example.clean_todo_list.di
 
 import com.example.clean_todo_list.business.data.cache.abstraction.TaskCacheDataSource
 import com.example.clean_todo_list.business.data.cache.implementation.TaskCacheDataSourceImpl
+import com.example.clean_todo_list.business.data.network.auth.abstraction.AuthNetworkDataSource
+import com.example.clean_todo_list.business.data.network.auth.implementation.AuthNetworkDataSourceImpl
 import com.example.clean_todo_list.business.data.network.task.abstraction.TaskNetworkDataSource
 import com.example.clean_todo_list.business.data.network.task.implementation.TaskNetworkDataSourceImpl
 import com.example.clean_todo_list.business.interactors.common.ChangeTaskDoneState
@@ -15,6 +17,8 @@ import com.example.clean_todo_list.framework.datasource.cache.abstraction.TaskDa
 import com.example.clean_todo_list.framework.datasource.cache.database.TaskDao
 import com.example.clean_todo_list.framework.datasource.cache.database.TaskDataBase
 import com.example.clean_todo_list.framework.datasource.cache.implementation.TaskDaoServiceImpl
+import com.example.clean_todo_list.framework.datasource.network.auth.abstraction.AuthFirebaseService
+import com.example.clean_todo_list.framework.datasource.network.auth.implementation.AuthFirebaseServiceImpl
 import com.example.clean_todo_list.framework.datasource.network.task.abstraction.TaskFirestoreService
 import com.example.clean_todo_list.framework.datasource.network.task.implemetation.TaskFirestoreServiceImpl
 import com.google.firebase.auth.FirebaseAuth
@@ -86,6 +90,29 @@ object AppModule {
         )
     }
 
+    @JvmStatic
+    @Singleton
+    @Provides
+    fun provideAuthFirebaseService(
+        firebaseAuth: FirebaseAuth
+    ): AuthFirebaseService {
+        return AuthFirebaseServiceImpl(
+            firebaseAuth
+        )
+    }
+
+    @JvmStatic
+    @Singleton
+    @Provides
+    fun provideAuthNetworkDataSource(
+        authFirebaseService: AuthFirebaseService
+    ): AuthNetworkDataSource {
+        return AuthNetworkDataSourceImpl(
+            authFirebaseService
+        )
+    }
+
+    //TODO WHY DID NOT JUST INJECT THIS
     @JvmStatic
     @Singleton
     @Provides
