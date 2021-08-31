@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import com.example.clean_todo_list.business.domain.state.StateMessageCallback
 import com.example.clean_todo_list.databinding.FragmentForgotPasswordBinding
 import com.example.clean_todo_list.framework.presentation.common.BaseFragment
-import com.example.clean_todo_list.util.toastShort
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
+@ExperimentalCoroutinesApi
+@FlowPreview
 class ForgotPasswordFragment(
     private val viewModelFactory: ViewModelProvider.Factory
 ) : BaseFragment() {
@@ -32,15 +35,42 @@ class ForgotPasswordFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUi()
+        subscribeObservers()
+    }
+
+    private fun subscribeObservers() {
+        viewModel.shouldDisplayProgressBar.observe(viewLifecycleOwner) {
+            it?.let {
+                uiController.displayProgressBar(it)
+            }
+        }
+        viewModel.stateMessage.observe(viewLifecycleOwner) { st ->
+            st?.let { stateMessage ->
+                uiController.onResponseReceived(
+                    response = stateMessage.response,
+                    stateMessageCallback = object : StateMessageCallback {
+                        override fun removeMessageFromStack() {
+                            viewModel.clearStateMessage()
+                        }
+                    })
+
+            }
+        }
     }
 
     private fun setupUi() {
-        binding.signupSignupBtn.setOnClickListener {
-            toastShort("Forgot password system is not ready!")
+        binding.submitBtn.setOnClickListener {
+            sendResetPasswordEmail()
         }
         binding.forgotPasswordBackToLoginTxt.setOnClickListener {
-            findNavController().navigateUp()
+            navigateUp()
         }
+    }
+
+    private fun sendResetPasswordEmail() {
+        viewModel.sendResetPasswordEmail(
+            binding.forgotPasswordEmailEdt.text.toString()
+        )
     }
 
     override fun onDestroyView() {

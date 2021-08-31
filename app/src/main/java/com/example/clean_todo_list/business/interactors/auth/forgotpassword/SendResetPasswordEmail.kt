@@ -1,6 +1,7 @@
 package com.example.clean_todo_list.business.interactors.auth.forgotpassword
 
 import com.example.clean_todo_list.business.data.network.ApiResponseHandler
+import com.example.clean_todo_list.business.data.network.AuthResponseHandler
 import com.example.clean_todo_list.business.data.network.auth.abstraction.AuthNetworkDataSource
 import com.example.clean_todo_list.business.data.util.safeAuthCall
 import com.example.clean_todo_list.business.domain.state.*
@@ -24,11 +25,11 @@ constructor(
         val networkResult = safeAuthCall(IO) {
             authNetworkDataSource.sendPasswordResetEmail(email)
         }
-        val response = object : ApiResponseHandler<ForgotPasswordViewState, Void>(
+        val response = object : AuthResponseHandler<ForgotPasswordViewState, Void>(
             response = networkResult,
             stateEvent = stateEvent
         ) {
-            override suspend fun handleSuccess(resultObj: Void): DataState<ForgotPasswordViewState>? {
+            override suspend fun handleSuccess(resultObj: Void?): DataState<ForgotPasswordViewState>? {
                 return DataState.data(
                     response = Response(
                         message = SEND_RESET_SUCCESS,

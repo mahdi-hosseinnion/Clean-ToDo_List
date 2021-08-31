@@ -1,6 +1,7 @@
 package com.example.clean_todo_list.business.interactors.auth.login
 
 import com.example.clean_todo_list.business.data.network.ApiResponseHandler
+import com.example.clean_todo_list.business.data.network.AuthResponseHandler
 import com.example.clean_todo_list.business.data.network.auth.abstraction.AuthNetworkDataSource
 import com.example.clean_todo_list.business.data.util.safeAuthCall
 import com.example.clean_todo_list.business.domain.state.*
@@ -30,11 +31,11 @@ constructor(
                 password
             )
         }
-        val response = object : ApiResponseHandler<LogInViewState, AuthResult>(
+        val response = object : AuthResponseHandler<LogInViewState, AuthResult>(
             response = networkResult,
             stateEvent = stateEvent
         ) {
-            override suspend fun handleSuccess(resultObj: AuthResult): DataState<LogInViewState>? {
+            override suspend fun handleSuccess(resultObj: AuthResult?): DataState<LogInViewState>? {
                 return DataState.data(
                     response = Response(
                         message = LOGIN_USER_SUCCESS,

@@ -2,6 +2,7 @@ package com.example.clean_todo_list.di
 
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModelProvider
+import com.example.clean_todo_list.business.interactors.auth.forgotpassword.SendResetPasswordEmail
 import com.example.clean_todo_list.business.interactors.auth.login.LoginUser
 import com.example.clean_todo_list.business.interactors.auth.signup.SignUpUser
 import com.example.clean_todo_list.business.interactors.task.taskdetail.TaskDetailInteractors
@@ -28,6 +29,7 @@ object TaskViewModelModule {
         taskNetworkSyncManager: TaskNetworkSyncManager,
         loginUser: LoginUser,
         signUpUser: SignUpUser,
+        sendResetPasswordEmail: SendResetPasswordEmail,
         sharedPreferences: SharedPreferences,
         sharedPrefsEditor: SharedPreferences.Editor
     ): ViewModelProvider.Factory {
@@ -37,6 +39,7 @@ object TaskViewModelModule {
             taskNetworkSyncManager = taskNetworkSyncManager,
             loginUser = loginUser,
             signUpUser = signUpUser,
+            sendResetPasswordEmail = sendResetPasswordEmail,
             sharedPreferences = sharedPreferences,
             sharedPrefsEditor = sharedPrefsEditor
         )

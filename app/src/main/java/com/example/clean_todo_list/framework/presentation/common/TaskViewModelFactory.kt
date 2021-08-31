@@ -3,6 +3,7 @@ package com.example.clean_todo_list.framework.presentation.common
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.clean_todo_list.business.interactors.auth.forgotpassword.SendResetPasswordEmail
 import com.example.clean_todo_list.business.interactors.auth.login.LoginUser
 import com.example.clean_todo_list.business.interactors.auth.signup.SignUpUser
 import com.example.clean_todo_list.business.interactors.task.taskdetail.TaskDetailInteractors
@@ -25,6 +26,7 @@ constructor(
     private val taskDetailInteractors: TaskDetailInteractors,
     private val loginUser: LoginUser,
     private val signUpUser: SignUpUser,
+    private val sendResetPasswordEmail: SendResetPasswordEmail,
     private val taskNetworkSyncManager: TaskNetworkSyncManager,
     private val sharedPreferences: SharedPreferences,
     private val sharedPrefsEditor: SharedPreferences.Editor
@@ -65,7 +67,9 @@ constructor(
 
             }
             ForgotPasswordViewModel::class.java -> {
-                ForgotPasswordViewModel() as T
+                ForgotPasswordViewModel(
+                    sendResetPasswordEmail
+                ) as T
 
             }
 

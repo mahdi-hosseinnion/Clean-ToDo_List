@@ -96,7 +96,7 @@ class TaskDetailFragment(
 
         binding.detailBackBtn.setOnClickListener {
             uiController.hideSoftKeyboard()
-            navigateBack()
+            navigateUp()
         }
 
         binding.isDoneDetail.setOnCheckedChangeListener { _, checked ->
@@ -132,11 +132,11 @@ class TaskDetailFragment(
                 when (response.message) {
 
                     DELETE_TASK_SUCCESS -> {
-                        navigateBack()
+                        navigateUp()
                     }
                     UPDATE_TASK_SUCCESS -> {
                         uiController.hideSoftKeyboard()
-                        navigateBack()
+                        navigateUp()
                     }
                     else -> {
                         uiController.onResponseReceived(

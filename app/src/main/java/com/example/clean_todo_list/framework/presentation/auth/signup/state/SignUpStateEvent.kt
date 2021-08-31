@@ -11,7 +11,7 @@ sealed class SignUpStateEvent : StateEvent {
 
         override fun errorInfo(): String = "Unable to sign up"
 
-        override fun eventName(): String = "Sign up user event hash: ${this.hashCode()}"
+        override fun eventName(): String = "Sign up user event for email: $email"
 
         override fun shouldDisplayProgressBar(): Boolean = true
     }

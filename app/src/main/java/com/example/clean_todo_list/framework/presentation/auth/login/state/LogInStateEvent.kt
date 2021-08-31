@@ -10,7 +10,7 @@ sealed class LogInStateEvent : StateEvent {
     ) : LogInStateEvent() {
         override fun errorInfo(): String = "Unable to login"
 
-        override fun eventName(): String = "Login user ${this.hashCode()}"
+        override fun eventName(): String = "Login user for email: $email"
 
         override fun shouldDisplayProgressBar(): Boolean = true
     }

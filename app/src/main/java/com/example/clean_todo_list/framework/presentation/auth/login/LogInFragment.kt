@@ -60,10 +60,6 @@ class LogInFragment(
     }
 
     private fun setupUi() {
-        binding.loginLoginWithTestUserTxt.setOnClickListener {
-            binding.loginLoginWithTestUserTxt.isEnabled = false
-            tryToSignInIntoFirestore()
-        }
         binding.loginLoginBtn.setOnClickListener {
             viewModel.login(
                 binding.loginEmailEdt.text.toString(),
@@ -84,18 +80,6 @@ class LogInFragment(
 
     private fun navToSignUpFragment() {
         findNavController().navigate(R.id.action_logInFragment_to_signUpFragment)
-    }
-
-    private fun tryToSignInIntoFirestore() {
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(
-            EMAIL, PASSWORD
-        ).addOnCompleteListener {
-            if (it.isSuccessful) {
-                navToApp()
-            } else {
-                binding.loginLoginWithTestUserTxt.isEnabled = true
-            }
-        }
     }
 
     private fun navToApp() {

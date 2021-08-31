@@ -38,7 +38,7 @@ abstract class BaseFragment : Fragment() {
     }
     //util functions
 
-    fun navigateBack() {
+    fun navigateUp() {
         findNavController().navigateUp()
     }
 

@@ -1,6 +1,7 @@
 package com.example.clean_todo_list.business.interactors.auth.signup
 
 import com.example.clean_todo_list.business.data.network.ApiResponseHandler
+import com.example.clean_todo_list.business.data.network.AuthResponseHandler
 import com.example.clean_todo_list.business.data.network.auth.abstraction.AuthNetworkDataSource
 import com.example.clean_todo_list.business.data.util.safeAuthCall
 import com.example.clean_todo_list.business.domain.state.*
@@ -26,11 +27,11 @@ constructor(
         val networkResult = safeAuthCall(Dispatchers.IO) {
             authNetworkDataSource.signup(email, password)
         }
-        val response = object : ApiResponseHandler<SignUpViewState, AuthResult>(
+        val response = object : AuthResponseHandler<SignUpViewState, AuthResult>(
             response = networkResult,
             stateEvent = stateEvent
         ) {
-            override suspend fun handleSuccess(resultObj: AuthResult): DataState<SignUpViewState>? {
+            override suspend fun handleSuccess(resultObj: AuthResult?): DataState<SignUpViewState>? {
                 return DataState.data(
                     response = Response(
                         message = SIGNUP_SUCCESS,

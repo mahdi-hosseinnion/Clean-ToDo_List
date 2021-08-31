@@ -48,7 +48,7 @@ class SignUpFragment(
             checkIfInsertedDataIsValidThenSignUp()
         }
         binding.signupLoginBtn.setOnClickListener {
-            navigateBack()
+            navigateUp()
         }
     }
 
