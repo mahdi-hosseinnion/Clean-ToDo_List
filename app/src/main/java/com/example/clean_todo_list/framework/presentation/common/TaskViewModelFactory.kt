@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.clean_todo_list.business.interactors.auth.login.LoginUser
+import com.example.clean_todo_list.business.interactors.auth.signup.SignUpUser
 import com.example.clean_todo_list.business.interactors.task.taskdetail.TaskDetailInteractors
 import com.example.clean_todo_list.business.interactors.task.tasklist.TaskListInteractors
 import com.example.clean_todo_list.framework.presentation.auth.forgotpassword.ForgotPasswordViewModel
@@ -23,6 +24,7 @@ constructor(
     private val taskListInteractors: TaskListInteractors,
     private val taskDetailInteractors: TaskDetailInteractors,
     private val loginUser: LoginUser,
+    private val signUpUser: SignUpUser,
     private val taskNetworkSyncManager: TaskNetworkSyncManager,
     private val sharedPreferences: SharedPreferences,
     private val sharedPrefsEditor: SharedPreferences.Editor
@@ -57,7 +59,9 @@ constructor(
 
             }
             SignUpViewModel::class.java -> {
-                SignUpViewModel() as T
+                SignUpViewModel(
+                    signUpUser
+                ) as T
 
             }
             ForgotPasswordViewModel::class.java -> {

@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.clean_todo_list.framework.presentation.MainActivity
 import com.example.clean_todo_list.framework.presentation.utils.UIController
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
-
+@ExperimentalCoroutinesApi
+@FlowPreview
 abstract class BaseFragment : Fragment() {
 
     lateinit var uiController: UIController
@@ -36,7 +39,7 @@ abstract class BaseFragment : Fragment() {
     //util functions
 
     fun navigateBack() {
-        findNavController().popBackStack()
+        findNavController().navigateUp()
     }
 
 

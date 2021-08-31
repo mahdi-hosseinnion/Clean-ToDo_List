@@ -47,7 +47,7 @@ constructor(
     }
 
     companion object {
-        private const val SIGNUP_SUCCESS = "The sign up was successful"
+         const val SIGNUP_SUCCESS = "The sign up was successful"
 
     }
 }

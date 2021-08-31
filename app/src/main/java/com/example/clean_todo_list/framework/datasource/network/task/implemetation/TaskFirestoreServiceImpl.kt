@@ -5,6 +5,8 @@ import com.example.clean_todo_list.business.domain.util.DateUtil
 import com.example.clean_todo_list.framework.datasource.network.task.abstraction.TaskFirestoreService
 import com.example.clean_todo_list.framework.datasource.network.mappers.NetworkMapper
 import com.example.clean_todo_list.framework.datasource.network.model.TaskNetworkEntity
+import com.example.clean_todo_list.framework.datasource.network.model.TaskNetworkEntity.Companion.IS_DONE_FIELD
+import com.example.clean_todo_list.framework.datasource.network.model.TaskNetworkEntity.Companion.UPDATED_AT_FIELD
 import com.example.clean_todo_list.util.cLog
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -234,8 +236,8 @@ constructor(
             .collection(TASKS_COLLECTION)
             .document(taskId)
             .update(
-                "isDone", isDone,
-                "updated_at", Timestamp.now()
+                IS_DONE_FIELD, isDone,
+                UPDATED_AT_FIELD, Timestamp.now()
             )
             .addOnFailureListener {
                 cLog(it.message, "updateIsDone")

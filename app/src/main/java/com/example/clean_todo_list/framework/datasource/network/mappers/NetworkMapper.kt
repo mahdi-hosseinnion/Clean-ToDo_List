@@ -11,7 +11,7 @@ object NetworkMapper : EntityMapper<TaskNetworkEntity, Task>() {
         id = entity.id,
         title = entity.title,
         body = entity.body,
-        isDone = entity.isDone,
+        isDone = entity.done,
         updated_at = DateUtil.convertFirebaseTimestampToUnixTimestamp(entity.updated_at),
         created_at = DateUtil.convertFirebaseTimestampToUnixTimestamp(entity.created_at)
     )
@@ -20,7 +20,7 @@ object NetworkMapper : EntityMapper<TaskNetworkEntity, Task>() {
         id = domainModel.id,
         title = domainModel.title,
         body = domainModel.body,
-        isDone = domainModel.isDone,
+        done = domainModel.isDone,
         updated_at = DateUtil.convertUnixTimestampToFirebaseTimestamp(domainModel.updated_at),
         created_at = DateUtil.convertUnixTimestampToFirebaseTimestamp(domainModel.created_at)
     )

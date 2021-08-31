@@ -8,7 +8,7 @@ sealed class LogInStateEvent : StateEvent {
         val email: String,
         val password: String
     ) : LogInStateEvent() {
-        override fun errorInfo(): String = "Error login user"
+        override fun errorInfo(): String = "Unable to login"
 
         override fun eventName(): String = "Login user ${this.hashCode()}"
 

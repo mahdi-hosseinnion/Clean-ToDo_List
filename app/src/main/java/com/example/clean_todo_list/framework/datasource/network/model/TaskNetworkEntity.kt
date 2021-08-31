@@ -6,7 +6,7 @@ data class TaskNetworkEntity(
     var id: String,
     var title: String,
     var body: String,
-    var isDone: Boolean,
+    var done: Boolean,
     var updated_at: Timestamp,
     var created_at: Timestamp
 ) {
@@ -15,8 +15,12 @@ data class TaskNetworkEntity(
         "",
         "",
         "",
-        false,
+        done = false,
         Timestamp.now(),
         Timestamp.now()
     )
+    companion object{
+        const val IS_DONE_FIELD  = "done"
+        const val UPDATED_AT_FIELD  = "updated_at"
+    }
 }
