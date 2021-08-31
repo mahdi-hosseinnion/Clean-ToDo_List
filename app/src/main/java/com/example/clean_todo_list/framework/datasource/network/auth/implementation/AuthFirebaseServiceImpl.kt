@@ -46,11 +46,6 @@ class AuthFirebaseServiceImpl(
     companion object {
         private const val TAG = "AuthFirestoreServiceImp"
 
-        //success messages
-        private const val LOGIN_SUCCESS = "The login was successful"
-        private const val SIGNUP_SUCCESS = "The sign up was successful"
-        private const val SEND_RESET_SUCCESS = "Password reset email sent"
-
         //errro messages
         private const val LOGIN_ERROR = "Unable to login\nreason: "
         private const val SIGNUP_ERROR = "Unable to sing up \nreason: "

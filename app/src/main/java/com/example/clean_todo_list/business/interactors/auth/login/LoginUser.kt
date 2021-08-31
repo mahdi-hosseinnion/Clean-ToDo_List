@@ -1,22 +1,14 @@
 package com.example.clean_todo_list.business.interactors.auth.login
 
 import com.example.clean_todo_list.business.data.network.ApiResponseHandler
-import com.example.clean_todo_list.business.data.network.NetworkConstants.NETWORK_TIMEOUT
 import com.example.clean_todo_list.business.data.network.auth.abstraction.AuthNetworkDataSource
 import com.example.clean_todo_list.business.data.util.safeAuthCall
 import com.example.clean_todo_list.business.domain.state.*
 import com.example.clean_todo_list.framework.presentation.auth.login.state.LogInViewState
-import com.example.clean_todo_list.util.printLogD
-import com.example.clean_todo_list.util.printLogE
 import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withTimeout
-import java.lang.Exception
 import javax.inject.Inject
 
 //TODO AUTH SCOPOE
