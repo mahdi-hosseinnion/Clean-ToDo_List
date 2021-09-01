@@ -21,7 +21,7 @@ class SignUpViewModel(
         val updatedVieState = SignUpViewState(
             email = data.email ?: outdated.email,
             password = data.password ?: outdated.password,
-            repeatPassword = data.repeatPassword ?: outdated.repeatPassword
+            passwordConfirm = data.passwordConfirm ?: outdated.passwordConfirm
         )
         setViewState(updatedVieState)
     }
@@ -53,6 +53,30 @@ class SignUpViewModel(
             SignUpStateEvent.SignUpUserEvent(
                 email,
                 password
+            )
+        )
+    }
+
+    fun setEmail(email: String) {
+        handleNewData(
+            SignUpViewState(
+                email = email
+            )
+        )
+    }
+
+    fun setPassword(password: String) {
+        handleNewData(
+            SignUpViewState(
+                password = password
+            )
+        )
+    }
+
+    fun setConfirmPassword(confirmPassword: String) {
+        handleNewData(
+            SignUpViewState(
+                passwordConfirm = confirmPassword
             )
         )
     }

@@ -8,5 +8,5 @@ import kotlinx.parcelize.Parcelize
 data class SignUpViewState(
     val email: String? = null,
     val password: String? = null,
-    val repeatPassword: String? = null
+    val passwordConfirm: String? = null
 ) : Parcelable, ViewState
