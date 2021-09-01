@@ -6,7 +6,6 @@ import com.example.clean_todo_list.business.interactors.auth.login.LoginUser
 import com.example.clean_todo_list.framework.presentation.auth.login.state.LogInStateEvent
 import com.example.clean_todo_list.framework.presentation.auth.login.state.LogInViewState
 import com.example.clean_todo_list.framework.presentation.common.BaseViewModel
-import com.example.clean_todo_list.framework.presentation.task.taskdetail.state.TaskDetailViewState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -50,6 +49,22 @@ class LogInViewModel(
             LogInStateEvent.LoginUserEvent(
                 email,
                 password
+            )
+        )
+    }
+
+    fun setEmail(email: String) {
+        handleNewData(
+            LogInViewState(
+                email = email
+            )
+        )
+    }
+
+    fun setPassword(password: String) {
+        handleNewData(
+            LogInViewState(
+                password = password
             )
         )
     }

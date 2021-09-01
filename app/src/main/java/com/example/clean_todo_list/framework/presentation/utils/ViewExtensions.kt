@@ -32,6 +32,14 @@ fun View.gone() {
     visibility = View.GONE
 }
 
+fun View.enable() {
+    isEnabled = true
+}
+
+fun View.disable() {
+    isEnabled = false
+}
+
 fun View.fadeIn() {
     val animationDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
     apply {
