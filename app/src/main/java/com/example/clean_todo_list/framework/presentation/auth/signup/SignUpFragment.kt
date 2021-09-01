@@ -48,6 +48,10 @@ class SignUpFragment(
     }
 
     private fun setupUi() {
+        binding.toolbar.toolbarBackBtn.setOnClickListener {
+            navigateUp()
+        }
+
         binding.signupSignupBtn.setOnClickListener {
             binding.signupSignupBtn.disable()
             checkIfInsertedDataIsValidThenSignUp()

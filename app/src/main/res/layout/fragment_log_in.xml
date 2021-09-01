@@ -3,25 +3,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:gravity="center"
     android:orientation="vertical"
-    android:padding="16dp"
     tools:context=".framework.presentation.auth.login.LogInFragment">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_simple_with_back_button" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/welcome_n_back"
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/login_email_edt"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:inputType="textEmailAddress"
-        android:hint="@string/email" />
+        android:layout_marginEnd="16dp"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/login_password_edt"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:hint="@string/password"
         android:inputType="textPassword" />
 
@@ -30,8 +44,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end|center"
-
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+
+        android:layout_marginEnd="16dp"
         android:gravity="end|center"
         android:text="@string/forgot_password_question" />
 
@@ -39,14 +55,18 @@
         android:id="@+id/login_login_btn"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/login" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_gravity="center"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:gravity="center"
         android:orientation="horizontal">
 

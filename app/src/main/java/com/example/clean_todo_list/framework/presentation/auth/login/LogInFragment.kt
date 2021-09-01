@@ -16,6 +16,7 @@ import com.example.clean_todo_list.databinding.FragmentLogInBinding
 import com.example.clean_todo_list.framework.presentation.common.BaseFragment
 import com.example.clean_todo_list.framework.presentation.utils.disable
 import com.example.clean_todo_list.framework.presentation.utils.enable
+import com.example.clean_todo_list.framework.presentation.utils.gone
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
@@ -47,6 +48,8 @@ class LogInFragment(
     }
 
     private fun setupUi() {
+        binding.toolbar.toolbarBackBtn.gone()
+
         binding.loginLoginBtn.setOnClickListener {
             binding.loginLoginBtn.disable()
             viewModel.login(
@@ -127,7 +130,6 @@ class LogInFragment(
         super.onDestroyView()
         _binding = null
     }
-
 
 
 }

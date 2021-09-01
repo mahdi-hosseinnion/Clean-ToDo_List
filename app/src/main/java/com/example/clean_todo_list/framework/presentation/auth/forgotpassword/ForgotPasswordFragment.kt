@@ -42,6 +42,9 @@ class ForgotPasswordFragment(
     }
 
     private fun setupUi() {
+        binding.toolbar.toolbarBackBtn.setOnClickListener {
+            navigateUp()
+        }
         binding.submitBtn.setOnClickListener {
             binding.submitBtn.disable()
             sendResetPasswordEmail()
