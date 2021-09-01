@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.clean_todo_list.business.domain.state.StateMessageCallback
 import com.example.clean_todo_list.databinding.FragmentForgotPasswordBinding
 import com.example.clean_todo_list.framework.presentation.common.BaseFragment
+import com.example.clean_todo_list.framework.presentation.utils.disable
+import com.example.clean_todo_list.framework.presentation.utils.enable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
@@ -38,6 +41,19 @@ class ForgotPasswordFragment(
         subscribeObservers()
     }
 
+    private fun setupUi() {
+        binding.submitBtn.setOnClickListener {
+            binding.submitBtn.disable()
+            sendResetPasswordEmail()
+        }
+        binding.forgotPasswordBackToLoginTxt.setOnClickListener {
+            navigateUp()
+        }
+        binding.forgotPasswordEmailEdt.addTextChangedListener {
+            viewModel.setEmail(it.toString())
+        }
+    }
+
     private fun subscribeObservers() {
         viewModel.shouldDisplayProgressBar.observe(viewLifecycleOwner) {
             it?.let {
@@ -53,17 +69,20 @@ class ForgotPasswordFragment(
                             viewModel.clearStateMessage()
                         }
                     })
-
+                binding.submitBtn.enable()
             }
         }
+        viewModel.viewState.observe(viewLifecycleOwner) { st ->
+            st?.let { viweState ->
+                viweState.email?.let { setEmail(it) }
+            }
+        }
+
     }
 
-    private fun setupUi() {
-        binding.submitBtn.setOnClickListener {
-            sendResetPasswordEmail()
-        }
-        binding.forgotPasswordBackToLoginTxt.setOnClickListener {
-            navigateUp()
+    private fun setEmail(email: String) {
+        if (binding.forgotPasswordEmailEdt.text.toString() != email) {
+            binding.forgotPasswordEmailEdt.setText(email)
         }
     }
 

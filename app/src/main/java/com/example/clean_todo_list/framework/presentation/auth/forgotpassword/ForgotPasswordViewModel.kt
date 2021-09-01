@@ -48,4 +48,12 @@ class ForgotPasswordViewModel(
             )
         )
     }
+
+    fun setEmail(email: String) {
+        handleNewData(
+            ForgotPasswordViewState(
+                email = email
+            )
+        )
+    }
 }
