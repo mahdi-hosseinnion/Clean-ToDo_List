@@ -3,11 +3,13 @@
 یک اپیکیشن بسیار ساده برای مدیریت کار های روزانه. <br />
 
 </br>
-</br>
-</br>
-TODO ADD SCREEN SHOTS here
-</br>
-</br>
+
+<p float="left" align="middle">
+  <img src="https://github.com/mahdi-hosseinnion/Clean-ToDo_List/blob/assets/doc/screenshots/main_page_screenshot.jpg" width="30%" height="25%" />
+  <img src="https://github.com/mahdi-hosseinnion/Clean-ToDo_List/blob/assets/doc/screenshots/detail_page_screenshot.jpg" width="30%" height="25%" />
+  <img src="https://github.com/mahdi-hosseinnion/Clean-ToDo_List/blob/assets/doc/screenshots/login_page_screenshot.jpg" width="30%" height="25%"/> 
+</p>
+
 </br>
 
 ### پیشنیاز ها
